@@ -1,12 +1,12 @@
 package com.jacob.chessapp;
 
+import com.jacob.chessapp.events.StageReadyEvent;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
@@ -39,13 +39,4 @@ public class ChessAppUI extends Application {
         Platform.exit();
     }
 
-    static class StageReadyEvent extends ApplicationEvent {
-        public StageReadyEvent(Stage stage) {
-            super(stage);
-        }
-
-        public Stage getStage() {
-            return (Stage) getSource();
-        }
-    }
 }

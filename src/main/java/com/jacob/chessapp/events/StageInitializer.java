@@ -1,4 +1,4 @@
-package com.jacob.chessapp;
+package com.jacob.chessapp.events;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,18 +13,18 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class StageInitializer implements ApplicationListener<ChessAppUI.StageReadyEvent> {
+public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private final Resource fxml;
     private final ApplicationContext context;
 
     public StageInitializer(
-            @Value("classpath:/main_screen.fxml") Resource fxml, ApplicationContext context) {
+            @Value("classpath:/main-screen.fxml") Resource fxml, ApplicationContext context) {
         this.fxml = fxml;
         this.context = context;
     }
 
     @Override
-    public void onApplicationEvent(@NotNull ChessAppUI.StageReadyEvent event) {
+    public void onApplicationEvent(@NotNull StageReadyEvent event) {
         try {
             var stage = event.getStage();
             FXMLLoader fxmlLoader = new FXMLLoader(fxml.getURL());
