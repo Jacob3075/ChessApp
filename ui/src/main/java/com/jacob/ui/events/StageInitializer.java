@@ -1,4 +1,4 @@
-package com.jacob.chessapp.events;
+package com.jacob.ui.events;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

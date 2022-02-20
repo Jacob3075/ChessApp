@@ -1,7 +1,7 @@
-package com.jacob.chessapp;
+package com.jacob.ui;
 
-import com.jacob.ChessAppApplication;
-import com.jacob.chessapp.events.StageReadyEvent;
+import com.jacob.ChessApplication;
+import com.jacob.ui.events.StageReadyEvent;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -23,8 +23,8 @@ public class ChessAppUI extends Application {
                     ac.registerBean(HostServices.class, this::getHostServices);
                 };
         applicationContext =
-                new SpringApplicationBuilder(ChessAppApplication.class)
-                        .sources(ChessAppApplication.class)
+                new SpringApplicationBuilder(ChessApplication.class)
+                        .sources(ChessApplication.class)
                         .initializers(initializer)
                         .run(getParameters().getRaw().toArray(new String[0]));
     }

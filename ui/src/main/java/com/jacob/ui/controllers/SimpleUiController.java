@@ -1,4 +1,4 @@
-package com.jacob.chessapp.controllers;
+package com.jacob.ui.controllers;
 
 import com.jacob.database.SampleDB;
 import com.jacob.database.SampleModel;

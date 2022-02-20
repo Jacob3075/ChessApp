@@ -1,13 +1,11 @@
-package com.jacob.chessapp;
+package com.jacob.ui;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChessAppApplicationTests {
+class UiApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }

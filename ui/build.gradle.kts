@@ -1,6 +1,7 @@
 plugins {
-    id("org.springframework.boot") version ("2.6.3") apply false
+    id("org.springframework.boot") version ("2.6.3")
     id("io.spring.dependency-management") version ("1.0.11.RELEASE")
+    id("org.openjfx.javafxplugin") version "0.0.10"
     java
 }
 
@@ -12,17 +13,20 @@ repositories {
     mavenCentral()
 }
 
+javafx {
+    version = "17"
+    modules("javafx.controls", "javafx.fxml")
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.postgresql:postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
+    implementation(project(":database"))
+    implementation(project(":chess-engine"))
 
-dependencyManagement {
-    imports {
-        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-    }
+    implementation("org.jetbrains:annotations:22.0.0")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
