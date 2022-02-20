@@ -26,7 +26,6 @@ listOf(":ui", ":database").forEach {
             implementation(project(":chess-engine"))
             implementation("org.jetbrains:annotations:20.1.0")
             implementation("org.springframework.boot:spring-boot-starter")
-            implementation("org.springframework.boot:spring-boot-starter-data-jpa")
             testImplementation("org.springframework.boot:spring-boot-starter-test")
         }
 
