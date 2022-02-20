@@ -1,5 +1,6 @@
 package com.jacob.chessapp;
 
+import com.jacob.ChessAppApplication;
 import com.jacob.chessapp.events.StageReadyEvent;
 import javafx.application.Application;
 import javafx.application.HostServices;
@@ -38,5 +39,4 @@ public class ChessAppUI extends Application {
         applicationContext.close();
         Platform.exit();
     }
-
 }

@@ -21,7 +21,7 @@ public class SimpleUiController {
     private void initialize() {
         myButton.setOnAction(
                 it -> {
-                    sampleDB.save(new SampleModel(0L, "", "", ""));
+                    sampleDB.save(new SampleModel(0L, "Value 1", "Value 2", "Value 3"));
                     myLabel.setText("Clicked");
                 });
     }

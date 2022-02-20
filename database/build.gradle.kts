@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version ("2.6.3")
+    id("org.springframework.boot") version ("2.6.3") apply false
     id("io.spring.dependency-management") version ("1.0.11.RELEASE")
     java
 }
@@ -17,4 +17,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
 }
