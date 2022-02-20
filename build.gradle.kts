@@ -1,30 +1,35 @@
 plugins {
-    id("org.springframework.boot") version ("2.6.3")
-    id("io.spring.dependency-management") version ("1.0.11.RELEASE")
-    id("org.openjfx.javafxplugin") version "0.0.10"
+    id("org.springframework.boot") version "2.6.3" apply false
+    id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
     java
 }
 
-group = "com.jacob"
-version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-repositories {
-    mavenCentral()
+subprojects {
+    group = "com.jacob"
+    version = "0.0.1-SNAPSHOT"
+
+    apply(plugin = "java")
+
+    repositories {
+        mavenCentral()
+    }
 }
 
-javafx {
-    version = "17"
-    modules("javafx.controls", "javafx.fxml")
-}
+listOf(":ui", ":database").forEach {
+    project(it) {
+        apply(plugin = "org.springframework.boot")
+        apply(plugin = "io.spring.dependency-management")
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation(project(":database"))
-    implementation(project(":chess-engine"))
+        dependencies {
+            implementation(project(":chess-engine"))
+            implementation("org.jetbrains:annotations:20.1.0")
+            implementation("org.springframework.boot:spring-boot-starter")
+            implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+            testImplementation("org.springframework.boot:spring-boot-starter-test")
+        }
 
-    implementation("org.jetbrains:annotations:22.0.0")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+        tasks.register("prepareKotlinBuildScriptModel") {}
+    }
 }
