@@ -1,11 +1,6 @@
 package com.jacob.engine.board;
 
-import com.jacob.engine.pieces.King;
-import com.jacob.engine.pieces.Knight;
-import com.jacob.engine.pieces.Rook;
-import com.jacob.engine.pieces.Bishop;
-import com.jacob.engine.pieces.Queen;
-import com.jacob.engine.pieces.Pawn;
+import com.jacob.engine.pieces.*;
 
 public class Board {
     Spot[][] boxes;
@@ -16,7 +11,7 @@ public class Board {
     }
 
     public Spot getBox(int x, int y) {
-        if(x < 0 || x > 7 || y < 0 || y > 7) {
+        if (x < 0 || x > 7 || y < 0 || y > 7) {
             throw new ArithmeticException("Index out of bound");
         }
 
@@ -24,8 +19,8 @@ public class Board {
     }
 
     public void resetBoard() {
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 boxes[i][j] = new Spot(i, j, null);
             }
         }
@@ -39,7 +34,7 @@ public class Board {
         boxes[0][6] = new Spot(0, 6, new Knight(true));
         boxes[0][7] = new Spot(0, 7, new Rook(true));
         // initialize white pawns
-        for(int j = 0; j < 8; j++) {
+        for (int j = 0; j < 8; j++) {
             boxes[1][j] = new Spot(1, j, new Pawn(true));
         }
 
@@ -53,13 +48,13 @@ public class Board {
         boxes[7][6] = new Spot(7, 6, new Knight(false));
         boxes[7][7] = new Spot(7, 7, new Rook(false));
         // initialize black pawns
-        for(int j = 0; j < 8; j++) {
+        for (int j = 0; j < 8; j++) {
             boxes[6][j] = new Spot(6, j, new Pawn(false));
         }
 
         // initialize remaining boxes without any piece
-        for(int i = 2; i < 6; i++) {
-            for(int j = 0; j < 8; j++) {
+        for (int i = 2; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
                 boxes[i][j] = new Spot(i, j, null);
             }
         }

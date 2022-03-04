@@ -2,6 +2,7 @@ package com.jacob.engine.pieces;
 
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
+import org.jetbrains.annotations.NotNull;
 
 public class Knight extends Piece {
     public Knight(boolean white) {
@@ -9,9 +10,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, @NotNull Spot end) {
         // we can't move the piece to a spot that has a piece of the same colour
-        if(end.getPiece().isWhite() == this.isWhite()) {
+        if (end.getPiece().isWhite() == this.isWhite()) {
             return false;
         }
 
@@ -23,7 +24,6 @@ public class Knight extends Piece {
                 && (end.getX() < 8)
                 && (0 <= end.getY())
                 && (end.getY() < 8)
-                && (dx * dy == 2)
-        );
+                && (dx * dy == 2));
     }
 }
