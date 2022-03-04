@@ -21,8 +21,10 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Board board, Spot start, @NotNull Spot end) {
+        Piece destPiece = end.getPiece();
+
         // we can't move the piece to a spot that has a piece of the same colour
-        if (end.getPiece().isWhite() == this.isWhite()) {
+        if(destPiece != null && destPiece.isWhite() == this.isWhite()) {
             return false;
         }
 

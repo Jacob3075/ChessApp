@@ -11,19 +11,16 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Board board, Spot start, @NotNull Spot end) {
+        Piece destPiece = end.getPiece();
+
         // we can't move the piece to a spot that has a piece of the same colour
-        if (end.getPiece().isWhite() == this.isWhite()) {
+        if(destPiece != null && destPiece.isWhite() == this.isWhite()) {
             return false;
         }
 
         int di = Math.abs(start.getI() - end.getI());
         int dj = Math.abs(start.getJ() - end.getJ());
 
-        // returns true if end spot is within bounds, and dx * dy == 2
-        return ((0 <= end.getJ())
-                && (end.getJ() < 8)
-                && (0 <= end.getI())
-                && (end.getI() < 8)
-                && (di * dj == 2));
+        return (di * dj == 2);
     }
 }
