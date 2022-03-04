@@ -28,7 +28,38 @@ public class Rook extends Piece {
             return false;
         }
 
-        // implement canMove logic
+        int di = start.getI() - end.getI();
+        int dj = start.getJ() - end.getJ();
+
+        // rooks move along a single direction
+        if((di == 0) == (dj == 0)) {
+            return false;
+        }
+
+        // positive deltaI -->  rook moving up,     negative deltaI -->  rook moving down
+        // positive deltaJ -->  rook moving right,  negative deltaJ -->  rook moving left
+        int deltaI;
+        int deltaJ;
+        if(di == 0) {
+            deltaI = 0;
+            deltaJ = dj > 0 ? -1 : 1;
+        }
+        else {
+            deltaI = di > 0 ? -1 : 1;
+            deltaJ = 0;
+        }
+
+        // checking the spots between start and end one by one to see if any have a piece
+        int currentI = start.getI() + deltaI;
+        int currentJ = start.getJ() + deltaJ;
+        while(!(currentI == end.getI() && currentJ == end.getJ())) {
+            if(board.getSpot(currentI, currentJ).getPiece() != null) {
+                return false;
+            }
+            currentI += deltaI;
+            currentJ += deltaJ;
+        }
+
         return true;
     }
 }

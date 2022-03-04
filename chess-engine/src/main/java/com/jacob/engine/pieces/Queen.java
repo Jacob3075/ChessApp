@@ -18,7 +18,12 @@ public class Queen extends Piece {
             return false;
         }
 
-        // implement canMove logic
-        return true;
+        // since a queen moves either like a bishop or a rook, check to see if either is possible
+        Bishop queenAsBishop = new Bishop(this.isWhite());
+        boolean canQueenMoveAsBishop = queenAsBishop.canMove(board, start, end);
+        Rook queenAsRook = new Rook(this.isWhite());
+        boolean canQueenMoveAsRook = queenAsRook.canMove(board, start, end);
+
+        return canQueenMoveAsBishop || canQueenMoveAsRook;
     }
 }
