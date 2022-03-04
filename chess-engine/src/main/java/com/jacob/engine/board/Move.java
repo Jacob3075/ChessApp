@@ -4,11 +4,11 @@ import com.jacob.engine.pieces.Piece;
 import com.jacob.engine.player.Player;
 
 public class Move {
-    private Player player;
-    private Spot start;
-    private Spot end;
-    private Piece pieceMoved;
-    private Piece pieceKilled;
+    private final Player player;
+    private final Spot start;
+    private final Spot end;
+    private final Piece pieceMoved;
+    private final Piece pieceKilled;
     private boolean castlingMove;
 
     public Move(Player player, Spot start, Spot end) {
@@ -20,15 +20,15 @@ public class Move {
     }
 
     public Spot getStart() {
-        return this.start;
+        return start;
     }
 
     public Spot getEnd() {
-        return this.start;
+        return end;
     }
 
     public boolean isCastlingMove() {
-        return this.castlingMove;
+        return castlingMove;
     }
 
     public void setCastlingMove(boolean castlingMove) {

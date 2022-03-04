@@ -7,7 +7,7 @@ public abstract class Piece {
     private boolean white = false;
     private String symbol;
 
-    public Piece(boolean white, String symbol) {
+    protected Piece(boolean white, String symbol) {
         this.setWhite(white);
         this.setSymbol(symbol);
     }
@@ -20,12 +20,12 @@ public abstract class Piece {
         this.white = white;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
     public String getSymbol() {
         return this.symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public abstract boolean canMove(Board board, Spot start, Spot end);
