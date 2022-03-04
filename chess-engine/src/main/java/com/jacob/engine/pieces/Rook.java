@@ -1,7 +1,7 @@
-package pieces;
+package com.jacob.engine.pieces;
 
-import board.Board;
-import board.Spot;
+import com.jacob.engine.board.Board;
+import com.jacob.engine.board.Spot;
 
 public class Rook extends Piece {
     public Rook(boolean white) {

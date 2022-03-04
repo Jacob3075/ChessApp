@@ -1,11 +1,11 @@
-package board;
+package com.jacob.engine.board;
 
-import pieces.King;
-import pieces.Knight;
-import pieces.Rook;
-import pieces.Bishop;
-import pieces.Queen;
-import pieces.Pawn;
+import com.jacob.engine.pieces.King;
+import com.jacob.engine.pieces.Knight;
+import com.jacob.engine.pieces.Rook;
+import com.jacob.engine.pieces.Bishop;
+import com.jacob.engine.pieces.Queen;
+import com.jacob.engine.pieces.Pawn;
 
 public class Board {
     Spot[][] boxes;
@@ -30,17 +30,17 @@ public class Board {
             }
         }
         // initialize white pieces
-         boxes[0][0] = new Spot(0, 0, new Rook(true));
+        boxes[0][0] = new Spot(0, 0, new Rook(true));
         boxes[0][1] = new Spot(0, 1, new Knight(true));
-         boxes[0][2] = new Spot(0, 2, new Bishop(true));
-         boxes[0][3] = new Spot(0, 3, new Queen(true));
+        boxes[0][2] = new Spot(0, 2, new Bishop(true));
+        boxes[0][3] = new Spot(0, 3, new Queen(true));
         boxes[0][4] = new Spot(0, 4, new King(true));
-         boxes[0][5] = new Spot(0, 5, new Bishop(true));
+        boxes[0][5] = new Spot(0, 5, new Bishop(true));
         boxes[0][6] = new Spot(0, 6, new Knight(true));
-         boxes[0][7] = new Spot(0, 7, new Rook(true));
+        boxes[0][7] = new Spot(0, 7, new Rook(true));
         // initialize white pawns
         for(int j = 0; j < 8; j++) {
-             boxes[1][j] = new Spot(1, j, new Pawn(true));
+            boxes[1][j] = new Spot(1, j, new Pawn(true));
         }
 
         // initialize black pieces

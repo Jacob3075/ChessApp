@@ -1,4 +1,4 @@
-package player;
+package com.jacob.engine.player;
 
 public class ComputerPlayer extends Player {
     public ComputerPlayer(boolean whiteSide) {

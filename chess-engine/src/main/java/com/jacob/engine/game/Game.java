@@ -1,11 +1,11 @@
-package game;
+package com.jacob.engine.game;
 
-import board.Board;
-import board.Move;
-import board.Spot;
-import pieces.King;
-import pieces.Piece;
-import player.Player;
+import com.jacob.engine.board.Board;
+import com.jacob.engine.board.Move;
+import com.jacob.engine.board.Spot;
+import com.jacob.engine.pieces.King;
+import com.jacob.engine.pieces.Piece;
+import com.jacob.engine.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

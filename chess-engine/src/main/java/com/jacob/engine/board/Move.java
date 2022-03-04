@@ -1,7 +1,7 @@
-package board;
+package com.jacob.engine.board;
 
-import pieces.Piece;
-import player.Player;
+import com.jacob.engine.pieces.Piece;
+import com.jacob.engine.player.Player;
 
 public class Move {
     private Player player;

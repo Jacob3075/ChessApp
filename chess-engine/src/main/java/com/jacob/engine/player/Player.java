@@ -1,4 +1,4 @@
-package player;
+package com.jacob.engine.player;
 
 public abstract class Player {
     public boolean whiteSide;

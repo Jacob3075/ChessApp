@@ -1,4 +1,4 @@
-package game;
+package com.jacob.engine.game;
 
 public enum GameStatus {
     ACTIVE,

@@ -1,6 +1,6 @@
-package board;
+package com.jacob.engine.board;
 
-import pieces.Piece;
+import com.jacob.engine.pieces.Piece;
 
 public class Spot {
     private Piece piece;
