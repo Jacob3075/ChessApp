@@ -5,6 +5,7 @@ import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.King;
 import com.jacob.engine.pieces.Piece;
+import com.jacob.engine.pieces.Rook;
 import com.jacob.engine.player.Player;
 
 import java.util.ArrayList;
@@ -93,14 +94,15 @@ public class Game {
 
             // moving the castle side rook from its start spot to its end spot
             Spot rookSpot;
+            Piece rook;
             if(start.getJ() < end.getJ()) {
                 rookSpot = board.getSpot(start.getI(), start.getJ()+3);
-                Piece rook = rookSpot.getPiece();
+                rook = rookSpot.getPiece();
                 board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
             }
             else {
                 rookSpot = board.getSpot(start.getI(), start.getJ()-4);
-                Piece rook = rookSpot.getPiece();
+                rook = rookSpot.getPiece();
                 board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
             }
             rookSpot.setPiece(null);
@@ -112,6 +114,7 @@ public class Game {
             move.setCastlingMove(true);
             ((King) sourcePiece).setCastlingDone(true);
             ((King) sourcePiece).setMoved(true);
+            ((Rook) rook).setMoved(true);
         }
         else {
             // get the killed piece
