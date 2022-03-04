@@ -2,6 +2,7 @@ package com.jacob.engine.board;
 
 import com.jacob.engine.pieces.Piece;
 import com.jacob.engine.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class Move {
     private final Player player;
@@ -11,7 +12,7 @@ public class Move {
     private final Piece pieceKilled;
     private boolean castlingMove;
 
-    public Move(Player player, Spot start, Spot end) {
+    public Move(Player player, @NotNull Spot start, @NotNull Spot end) {
         this.player = player;
         this.start = start;
         this.end = end;

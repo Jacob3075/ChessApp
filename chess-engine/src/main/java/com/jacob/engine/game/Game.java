@@ -6,6 +6,7 @@ import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.King;
 import com.jacob.engine.pieces.Piece;
 import com.jacob.engine.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class Game {
         return this.makeMove(move, player);
     }
 
-    private boolean makeMove(Move move, Player player) {
+    private boolean makeMove(@NotNull Move move, Player player) {
         Piece sourcePiece = move.getStart().getPiece();
         if (sourcePiece == null) {
             return false;

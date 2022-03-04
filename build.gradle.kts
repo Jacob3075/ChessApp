@@ -15,6 +15,10 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
+    dependencies {
+        implementation("org.jetbrains:annotations:22.0.0")
+    }
 }
 
 listOf(":ui", ":database").forEach {
@@ -24,7 +28,6 @@ listOf(":ui", ":database").forEach {
 
         dependencies {
             implementation(project(":chess-engine"))
-            implementation("org.jetbrains:annotations:20.1.0")
             implementation("org.springframework.boot:spring-boot-starter")
             testImplementation("org.springframework.boot:spring-boot-starter-test")
         }

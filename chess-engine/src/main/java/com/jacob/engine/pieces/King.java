@@ -2,6 +2,7 @@ package com.jacob.engine.pieces;
 
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
+import org.jetbrains.annotations.NotNull;
 
 public class King extends Piece {
     private boolean castlingDone = false;
@@ -19,7 +20,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, Spot end) {
+    public boolean canMove(Board board, Spot start, @NotNull Spot end) {
         // we can't move the piece to a Spot that has a piece of the same color
         if (end.getPiece().isWhite() == this.isWhite()) {
             return false;

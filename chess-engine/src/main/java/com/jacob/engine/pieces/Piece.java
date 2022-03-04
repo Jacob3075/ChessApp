@@ -2,6 +2,7 @@ package com.jacob.engine.pieces;
 
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Piece {
     private boolean white = false;
@@ -28,5 +29,5 @@ public abstract class Piece {
         this.symbol = symbol;
     }
 
-    public abstract boolean canMove(Board board, Spot start, Spot end);
+    public abstract boolean canMove(Board board, Spot start, @NotNull Spot end);
 }
