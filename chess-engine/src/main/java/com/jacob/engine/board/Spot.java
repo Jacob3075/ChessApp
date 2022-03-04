@@ -4,13 +4,13 @@ import com.jacob.engine.pieces.Piece;
 
 public class Spot {
     private Piece piece;
-    private int x;
-    private int y;
+    private int i;
+    private int j;
 
-    public Spot(int y, int x, Piece piece) {
+    public Spot(int i, int j, Piece piece) {
         this.setPiece(piece);
-        this.setX(x);
-        this.setY(y);
+        this.setI(i);
+        this.setJ(j);
     }
 
     public Piece getPiece() {
@@ -21,19 +21,19 @@ public class Spot {
         this.piece = p;
     }
 
-    public int getX() {
-        return this.x;
+    public int getI() {
+        return this.i;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setI(int i) {
+        this.i = i;
     }
 
-    public int getY() {
-        return this.y;
+    public int getJ() {
+        return this.j;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setJ(int j) {
+        this.j = j;
     }
 }

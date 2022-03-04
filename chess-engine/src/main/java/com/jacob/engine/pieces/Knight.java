@@ -16,14 +16,14 @@ public class Knight extends Piece {
             return false;
         }
 
-        int dx = Math.abs(start.getX() - end.getX());
-        int dy = Math.abs(start.getY() - end.getY());
+        int di = Math.abs(start.getI() - end.getI());
+        int dj = Math.abs(start.getJ() - end.getJ());
 
         // returns true if end spot is within bounds, and dx * dy == 2
-        return ((0 <= end.getX())
-                && (end.getX() < 8)
-                && (0 <= end.getY())
-                && (end.getY() < 8)
-                && (dx * dy == 2));
+        return ((0 <= end.getJ())
+                && (end.getJ() < 8)
+                && (0 <= end.getI())
+                && (end.getI() < 8)
+                && (di * dj == 2));
     }
 }

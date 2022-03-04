@@ -29,7 +29,7 @@ public class King extends Piece {
     }
 
     public boolean hasMoved() {
-        return this.hasMoved();
+        return this.moved;
     }
 
     public void setMoved(boolean moved) {
@@ -43,10 +43,10 @@ public class King extends Piece {
             return false;
         }
 
-        int dx = Math.abs(start.getX() - end.getX());
-        int dy = Math.abs(start.getY() - end.getY());
+        int di = Math.abs(start.getI() - end.getI());
+        int dj = Math.abs(start.getJ() - end.getJ());
 
-        if((dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1)) {
+        if((di | dj) == 1) {
             // TODO: check if this move will not result in the king being attacked. If so, return true
             return true;
         }
@@ -62,11 +62,11 @@ public class King extends Piece {
     }
 
     private boolean isValidCastling(Board board, Spot start, Spot end) {
-        int dx = start.getX() - end.getX();
-        int dy = start.getY() - end.getY();
+        int di = start.getI() - end.getI();
+        int dj = start.getJ() - end.getJ();
 
         // king has to move horizontally by 2 spots
-        if(!(Math.abs(dx) == 2 && dy == 0)) {
+        if(!(Math.abs(dj) == 2 && di == 0)) {
             return false;
         }
 
@@ -83,23 +83,23 @@ public class King extends Piece {
         // TODO: king should not go through an attacked spot
         // no pieces should be between king and rook
         Spot spot;
-        if(dx > 0) {
-            for(int i = 1; i < 3; i++) {
-                spot = board.getBox(start.getX()+i, start.getY());
+        if(dj > 0) {
+            for(int j = 1; j < 3; j++) {
+                spot = board.getSpot(start.getI(), start.getJ()+j);
                 if(spot.getPiece() != null) {
                     return false;
                 }
             }
-            spot = board.getBox(start.getX()+3, start.getY());
+            spot = board.getSpot(start.getI(), start.getJ()+3);
         }
         else {
-            for(int i = 1; i < 4; i++) {
-                spot = board.getBox(start.getX()-i, start.getY());
+            for(int j = 1; j < 4; j++) {
+                spot = board.getSpot(start.getI(), start.getJ()-j);
                 if(spot.getPiece() != null) {
                     return false;
                 }
             }
-            spot = board.getBox(start.getX()-4, start.getY());
+            spot = board.getSpot(start.getI(), start.getJ()-4);
         }
         Piece piece = spot.getPiece();
 
@@ -109,10 +109,6 @@ public class King extends Piece {
         }
 
         // the castle side rook should not have been moved previously
-        if(!(piece instanceof Rook && !((Rook) piece).hasMoved())) {
-            return false;
-        }
-
-        return true;
+        return (!(piece instanceof Rook && !((Rook) piece).hasMoved()));
     }
 }

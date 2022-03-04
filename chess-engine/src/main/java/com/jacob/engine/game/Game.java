@@ -22,8 +22,6 @@ public class Game {
         players[0] = p1;
         players[1] = p2;
 
-        // top left of the board is x = 0, y = 0
-        // x increases towards the right, y increases towards the bottom
         this.board = new Board();
 
         this.movesPlayed = new ArrayList<>();
@@ -38,31 +36,13 @@ public class Game {
         this.status = GameStatus.ACTIVE;
 
         // main game loop
-//        while(this.status == GameStatus.ACTIVE) {
+//        while(!this.isEnd()) {
 //
 //        }
     }
 
     public void displayBoard() {
-        for(int y = 7; y >= 0; y--) {
-            for(int x = 0; x < 8; x++) {
-                Spot spot = board.getBox(y, x);
-                Piece piece = spot.getPiece();
-
-                if(piece == null) {
-                    System.out.print(". ");
-                }
-                else {
-                    if(piece.isWhite()) {
-                        System.out.print(piece.getSymbol().toUpperCase() + " ");
-                    }
-                    else {
-                        System.out.print(piece.getSymbol() + " ");
-                    }
-                }
-            }
-            System.out.println();
-        }
+        this.board.displayBoard();
     }
 
     public boolean isEnd() {
@@ -77,15 +57,16 @@ public class Game {
         this.status = status;
     }
 
-    public boolean playerMove(Player player, int startX, int startY, int endX, int endY) {
-        Spot startBox = board.getBox(startX, startY);
-        Spot endBox = board.getBox(endX, endY);
-        Move move = new Move(player, startBox, endBox);
+    public boolean playerMove(Player player, int startI, int startJ, int endI, int endJ) {
+        Spot startSpot = board.getSpot(startI, startJ);
+        Spot endSpot = board.getSpot(endI, endJ);
+        Move move = new Move(player, startSpot, endSpot);
         return this.makeMove(move, player);
     }
 
     private boolean makeMove(Move move, Player player) {
         Piece sourcePiece = move.getStart().getPiece();
+
         if(sourcePiece == null) {
             return false;
         }
@@ -112,15 +93,15 @@ public class Game {
 
             // moving the castle side rook from its start spot to its end spot
             Spot rookSpot;
-            if(start.getX() < end.getX()) {
-                rookSpot = board.getBox(start.getX()+3, start.getY());
+            if(start.getJ() < end.getJ()) {
+                rookSpot = board.getSpot(start.getI(), start.getJ()+3);
                 Piece rook = rookSpot.getPiece();
-                board.getBox(start.getX()+1, start.getY()).setPiece(rook);
+                board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
             }
             else {
-                rookSpot = board.getBox(start.getX()-4, start.getY());
+                rookSpot = board.getSpot(start.getI(), start.getJ()-4);
                 Piece rook = rookSpot.getPiece();
-                board.getBox(start.getX()-1, start.getY()).setPiece(rook);
+                board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
             }
             rookSpot.setPiece(null);
 
