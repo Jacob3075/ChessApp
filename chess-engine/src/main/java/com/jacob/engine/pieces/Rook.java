@@ -4,8 +4,18 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
 
 public class Rook extends Piece {
+    private boolean moved = false;
+
     public Rook(boolean white) {
         super(white, "r");
+    }
+
+    public boolean hasMoved() {
+        return this.moved;
+    }
+
+    public void setMoved(boolean moved) {
+        this.moved = moved;
     }
 
     @Override

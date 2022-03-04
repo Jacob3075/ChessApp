@@ -90,47 +90,68 @@ public class Game {
             return false;
         }
 
-        // valid player
+        // checks if it's the player's turn
         if(player != currentTurn) {
             return false;
         }
 
+        // checks if the player is moving their piece or opponents piece
         if(sourcePiece.isWhite() != player.isWhiteSide()) {
             return false;
         }
 
-        // valid move?
+        // checks if the move is valid
         if(!sourcePiece.canMove(board, move.getStart(), move.getEnd())) {
             return false;
         }
 
-        // kill?
-        Piece destPiece = move.getStart().getPiece();
-        if(destPiece != null) {
-//            destPiece.setKilled(true);
-//            move.setPieceKilled(destPiece);
-        }
+        // castling
+        if(sourcePiece instanceof King && ((King) sourcePiece).isCastlingPossible()) {
+            Spot start = move.getStart();
+            Spot end = move.getEnd();
 
-        // castling?
-        if(sourcePiece != null && sourcePiece instanceof King && move.isCastlingMove()) {
+            // moving the castle side rook from its start spot to its end spot
+            Spot rookSpot;
+            if(start.getX() < end.getX()) {
+                rookSpot = board.getBox(start.getX()+3, start.getY());
+                Piece rook = rookSpot.getPiece();
+                board.getBox(start.getX()+1, start.getY()).setPiece(rook);
+            }
+            else {
+                rookSpot = board.getBox(start.getX()-4, start.getY());
+                Piece rook = rookSpot.getPiece();
+                board.getBox(start.getX()-1, start.getY()).setPiece(rook);
+            }
+            rookSpot.setPiece(null);
+
+            // moving the king from the start spot to the end spot
+            end.setPiece(sourcePiece);
+            start.setPiece(null);
+
             move.setCastlingMove(true);
+            ((King) sourcePiece).setCastlingDone(true);
+            ((King) sourcePiece).setMoved(true);
+        }
+        else {
+            // get the killed piece
+            Piece destPiece = move.getEnd().getPiece();
+
+            // move piece from the start spot to end spot
+            move.getEnd().setPiece(move.getStart().getPiece());
+            move.getStart().setPiece(null);
+
+            if(destPiece instanceof King) {
+                if(player.isWhiteSide()) {
+                    this.setStatus(GameStatus.WHITE_WIN);
+                }
+                else {
+                    this.setStatus(GameStatus.BLACK_WIN);
+                }
+            }
         }
 
         // store the move
         movesPlayed.add(move);
-
-        // move piece from the start box to end box
-        move.getEnd().setPiece(move.getStart().getPiece());
-        move.getStart().setPiece(null);
-
-        if(destPiece != null && destPiece instanceof King) {
-            if(player.isWhiteSide()) {
-                this.setStatus(GameStatus.WHITE_WIN);
-            }
-            else {
-                this.setStatus(GameStatus.BLACK_WIN);
-            }
-        }
 
         // set the current turn to the other player
         if(this.currentTurn == players[0]) {
