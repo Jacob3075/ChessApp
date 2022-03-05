@@ -21,6 +21,11 @@ public class Knight extends Piece {
         int di = Math.abs(start.getI() - end.getI());
         int dj = Math.abs(start.getJ() - end.getJ());
 
-        return (di * dj == 2);
+        if(di * dj != 2) {
+            return false;
+        }
+
+        // move is legal if player's king is not attacked after making it
+        return this.isKingAttackedAfterMove(board, start, end);
     }
 }

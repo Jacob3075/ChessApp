@@ -60,6 +60,7 @@ public class Rook extends Piece {
             currentJ += deltaJ;
         }
 
-        return true;
+        // move is legal if player's king is not attacked after making it
+        return this.isKingAttackedAfterMove(board, start, end);
     }
 }

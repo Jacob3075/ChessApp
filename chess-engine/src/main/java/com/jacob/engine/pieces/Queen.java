@@ -24,6 +24,11 @@ public class Queen extends Piece {
         Rook queenAsRook = new Rook(this.isWhite());
         boolean canQueenMoveAsRook = queenAsRook.canMove(board, start, end);
 
-        return canQueenMoveAsBishop || canQueenMoveAsRook;
+        if(!(canQueenMoveAsBishop || canQueenMoveAsRook)) {
+            return false;
+        }
+
+        // move is legal if player's king is not attacked after making it
+        return this.isKingAttackedAfterMove(board, start, end);
     }
 }

@@ -2,7 +2,6 @@ package com.jacob.engine.pieces;
 
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
-import org.jetbrains.annotations.NotNull;
 
 public class Bishop extends Piece {
     public Bishop(boolean white) {
@@ -10,7 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, @NotNull Spot end) {
+    public boolean canMove(Board board, Spot start, Spot end) {
         Piece destPiece = end.getPiece();
 
         // we can't move the piece to a spot that has a piece of the same colour
@@ -26,8 +25,10 @@ public class Bishop extends Piece {
             return false;
         }
 
-        // delta is negative if the bishop is moving down the board and positive if moving up
+        // deltaI is negative if the bishop is moving down the board and positive if moving up
         int deltaI = di > 0 ? -1 : 1;
+
+        // deltaJ is negative if the bishop is moving left and positive if moving right
         int deltaJ = dj > 0 ? -1 : 1;
 
         int currentI = start.getI() + deltaI;
@@ -42,6 +43,7 @@ public class Bishop extends Piece {
             currentJ += deltaJ;
         }
 
-        return true;
+        // move is legal if player's king is not attacked after making it
+        return this.isKingAttackedAfterMove(board, start, end);
     }
 }
