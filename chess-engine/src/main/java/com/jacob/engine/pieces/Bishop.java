@@ -44,6 +44,6 @@ public class Bishop extends Piece {
         }
 
         // move is legal if player's king is not attacked after making it
-        return this.isKingAttackedAfterMove(board, start, end);
+        return !this.isKingAttackedAfterMove(board, start, end);
     }
 }
