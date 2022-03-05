@@ -2,7 +2,6 @@ package com.jacob.engine.pieces;
 
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
-import org.jetbrains.annotations.NotNull;
 
 public class Queen extends Piece {
     public Queen(boolean white) {
