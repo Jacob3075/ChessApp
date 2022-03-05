@@ -8,7 +8,7 @@ public class Move {
     private final Spot start;
     private final Spot end;
     private final Piece pieceMoved;
-    private final Piece pieceKilled;
+    private final Piece pieceCaptured;
     private boolean kingSideCastlingMove;
     private boolean queenSideCastlingMove;
 
@@ -17,7 +17,7 @@ public class Move {
         this.start = start;
         this.end = end;
         this.pieceMoved = start.getPiece();
-        this.pieceKilled = end.getPiece();
+        this.pieceCaptured = end.getPiece();
     }
 
     public Spot getStart() {
@@ -32,8 +32,8 @@ public class Move {
         return pieceMoved;
     }
 
-    public Piece getPieceKilled() {
-        return pieceKilled;
+    public Piece getPieceCaptured() {
+        return pieceCaptured;
     }
 
     public Player getPlayer() {
