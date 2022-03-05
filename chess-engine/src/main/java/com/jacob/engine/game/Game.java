@@ -44,14 +44,20 @@ public class Game {
         board.displayBoard();
         playerMove(currentTurn, 1, 0, 3, 0);
         board.displayBoard();
-        playerMove(currentTurn, 6, 1, 5, 1);
+        playerMove(currentTurn, 6, 2, 5, 2);
         board.displayBoard();
         playerMove(currentTurn, 3, 0, 4, 0);
         board.displayBoard();
-        playerMove(currentTurn, 5, 1, 4, 0);
+        playerMove(currentTurn, 6, 1, 4, 1);
         board.displayBoard();
 
-        System.out.println(getEvaluation());
+        playerMove(currentTurn, 1, 4, 2, 4);
+        board.displayBoard();
+        playerMove(currentTurn, 6, 4, 5, 4);
+        board.displayBoard();
+
+        playerMove(currentTurn, 4, 0, 5, 1);
+        board.displayBoard();
     }
 
     public boolean isEnd() {
@@ -121,6 +127,7 @@ public class Game {
                 // moving the castle side rook from its start spot to its end spot
                 Spot rookSpot;
                 Piece rook;
+                // king side castle
                 if(start.getJ() < end.getJ()) {
                     rookSpot = board.getSpot(start.getI(), start.getJ()+3);
                     rook = rookSpot.getPiece();
@@ -129,6 +136,7 @@ public class Game {
                     move.setKingSideCastlingMove(true);
                     ((King) movedPiece).setKingSideCastlingDone(true);
                 }
+                // queen side castle
                 else {
                     rookSpot = board.getSpot(start.getI(), start.getJ()-4);
                     rook = rookSpot.getPiece();
@@ -151,12 +159,17 @@ public class Game {
                 // TODO: implement pawn promotion logic
 
             }
+            // en passant
+            if(((Pawn) movedPiece).isEnPassantPossible()) {
+                ((Pawn) movedPiece).setEnPassantPossible(false);
+                capturedPiece = board.getSpot(start.getI(), end.getJ()).getPiece();
+                board.getSpot(start.getI(), end.getJ()).setPiece(null);
+            }
 
             // updating the pawn to record that it has been moved
             ((Pawn) movedPiece).setMoved(true);
         }
         else {
-            // get the killed piece
             if(capturedPiece instanceof King) {
                 if(player.isWhiteSide()) {
                     this.setStatus(GameStatus.WHITE_WIN);
@@ -167,10 +180,6 @@ public class Game {
             }
         }
 
-        // moving the piece from start spot to end spot
-        end.setPiece(movedPiece);
-        start.setPiece(null);
-
         // store the captured piece
         if(capturedPiece != null) {
             if(currentTurn == players[0]) {
@@ -178,6 +187,18 @@ public class Game {
             }
             else {
                 piecesCapturedByPlayerOne.add(capturedPiece);
+            }
+        }
+
+        // moving the piece from start spot to end spot
+        end.setPiece(movedPiece);
+        start.setPiece(null);
+
+        // checking if a pawn moved 2 spots in the previous move
+        if(movesPlayed.size() > 0) {
+            Piece pieceMovedOnPreviousTurn = movesPlayed.get(movesPlayed.size()-1).getPieceMoved();
+            if(pieceMovedOnPreviousTurn instanceof Pawn) {
+                ((Pawn) pieceMovedOnPreviousTurn).setMovedTwoSpotsOnPreviousTurn(false);
             }
         }
 

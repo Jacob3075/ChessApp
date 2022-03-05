@@ -6,6 +6,8 @@ import com.jacob.engine.board.Spot;
 public class Pawn extends Piece {
     private boolean moved = false;
     private boolean canPromote = false;
+    private boolean enPassant = false;
+    private boolean movedTwoSpotsOnPreviousTurn = false;
 
     public Pawn(boolean white) {
         super(white, "p", 1);
@@ -19,12 +21,28 @@ public class Pawn extends Piece {
         this.moved = moved;
     }
 
+    public boolean isEnPassantPossible() {
+        return this.enPassant;
+    }
+
+    public void setEnPassantPossible(boolean enPassant) {
+        this.enPassant = enPassant;
+    }
+
     public boolean isPromotionPossible() {
         return this.canPromote;
     }
 
     public void setPromotionPossible(boolean canPromote) {
         this.canPromote = canPromote;
+    }
+
+    public boolean isMovedTwoSpotsOnPreviousTurn() {
+        return movedTwoSpotsOnPreviousTurn;
+    }
+
+    public void setMovedTwoSpotsOnPreviousTurn(boolean movedTwoSpotsOnPreviousTurn) {
+        this.movedTwoSpotsOnPreviousTurn = movedTwoSpotsOnPreviousTurn;
     }
 
     @Override
@@ -53,10 +71,18 @@ public class Pawn extends Piece {
             }
             // going diagonal
             else if(Math.abs(dj) == 1) {
+                // en passant
                 if(capturedPiece == null) {
-                    // TODO: check if en passant
-                    return false;
+                    capturedPiece = board.getSpot(start.getI(), end.getJ()).getPiece();
+
+                    if(!(capturedPiece instanceof Pawn
+                            && capturedPiece.isWhite() != this.isWhite()
+                            && ((Pawn) capturedPiece).isMovedTwoSpotsOnPreviousTurn())) {
+                        return false;
+                    }
+                    this.setEnPassantPossible(true);
                 }
+                // regular pawn capture
                 else if(this.isWhite() == capturedPiece.isWhite()) {
                     return false;
                 }
@@ -80,6 +106,8 @@ public class Pawn extends Piece {
                 if(board.getSpot(start.getI() + 2*deltaI, start.getJ()).getPiece() != null) {
                     return false;
                 }
+
+                this.setMovedTwoSpotsOnPreviousTurn(true);
             }
         }
 
@@ -90,4 +118,5 @@ public class Pawn extends Piece {
 
         return true;
     }
+
 }
