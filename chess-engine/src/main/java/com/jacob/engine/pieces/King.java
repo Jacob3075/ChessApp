@@ -4,20 +4,13 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
 
 public class King extends Piece {
-    private boolean castlingDone = false;
     private boolean canCastle = false;
     private boolean moved = false;
+    private boolean queenSideCastlingDone = false;
+    private boolean kingSideCastlingDone = false;
 
     public King(boolean white) {
         super(white, "k");
-    }
-
-    public boolean isCastlingDone() {
-        return this.castlingDone;
-    }
-
-    public void setCastlingDone(boolean castlingDone) {
-        this.castlingDone = castlingDone;
     }
 
     public boolean isCastlingPossible() {
@@ -34,6 +27,22 @@ public class King extends Piece {
 
     public void setMoved(boolean moved) {
         this.moved = moved;
+    }
+
+    public boolean isQueenSideCastlingDone() {
+        return queenSideCastlingDone;
+    }
+
+    public void setQueenSideCastlingDone(boolean queenSideCastlingDone) {
+        this.queenSideCastlingDone = queenSideCastlingDone;
+    }
+
+    public boolean isKingSideCastlingDone() {
+        return kingSideCastlingDone;
+    }
+
+    public void setKingSideCastlingDone(boolean kingSideCastlingDone) {
+        this.kingSideCastlingDone = kingSideCastlingDone;
     }
 
     @Override
@@ -67,13 +76,13 @@ public class King extends Piece {
         int di = start.getI() - end.getI();
         int dj = start.getJ() - end.getJ();
 
-        // king has to move horizontally by 2 spots
-        if(!(Math.abs(dj) == 2 && di == 0)) {
+        // castling should not have been done already
+        if(this.isKingSideCastlingDone() || this.isQueenSideCastlingDone()) {
             return false;
         }
 
-        // castling should not have been done already
-        if(this.isCastlingDone()) {
+        // king has to move horizontally by 2 spots
+        if(!(Math.abs(dj) == 2 && di == 0)) {
             return false;
         }
 
@@ -111,6 +120,11 @@ public class King extends Piece {
         }
 
         // the castle side rook should not have been moved previously
-        return (!(piece instanceof Rook && !((Rook) piece).hasMoved()));
+        if(!(piece instanceof Rook && !((Rook) piece).hasMoved())) {
+            return false;
+        }
+
+        return true;
     }
+
 }

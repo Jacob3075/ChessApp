@@ -4,6 +4,7 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.King;
+import com.jacob.engine.pieces.Pawn;
 import com.jacob.engine.pieces.Piece;
 import com.jacob.engine.pieces.Rook;
 import com.jacob.engine.player.Player;
@@ -36,9 +37,12 @@ public class Game {
 
         this.status = GameStatus.ACTIVE;
 
-        // main game loop
+        this.displayBoard();
+        playerMove(currentTurn, 0, 1, 2, 2);
+        this.displayBoard();
+
+    // main game loop
 //        while(!this.isEnd()) {
-//
 //        }
     }
 
@@ -99,11 +103,17 @@ public class Game {
                 rookSpot = board.getSpot(start.getI(), start.getJ()+3);
                 rook = rookSpot.getPiece();
                 board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
+
+                move.setKingSideCastlingMove(true);
+                ((King) sourcePiece).setKingSideCastlingDone(true);
             }
             else {
                 rookSpot = board.getSpot(start.getI(), start.getJ()-4);
                 rook = rookSpot.getPiece();
                 board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
+
+                move.setQueenSideCastlingMove(true);
+                ((King) sourcePiece).setQueenSideCastlingDone(true);
             }
             rookSpot.setPiece(null);
 
@@ -111,10 +121,13 @@ public class Game {
             end.setPiece(sourcePiece);
             start.setPiece(null);
 
-            move.setCastlingMove(true);
-            ((King) sourcePiece).setCastlingDone(true);
             ((King) sourcePiece).setMoved(true);
             ((Rook) rook).setMoved(true);
+        }
+        // pawn promotion
+        else if(sourcePiece instanceof Pawn && ((Pawn) sourcePiece).isPromotionPossible()) {
+            // TODO: implement pawn promotion logic
+
         }
         else {
             // get the killed piece
