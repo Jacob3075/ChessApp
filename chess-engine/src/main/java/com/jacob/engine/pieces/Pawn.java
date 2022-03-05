@@ -36,7 +36,7 @@ public class Pawn extends Piece {
         int dj = start.getJ() - end.getJ();
 
         // white pawns move up and black pawns move down
-        if((this.isWhite() && di >= 0) || (!this.isWhite() && di <= 0)) {
+        if((this.isWhite() && di >= 0) || (!this.isWhite() && di <= 0) || Math.abs(di) > 2) {
             return false;
         }
 
