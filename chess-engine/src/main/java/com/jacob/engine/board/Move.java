@@ -2,7 +2,6 @@ package com.jacob.engine.board;
 
 import com.jacob.engine.pieces.Piece;
 import com.jacob.engine.player.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class Move {
     private final Player player;
@@ -10,9 +9,10 @@ public class Move {
     private final Spot end;
     private final Piece pieceMoved;
     private final Piece pieceKilled;
-    private boolean castlingMove;
+    private boolean kingSideCastlingMove;
+    private boolean queenSideCastlingMove;
 
-    public Move(Player player, @NotNull Spot start, @NotNull Spot end) {
+    public Move(Player player, Spot start, Spot end) {
         this.player = player;
         this.start = start;
         this.end = end;
@@ -28,11 +28,32 @@ public class Move {
         return end;
     }
 
-    public boolean isCastlingMove() {
-        return castlingMove;
+    public Piece getPieceMoved() {
+        return pieceMoved;
     }
 
-    public void setCastlingMove(boolean castlingMove) {
-        this.castlingMove = castlingMove;
+    public Piece getPieceKilled() {
+        return pieceKilled;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public boolean isKingSideCastlingMove() {
+        return kingSideCastlingMove;
+    }
+
+    public void setKingSideCastlingMove(boolean kingSideCastlingMove) {
+        this.kingSideCastlingMove = kingSideCastlingMove;
+    }
+
+    public boolean isQueenSideCastlingMove() {
+        return queenSideCastlingMove;
+    }
+
+    public void setQueenSideCastlingMove(boolean queenSideCastlingMove) {
+        this.queenSideCastlingMove = queenSideCastlingMove;
+    }
+
 }
