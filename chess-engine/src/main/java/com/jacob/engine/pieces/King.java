@@ -10,7 +10,7 @@ public class King extends Piece {
     private boolean kingSideCastlingDone = false;
 
     public King(boolean white) {
-        super(white, "k");
+        super(white, "k", 0);
     }
 
     public boolean isCastlingPossible() {

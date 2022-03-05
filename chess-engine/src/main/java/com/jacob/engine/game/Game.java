@@ -18,6 +18,8 @@ public class Game {
     private Player currentTurn;
     private GameStatus status;
     private List<Move> movesPlayed;
+    private List<Piece> piecesCapturedByPlayerZero;
+    private List<Piece> piecesCapturedByPlayerOne;
 
     public Game(Player p1, Player p2) {
         this.players = new Player[2];
@@ -27,6 +29,8 @@ public class Game {
         this.board = new Board();
 
         this.movesPlayed = new ArrayList<>();
+        this.piecesCapturedByPlayerZero = new ArrayList<>();
+        this.piecesCapturedByPlayerOne = new ArrayList<>();
 
         if(p1.isWhiteSide()) {
             this.currentTurn = p1;
@@ -37,17 +41,17 @@ public class Game {
 
         this.status = GameStatus.ACTIVE;
 
-        this.displayBoard();
-        playerMove(currentTurn, 0, 1, 2, 2);
-        this.displayBoard();
+        board.displayBoard();
+        playerMove(currentTurn, 1, 0, 3, 0);
+        board.displayBoard();
+        playerMove(currentTurn, 6, 1, 5, 1);
+        board.displayBoard();
+        playerMove(currentTurn, 3, 0, 4, 0);
+        board.displayBoard();
+        playerMove(currentTurn, 5, 1, 4, 0);
+        board.displayBoard();
 
-    // main game loop
-//        while(!this.isEnd()) {
-//        }
-    }
-
-    public void displayBoard() {
-        this.board.displayBoard();
+        System.out.println(getEvaluation());
     }
 
     public boolean isEnd() {
@@ -61,23 +65,34 @@ public class Game {
     public void setStatus(GameStatus status) {
         this.status = status;
     }
+    
+    public int getEvaluation() {
+        int evaluation = 0;
+        int playerZeroPieceMultiplier = players[0].isWhiteSide() ? 1 : -1;
+        int playerOnePieceMultiplier = players[1].isWhiteSide() ? 1 : -1;
+
+        for(Piece piece : piecesCapturedByPlayerZero) {
+            evaluation += piece.getValue()*playerZeroPieceMultiplier;
+        }
+        for(Piece piece : piecesCapturedByPlayerOne) {
+            evaluation += piece.getValue()*playerOnePieceMultiplier;
+        }
+        
+        return evaluation;
+    }
 
     public boolean playerMove(Player player, int startI, int startJ, int endI, int endJ) {
         Spot startSpot = board.getSpot(startI, startJ);
         Spot endSpot = board.getSpot(endI, endJ);
-
-        if(startSpot == null || endSpot == null) {
-            return false;
-        }
-
         Move move = new Move(player, startSpot, endSpot);
         return this.makeMove(move, player);
     }
 
     private boolean makeMove(Move move, Player player) {
-        Piece sourcePiece = move.getPieceMoved();
+        Piece movedPiece = move.getPieceMoved();
+        Piece capturedPiece = move.getPieceCaptured();
 
-        if(sourcePiece == null) {
+        if(movedPiece == null) {
             return false;
         }
 
@@ -87,68 +102,82 @@ public class Game {
         }
 
         // checks if the player is moving their piece or opponents piece
-        if(sourcePiece.isWhite() != player.isWhiteSide()) {
+        if(movedPiece.isWhite() != player.isWhiteSide()) {
             return false;
         }
 
         // checks if the move is valid
-        if(!sourcePiece.canMove(board, move.getStart(), move.getEnd())) {
+        if(!movedPiece.canMove(board, move.getStart(), move.getEnd())) {
             return false;
         }
 
-        // castling
-        if(sourcePiece instanceof King && ((King) sourcePiece).isCastlingPossible()) {
-            Spot start = move.getStart();
-            Spot end = move.getEnd();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
 
-            // moving the castle side rook from its start spot to its end spot
-            Spot rookSpot;
-            Piece rook;
-            if(start.getJ() < end.getJ()) {
-                rookSpot = board.getSpot(start.getI(), start.getJ()+3);
-                rook = rookSpot.getPiece();
-                board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
+        // moving a king
+        if(movedPiece instanceof King) {
+            // castling
+            if(((King) movedPiece).isCastlingPossible()) {
+                // moving the castle side rook from its start spot to its end spot
+                Spot rookSpot;
+                Piece rook;
+                if(start.getJ() < end.getJ()) {
+                    rookSpot = board.getSpot(start.getI(), start.getJ()+3);
+                    rook = rookSpot.getPiece();
+                    board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
 
-                move.setKingSideCastlingMove(true);
-                ((King) sourcePiece).setKingSideCastlingDone(true);
+                    move.setKingSideCastlingMove(true);
+                    ((King) movedPiece).setKingSideCastlingDone(true);
+                }
+                else {
+                    rookSpot = board.getSpot(start.getI(), start.getJ()-4);
+                    rook = rookSpot.getPiece();
+                    board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
+
+                    move.setQueenSideCastlingMove(true);
+                    ((King) movedPiece).setQueenSideCastlingDone(true);
+                }
+                rookSpot.setPiece(null);
+                ((Rook) rook).setMoved(true);
             }
-            else {
-                rookSpot = board.getSpot(start.getI(), start.getJ()-4);
-                rook = rookSpot.getPiece();
-                board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
 
-                move.setQueenSideCastlingMove(true);
-                ((King) sourcePiece).setQueenSideCastlingDone(true);
-            }
-            rookSpot.setPiece(null);
-
-            // moving the king from the start spot to the end spot
-            end.setPiece(sourcePiece);
-            start.setPiece(null);
-
-            ((King) sourcePiece).setMoved(true);
-            ((Rook) rook).setMoved(true);
+            // updating the king to record that it has been moved
+            ((King) movedPiece).setMoved(true);
         }
-        // pawn promotion
-        else if(sourcePiece instanceof Pawn && ((Pawn) sourcePiece).isPromotionPossible()) {
-            // TODO: implement pawn promotion logic
+        // moving a pawn
+        else if(movedPiece instanceof Pawn) {
+            // pawn promotion
+            if(((Pawn) movedPiece).isPromotionPossible()) {
+                // TODO: implement pawn promotion logic
 
+            }
+
+            // updating the pawn to record that it has been moved
+            ((Pawn) movedPiece).setMoved(true);
         }
         else {
             // get the killed piece
-            Piece destPiece = move.getEnd().getPiece();
-
-            // move piece from the start spot to end spot
-            move.getEnd().setPiece(move.getStart().getPiece());
-            move.getStart().setPiece(null);
-
-            if(destPiece instanceof King) {
+            if(capturedPiece instanceof King) {
                 if(player.isWhiteSide()) {
                     this.setStatus(GameStatus.WHITE_WIN);
                 }
                 else {
                     this.setStatus(GameStatus.BLACK_WIN);
                 }
+            }
+        }
+
+        // moving the piece from start spot to end spot
+        end.setPiece(movedPiece);
+        start.setPiece(null);
+
+        // store the captured piece
+        if(capturedPiece != null) {
+            if(currentTurn == players[0]) {
+                piecesCapturedByPlayerZero.add(capturedPiece);
+            }
+            else {
+                piecesCapturedByPlayerOne.add(capturedPiece);
             }
         }
 

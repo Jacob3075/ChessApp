@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Queen extends Piece {
     public Queen(boolean white) {
-        super(white, "q");
+        super(white, "q", 9);
     }
 
     @Override

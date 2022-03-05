@@ -8,7 +8,7 @@ public class Rook extends Piece {
     private boolean moved = false;
 
     public Rook(boolean white) {
-        super(white, "r");
+        super(white, "r", 5);
     }
 
     public boolean hasMoved() {

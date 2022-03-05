@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Knight extends Piece {
     public Knight(boolean white) {
-        super(white, "n");
+        super(white, "n", 3);
     }
 
     @Override

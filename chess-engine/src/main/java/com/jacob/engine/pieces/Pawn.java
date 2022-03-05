@@ -9,7 +9,7 @@ public class Pawn extends Piece {
     private boolean canPromote = false;
 
     public Pawn(boolean white) {
-        super(white, "p");
+        super(white, "p", 1);
     }
 
     public boolean hasMoved() {

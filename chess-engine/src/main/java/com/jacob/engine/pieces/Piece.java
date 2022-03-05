@@ -7,10 +7,12 @@ import org.jetbrains.annotations.NotNull;
 public abstract class Piece {
     private boolean white = false;
     private String symbol;
+    private int value;
 
-    protected Piece(boolean white, String symbol) {
+    protected Piece(boolean white, String symbol, int value) {
         this.setWhite(white);
         this.setSymbol(symbol);
+        this.setValue(value);
     }
 
     public boolean isWhite() {
@@ -30,6 +32,14 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Board board, Spot start, Spot end);
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
 
     public boolean isKingAttackedAfterMove(Board board, Spot start, Spot end) {
         // a piece which could be attacking the king

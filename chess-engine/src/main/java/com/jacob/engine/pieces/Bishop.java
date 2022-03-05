@@ -5,7 +5,7 @@ import com.jacob.engine.board.Spot;
 
 public class Bishop extends Piece {
     public Bishop(boolean white) {
-        super(white, "b");
+        super(white, "b", 3);
     }
 
     @Override
