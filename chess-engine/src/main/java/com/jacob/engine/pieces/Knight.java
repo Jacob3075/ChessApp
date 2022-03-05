@@ -10,11 +10,15 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, @NotNull Spot end) {
-        Piece destPiece = end.getPiece();
+    public boolean canMove(Board board, Spot start, Spot end) {
+        if(start == null || end == null || start == end) {
+            return false;
+        }
+        
+        Piece capturedPiece = end.getPiece();
 
         // we can't move the piece to a spot that has a piece of the same colour
-        if(destPiece != null && destPiece.isWhite() == this.isWhite()) {
+        if(capturedPiece != null && capturedPiece.isWhite() == this.isWhite()) {
             return false;
         }
 

@@ -29,8 +29,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Spot start, @NotNull Spot end) {
-        Piece destPiece = end.getPiece();
+    public boolean canMove(Board board, Spot start, Spot end) {
+        if(start == null || end == null || start == end) {
+            return false;
+        }
+        
+        Piece capturedPiece = end.getPiece();
 
         int di = start.getI() - end.getI();
         int dj = start.getJ() - end.getJ();
@@ -40,42 +44,43 @@ public class Pawn extends Piece {
             return false;
         }
 
-        // if pawn moving one spot, it either goes straight or diagonal
-        if(Math.abs(di) == 1 && !(dj == 0 || Math.abs(dj) == 1)) {
-            return false;
-        }
-
-        // pawn can only move two spots straight if this is it's first move
-        if(Math.abs(di) == 2 && !(dj == 0 && !this.hasMoved())) {
-            return false;
-        }
-
-        // pawn moves one spot straight
-        if(Math.abs(di) == 1 && dj == 0) {
-            if(destPiece != null) {
-                return false;
-            }
-        }
-
-        // pawn moves diagonal
+        // pawn moves one spot
         if(Math.abs(di) == 1) {
-            if(destPiece == null) {
-                // TODO: check if en passant
-                return false;
+            // going straight
+            if(dj == 0) {
+                if(capturedPiece != null) {
+                    return false;
+                }
             }
-            else if(this.isWhite() == destPiece.isWhite()) {
+            // going diagonal
+            else if(Math.abs(dj) == 1) {
+                if(capturedPiece == null) {
+                    // TODO: check if en passant
+                    return false;
+                }
+                else if(this.isWhite() == capturedPiece.isWhite()) {
+                    return false;
+                }
+            }
+            // pawns can't move horizontally by more than 2 spots in a single move
+            else {
                 return false;
             }
         }
 
-        // pawn moves 2 spots on its first turn
+        // pawn moves 2 spots
         int deltaI = this.isWhite() ? 1 : -1;
         if(Math.abs(di) == 2) {
-            if(board.getSpot(start.getI() + deltaI, start.getJ()).getPiece() != null) {
+            if(this.hasMoved()) {
                 return false;
             }
-            if(board.getSpot(start.getI() + 2*deltaI, start.getJ()).getPiece() != null) {
-                return false;
+            else {
+                if(board.getSpot(start.getI() + deltaI, start.getJ()).getPiece() != null) {
+                    return false;
+                }
+                if(board.getSpot(start.getI() + 2*deltaI, start.getJ()).getPiece() != null) {
+                    return false;
+                }
             }
         }
 
