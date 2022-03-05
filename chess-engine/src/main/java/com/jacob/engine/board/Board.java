@@ -11,8 +11,9 @@ public class Board {
     }
 
     public Spot getSpot(int i, int j) {
-        if (i < 0 || i > 7 || j < 0 || j > 7) {
-            throw new ArithmeticException("Index out of bound");
+        if(i < 0 || i > 7 || j < 0 || j > 7) {
+//            throw new ArithmeticException("Index out of bound");
+            return null;
         }
 
         return spots[i][j];
