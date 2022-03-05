@@ -65,12 +65,17 @@ public class Game {
     public boolean playerMove(Player player, int startI, int startJ, int endI, int endJ) {
         Spot startSpot = board.getSpot(startI, startJ);
         Spot endSpot = board.getSpot(endI, endJ);
+
+        if(startSpot == null || endSpot == null) {
+            return false;
+        }
+
         Move move = new Move(player, startSpot, endSpot);
         return this.makeMove(move, player);
     }
 
     private boolean makeMove(Move move, Player player) {
-        Piece sourcePiece = move.getStart().getPiece();
+        Piece sourcePiece = move.getPieceMoved();
 
         if(sourcePiece == null) {
             return false;
