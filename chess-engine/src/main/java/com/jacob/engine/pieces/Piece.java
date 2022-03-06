@@ -41,6 +41,12 @@ public abstract class Piece {
     }
 
     public boolean isKingAttackedAfterMove(Board board, Spot start, Spot end) {
+        // moving the piece from the start spot to the end spot, then checking if king is attacked
+        Piece pieceMoved = start.getPiece();
+        Piece pieceCaptured = end.getPiece();
+        end.setPiece(pieceMoved);
+        start.setPiece(null);
+
         // a piece which could be attacking the king
         Piece attackingPiece;
 
@@ -69,10 +75,14 @@ public abstract class Piece {
         tj = kingSpot.getJ();
         attackingPiece = ti<8 && ti>=0 && tj-1>=0 ? board.getSpot(ti, tj-1).getPiece() : null;
         if(attackingPiece instanceof Pawn && attackingPiece.isWhite() != this.isWhite()) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
         attackingPiece = ti<8 && ti>=0 && tj+1<8 ? board.getSpot(ti, tj+1).getPiece() : null;
         if(attackingPiece instanceof Pawn && attackingPiece.isWhite() != this.isWhite()) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -87,6 +97,8 @@ public abstract class Piece {
                     if(di * dj == 2
                         && attackingPiece instanceof Knight
                         && attackingPiece.isWhite() != this.isWhite()) {
+                        start.setPiece(pieceMoved);
+                        end.setPiece(pieceCaptured);
                         return true;
                     }
                 }
@@ -108,6 +120,8 @@ public abstract class Piece {
             && (attackingPiece instanceof Rook
                 || attackingPiece instanceof Queen
                 || (attackingPiece instanceof King && ti == kingSpot.getI()+1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -126,6 +140,8 @@ public abstract class Piece {
             && (attackingPiece instanceof Rook
                 || attackingPiece instanceof Queen
                 || (attackingPiece instanceof King && ti == kingSpot.getI()-1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -144,6 +160,8 @@ public abstract class Piece {
             && (attackingPiece instanceof Rook
                 || attackingPiece instanceof Queen
                 || (attackingPiece instanceof King && tj == kingSpot.getJ()+1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -162,6 +180,8 @@ public abstract class Piece {
             && (attackingPiece instanceof Rook
                 || attackingPiece instanceof Queen
                 || (attackingPiece instanceof King && tj == kingSpot.getJ()-1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -184,6 +204,8 @@ public abstract class Piece {
                 || (attackingPiece instanceof King
                     && ti == kingSpot.getI()+1
                     && tj == kingSpot.getJ()-1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -206,6 +228,8 @@ public abstract class Piece {
                 || (attackingPiece instanceof King
                 && ti == kingSpot.getI()+1
                 && tj == kingSpot.getJ()+1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -228,6 +252,8 @@ public abstract class Piece {
                 || (attackingPiece instanceof King
                 && ti == kingSpot.getI()-1
                 && tj == kingSpot.getJ()-1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
@@ -250,6 +276,8 @@ public abstract class Piece {
                 || (attackingPiece instanceof King
                 && ti == kingSpot.getI()-1
                 && tj == kingSpot.getJ()+1))) {
+            start.setPiece(pieceMoved);
+            end.setPiece(pieceCaptured);
             return true;
         }
 
