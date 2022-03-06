@@ -9,7 +9,5 @@ public class Main {
         HumanPlayer p2 = new HumanPlayer(false);
 
         Game game = new Game(p1, p2);
-
-        game.displayBoard();
     }
 }
