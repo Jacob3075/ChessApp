@@ -98,7 +98,8 @@ public class King extends Piece {
         // TODO: king should not go through an attacked spot
         // no pieces should be between king and rook
         Spot spot;
-        if(dj > 0) {
+        // king side castling
+        if(dj < 0) {
             for(int j = 1; j < 3; j++) {
                 spot = board.getSpot(start.getI(), start.getJ()+j);
                 if(spot.getPiece() != null) {
@@ -107,6 +108,7 @@ public class King extends Piece {
             }
             spot = board.getSpot(start.getI(), start.getJ()+3);
         }
+        // queen side castling
         else {
             for(int j = 1; j < 4; j++) {
                 spot = board.getSpot(start.getI(), start.getJ()-j);
