@@ -12,7 +12,6 @@ public class Board {
 
     public Spot getSpot(int i, int j) {
         if(i < 0 || i > 7 || j < 0 || j > 7) {
-//            throw new ArithmeticException("Index out of bound");
             return null;
         }
 
@@ -48,7 +47,7 @@ public class Board {
             spots[6][j] = new Spot(6, j, new Pawn(false));
         }
 
-        // initialize remaining boxes without any piece
+        // initialize remaining spots without any piece
         for (int i = 2; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
                 spots[i][j] = new Spot(i, j, null);
