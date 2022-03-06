@@ -11,6 +11,7 @@ import com.jacob.engine.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
     private Player[] players;
@@ -41,23 +42,23 @@ public class Game {
 
         this.status = GameStatus.ACTIVE;
 
-        board.displayBoard();
-        playerMove(currentTurn, 1, 0, 3, 0);
-        board.displayBoard();
-        playerMove(currentTurn, 6, 2, 5, 2);
-        board.displayBoard();
-        playerMove(currentTurn, 3, 0, 4, 0);
-        board.displayBoard();
-        playerMove(currentTurn, 6, 1, 4, 1);
-        board.displayBoard();
+        Scanner in = new Scanner(System.in);
+        while(this.getStatus() == GameStatus.ACTIVE) {
+            if(currentTurn == players[0]) {
+                System.out.println("Player Zero's Move: ");
+            }
+            else {
+                System.out.println("Player One's Move: ");
+            }
 
-        playerMove(currentTurn, 1, 4, 2, 4);
-        board.displayBoard();
-        playerMove(currentTurn, 6, 4, 5, 4);
-        board.displayBoard();
-
-        playerMove(currentTurn, 4, 0, 5, 1);
-        board.displayBoard();
+            boolean isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+            while(!isLegal) {
+                System.out.println("Illegal move. Enter a different move: ");
+                isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+            }
+            board.displayBoard();
+            System.out.println(this.getEvaluation());
+        }
     }
 
     public boolean isEnd() {
@@ -87,7 +88,7 @@ public class Game {
         return evaluation;
     }
 
-    public boolean playerMove(Player player, int startI, int startJ, int endI, int endJ) {
+    public boolean playerMove(Player player, int startJ, int startI, int endJ, int endI) {
         Spot startSpot = board.getSpot(startI, startJ);
         Spot endSpot = board.getSpot(endI, endJ);
         Move move = new Move(player, startSpot, endSpot);
