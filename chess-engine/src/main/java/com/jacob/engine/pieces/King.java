@@ -84,7 +84,7 @@ public class King extends Piece {
         int di = start.getI() - end.getI();
         int dj = start.getJ() - end.getJ();
 
-        // castling should not have been done already
+        // castling should not have been done previously
         if(this.isKingSideCastlingDone() || this.isQueenSideCastlingDone()) {
             return false;
         }
