@@ -62,8 +62,12 @@ public class King extends Piece {
         int dj = Math.abs(start.getJ() - end.getJ());
 
         if((di | dj) == 1) {
-            // TODO: check if this move will not result in the king being attacked. If so, return true
-            return true;
+            // check if this move will result in the king being attacked. If so, return false
+            return !isKingAttackedAfterMove(board, start, end);
+        }
+
+        if(di > 2 || dj > 2 || (di == 2 && dj > 0) || (dj == 2 && di > 0)) {
+            return false;
         }
 
         if(this.isValidCastling(board, start, end)) {
@@ -95,14 +99,18 @@ public class King extends Piece {
             return false;
         }
 
-        // TODO: king should not go through an attacked spot
         // no pieces should be between king and rook
         Spot spot;
         // king side castling
         if(dj < 0) {
             for(int j = 1; j < 3; j++) {
                 spot = board.getSpot(start.getI(), start.getJ()+j);
+                // a piece is between the king and rook
                 if(spot.getPiece() != null) {
+                    return false;
+                }
+                // this spot is under attack and the king has to go through it
+                if(isKingAttackedAfterMove(board, start, spot)) {
                     return false;
                 }
             }
@@ -112,7 +120,12 @@ public class King extends Piece {
         else {
             for(int j = 1; j < 4; j++) {
                 spot = board.getSpot(start.getI(), start.getJ()-j);
+                // a piece is between the king and rook
                 if(spot.getPiece() != null) {
+                    return false;
+                }
+                // this spot is under attack and the king has to go through it
+                if(j < 3 && isKingAttackedAfterMove(board, start, spot)) {
                     return false;
                 }
             }
