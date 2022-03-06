@@ -116,7 +116,7 @@ public class Pawn extends Piece {
             this.setPromotionPossible(true);
         }
 
-        return true;
+        return !this.isKingAttackedAfterMove(board, start, end);
     }
 
 }
