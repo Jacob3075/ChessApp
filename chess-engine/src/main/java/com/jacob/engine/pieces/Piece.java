@@ -282,6 +282,8 @@ public abstract class Piece {
         }
 
         // if this line is reached, then the kingSpot is not under attack
+        start.setPiece(pieceMoved);
+        end.setPiece(pieceCaptured);
         return false;
     }
 }
