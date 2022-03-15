@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.login.LoginController">
+<left>
+    <AnchorPane prefHeight="407.0" prefWidth="228.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="285.0" layoutX="-53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/chessLogo.jpg" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+</left>
+<right>
+    <AnchorPane prefHeight="400.0" prefWidth="332.0" style="-fx-background-color: #ECECE7;" BorderPane.alignment="CENTER">
+        <children>
+            <Label layoutX="24.0" layoutY="148.0" text="Username:" />
+            <TextField fx:id="usernameTextField" layoutX="95.0" layoutY="144.0" prefHeight="26.0" prefWidth="173.0" promptText="Username" />
+            <Label layoutX="24.0" layoutY="191.0" text="Password:" />
+            <PasswordField fx:id="setPasswordField" layoutX="95.0" layoutY="187.0" prefHeight="26.0" prefWidth="173.0" promptText="Password" />
+            <Button fx:id="registerButton" layoutX="22.0" layoutY="292.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;" text="Register" textFill="WHITE">
+                <font>
+                    <Font size="16.0" />
+                </font></Button>
+            <Button fx:id="closeButton" layoutX="22.0" layoutY="342.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;" text="Close" textFill="WHITE">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Button>
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="22.0" layoutY="264.0" prefHeight="17.0" prefWidth="246.0" textFill="#fc0f0f" />
+            <Label layoutX="24.0" layoutY="64.0" text="Firstname:" />
+            <TextField fx:id="firstnameTextField1" layoutX="95.0" layoutY="60.0" prefHeight="26.0" prefWidth="173.0" promptText="Firstname" />
+            <Label layoutX="23.0" layoutY="105.0" text="Lastname:" />
+            <TextField fx:id="lastnameTextField11" layoutX="94.0" layoutY="101.0" prefHeight="26.0" prefWidth="173.0" promptText="Lastname" />
+            <Label layoutX="24.0" layoutY="230.0" text="Confirm:" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="95.0" layoutY="226.0" prefHeight="26.0" prefWidth="173.0" promptText="Confirm Password" />
+        </children></AnchorPane>
+</right>
+</BorderPane>
