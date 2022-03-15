@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
@@ -12,98 +13,258 @@
                     <children>
                         <Pane>
                             <children>
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/rook1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/bishop1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="250.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/bishop1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="350.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/rook1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/queen1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="200.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/king1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="300.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/knight1_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/knight1_black.png" />
+                                    </image>
+                                </ImageView>
                             </children>
                         </Pane>
                         <Pane layoutY="50.0">
                             <children>
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="200.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="250.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="300.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="350.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_black.png" />
+                                    </image>
+                                </ImageView>
                             </children>
                         </Pane>
                         <Pane layoutY="100.0">
                             <children>
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                             </children>
                         </Pane>
                         <Pane layoutY="150.0">
                             <children>
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                             </children>
                         </Pane>
                         <Pane layoutY="200.0">
                             <children>
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                             </children>
                         </Pane>
                         <Pane layoutY="250.0">
                             <children>
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                             </children>
                         </Pane>
                         <Pane layoutY="300.0">
                             <children>
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="48.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="98.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="148.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="198.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="248.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="298.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="348.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/pawn_white.png" />
+                                    </image>
+                                </ImageView>
                             </children>
                         </Pane>
                         <Pane layoutY="350.0">
                             <children>
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="150.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="250.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecece7" height="50.0" layoutX="300.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#020202" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#829d5d" height="50.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="board_square_lt" width="50.0" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/rook1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="52.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/knight1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="102.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/bishop1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="252.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/bishop1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="302.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/knight1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="352.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/rook1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="152.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/queen1_white.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="202.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/king1_white.png" />
+                                    </image>
+                                </ImageView>
                             </children>
                         </Pane>
                     </children>
