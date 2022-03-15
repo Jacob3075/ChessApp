@@ -111,12 +111,16 @@ public class Pawn extends Piece {
             }
         }
 
+        if(this.isKingAttackedAfterMove(board, start, end)) {
+            return false;
+        }
+
         // if the final position of the pawn is on an edge rank, pawn promotion is possible
         if((this.isWhite() && end.getI() == 7) || (!this.isWhite() && end.getI() == 0)) {
             this.setPromotionPossible(true);
         }
 
-        return !this.isKingAttackedAfterMove(board, start, end);
+        return true;
     }
 
 }

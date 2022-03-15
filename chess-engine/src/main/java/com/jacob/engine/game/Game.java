@@ -3,10 +3,7 @@ package com.jacob.engine.game;
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
-import com.jacob.engine.pieces.King;
-import com.jacob.engine.pieces.Pawn;
-import com.jacob.engine.pieces.Piece;
-import com.jacob.engine.pieces.Rook;
+import com.jacob.engine.pieces.*;
 import com.jacob.engine.player.Player;
 
 import java.util.ArrayList;
@@ -75,14 +72,28 @@ public class Game {
     
     public int getEvaluation() {
         int evaluation = 0;
-        int playerZeroPieceMultiplier = players[0].isWhiteSide() ? 1 : -1;
-        int playerOnePieceMultiplier = players[1].isWhiteSide() ? 1 : -1;
+//        int playerZeroPieceMultiplier = players[0].isWhiteSide() ? 1 : -1;
+//        int playerOnePieceMultiplier = players[1].isWhiteSide() ? 1 : -1;
+//
+//        for(Piece piece : piecesCapturedByPlayerZero) {
+//            evaluation += piece.getValue()*playerZeroPieceMultiplier;
+//        }
+//        for(Piece piece : piecesCapturedByPlayerOne) {
+//            evaluation += piece.getValue()*playerOnePieceMultiplier;
+//        }
 
-        for(Piece piece : piecesCapturedByPlayerZero) {
-            evaluation += piece.getValue()*playerZeroPieceMultiplier;
-        }
-        for(Piece piece : piecesCapturedByPlayerOne) {
-            evaluation += piece.getValue()*playerOnePieceMultiplier;
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                Piece p = board.getSpot(i, j).getPiece();
+                if(p != null) {
+                    if(p.isWhite()) {
+                        evaluation += p.getValue();
+                    }
+                    else {
+                        evaluation -= p.getValue();
+                    }
+                }
+            }
         }
         
         return evaluation;
@@ -155,11 +166,9 @@ public class Game {
         }
         // moving a pawn
         else if(movedPiece instanceof Pawn) {
-            // pawn promotion
-            if(((Pawn) movedPiece).isPromotionPossible()) {
-                // TODO: implement pawn promotion logic
+            // updating the pawn to record that it has been moved
+            ((Pawn) movedPiece).setMoved(true);
 
-            }
             // en passant
             if(((Pawn) movedPiece).isEnPassantPossible()) {
                 ((Pawn) movedPiece).setEnPassantPossible(false);
@@ -167,8 +176,31 @@ public class Game {
                 board.getSpot(start.getI(), end.getJ()).setPiece(null);
             }
 
-            // updating the pawn to record that it has been moved
-            ((Pawn) movedPiece).setMoved(true);
+            // pawn promotion
+            if(((Pawn) movedPiece).isPromotionPossible()) {
+                ((Pawn) movedPiece).setPromotionPossible(false);
+                // finding what piece to promote the pawn to
+                Scanner in = new Scanner(System.in);
+                System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
+                int choice = in.nextInt();
+//                in.close();
+
+                // promoting the pawn
+                switch (choice) {
+                    case 1 -> {
+                        movedPiece = new Queen(movedPiece.isWhite());
+                    }
+                    case 2 -> {
+                        movedPiece = new Rook(movedPiece.isWhite());
+                    }
+                    case 3 -> {
+                        movedPiece = new Bishop(movedPiece.isWhite());
+                    }
+                    case 4 -> {
+                        movedPiece = new Knight(movedPiece.isWhite());
+                    }
+                }
+            }
         }
         else {
             if(capturedPiece instanceof King) {
@@ -213,6 +245,8 @@ public class Game {
         else {
             this.currentTurn = players[0];
         }
+
+        // TODO: check for checkmate
 
         return true;
     }
