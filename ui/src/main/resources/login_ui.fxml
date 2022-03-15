@@ -29,7 +29,7 @@
                 </font>
             </Button>
             <Button fx:id="cancelButton" layoutX="23.0" layoutY="316.0" mnemonicParsing="false"
-                onAction="#cancelButtonOnAction" prefHeight="34.0" prefWidth="245.0"
+                prefHeight="34.0" prefWidth="245.0"
                 style="-fx-background-color: #000000;" text="Cancel" textFill="WHITE">
                 <font>
                     <Font size="16.0" />

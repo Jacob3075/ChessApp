@@ -19,6 +19,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
     public StageInitializer(
             @Value("classpath:/login_ui.fxml") Resource fxml, ApplicationContext context) {
+        //  @Value("classpath:/main-screen.fxml") Resource fxml, ApplicationContext context) {
         this.fxml = fxml;
         this.context = context;
     }
