@@ -61,7 +61,7 @@ public class Game {
             board.displayBoard();
             System.out.println(this.getEvaluation());
 
-            // checking if game is over
+            // checking if the game is still active
             // generating all possible moves for the current player
             List<Move> possibleMoves = currentTurn.generateMoves(board);
 
