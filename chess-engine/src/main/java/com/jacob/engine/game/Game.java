@@ -96,11 +96,11 @@ public class Game {
         this.status = status;
     }
 
-    private List<Piece> getPiecesCapturedByPlayerZero() {
+    public List<Piece> getPiecesCapturedByPlayerZero() {
         return this.piecesCapturedByPlayerZero;
     }
 
-    private List<Piece> getPiecesCapturedByPlayerOne() {
+    public List<Piece> getPiecesCapturedByPlayerOne() {
         return this.piecesCapturedByPlayerOne;
     }
     
