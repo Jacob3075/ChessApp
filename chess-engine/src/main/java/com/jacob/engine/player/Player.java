@@ -38,7 +38,9 @@ public abstract class Player {
 
                             // if the piece can move from the start spot to the end spot
                             if(currentPiece.canMove(board, start, end)) {
-                               possibleMoves.add(new Move(this, start, end));
+
+                                // adding the move to the list
+                                possibleMoves.add(new Move(this, start, end));
                             }
                         }
                     }
