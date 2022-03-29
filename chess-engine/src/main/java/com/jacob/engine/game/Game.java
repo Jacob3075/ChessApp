@@ -110,17 +110,13 @@ public class Game {
         // iterating through all the spots and updating the rating based on the pieces on the board
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                // getting the piece on the current spot
                 Piece currentPiece = board.getSpot(i, j).getPiece();
 
-                // if the piece is white, increase the evaluation by the piece's value
-                if(currentPiece != null && currentPiece.isWhite()) {
-                    evaluation += currentPiece.getValue();
-                }
-
-                // if the piece is black, decrease the evaluation by the piece's value
-                else if(currentPiece != null && !currentPiece.isWhite()) {
-                    evaluation -= currentPiece.getValue();
+                if(currentPiece != null) {
+                    if(currentPiece.isWhite())
+                        evaluation += currentPiece.getValue();
+                    else
+                        evaluation -= currentPiece.getValue();
                 }
             }
         }
