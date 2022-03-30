@@ -93,6 +93,8 @@ public class Pawn extends Piece {
         if(Math.abs(di) == 2) {
             if(this.hasMoved())
                 return false;
+            if(dj != 0)
+                return false;
             else {
                 if(board.getSpot(start.getI() + deltaI, start.getJ()).getPiece() != null)
                     return false;
