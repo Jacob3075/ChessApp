@@ -2,10 +2,10 @@
 
 Chess application using Spring Boot and JavaFX for OOAD project
 
-# Starting Postgres database with Docker
+# Starting MySQL database with Docker
 
 ```shell
-docker run --name postgres-container -e POSTGRES_PASSWORD=1234 -d -p 5432:5432 postgres
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=chess_db -d -p 3306:3306 mysql
 ```
 
 # Getting Started
