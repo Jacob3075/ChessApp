@@ -4,10 +4,12 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.*;
+import com.jacob.engine.player.HumanPlayer;
 import com.jacob.engine.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -18,6 +20,7 @@ public class Game {
     private final List<Move> movesPlayed;
     private final List<Piece> piecesCapturedByPlayerZero;
     private final List<Piece> piecesCapturedByPlayerOne;
+    private Random random = new Random();
 
     public Game(Player p1, Player p2) {
         // initializing the players
@@ -31,57 +34,77 @@ public class Game {
         this.piecesCapturedByPlayerZero = new ArrayList<>();
         this.piecesCapturedByPlayerOne = new ArrayList<>();
 
-        // assigning the current turn
-        if(p1.isWhiteSide()) {
+        // white plays first
+        if(p1.isWhiteSide())
             this.currentTurn = p1;
-        }
-        else {
+        else
             this.currentTurn = p2;
-        }
-        
-        // setting the game status as ACTIVE
+
         this.status = GameStatus.ACTIVE;
 
         // main game loop
         Scanner in = new Scanner(System.in);
         while(!this.isEnd()) {
-            if(currentTurn == players[0]) {
-                System.out.println("Player Zero's Move: ");
-            }
-            else {
-                System.out.println("Player One's Move: ");
-            }
-
-            boolean isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
-            while(!isLegal) {
-                System.out.println("Illegal move. Enter a different move: ");
-                isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
-            }
-            
             board.displayBoard();
-            System.out.println(this.getEvaluation());
 
             // checking if the game is still active
-            // generating all possible moves for the current player
             List<Move> possibleMoves = currentTurn.generateMoves(board);
 
-            // if the current player cannot make a move
             if(possibleMoves.isEmpty()) {
-                if(currentTurn == players[0]) {
-                    System.out.println("Player 1 wins!");
-                }
-                else {
-                    System.out.println("Player 0 Wins!");
-                }
+                Spot currentTurnsKingSpot = getCurrentTurnsKingSpot();
+                Piece currentTurnsKing = currentTurnsKingSpot.getPiece();
+                if(currentTurnsKing.isKingAttackedAfterMove(board, currentTurnsKingSpot, currentTurnsKingSpot)) {
+                    if(currentTurn == players[0])
+                        System.out.println("Player 1 wins!");
+                    else
+                        System.out.println("Player 0 Wins!");
 
-                if(currentTurn.isWhiteSide()) {
-                    this.setStatus(GameStatus.BLACK_WIN);
+                    if(currentTurn.isWhiteSide())
+                        this.setStatus(GameStatus.BLACK_WIN);
+                    else
+                        this.setStatus(GameStatus.WHITE_WIN);
                 }
                 else {
-                    this.setStatus(GameStatus.WHITE_WIN);
+                    System.out.println("It's a draw.");
+                    this.setStatus(GameStatus.DRAW);
+                }
+            }
+            else {
+                if(currentTurn == players[0])
+                    System.out.println("Player Zero's Move: ");
+                else
+                    System.out.println("Player One's Move: ");
+
+                if(currentTurn instanceof HumanPlayer) {
+                    //                                        start j       start i       end j         end i
+                    boolean isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+                    while(!isLegal) {
+                        System.out.println("Illegal move. Enter a different move: ");
+                        isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+                    }
+                }
+                else {
+                    int randomIndex = random.nextInt(possibleMoves.size());
+                    Move computerMove = possibleMoves.get(randomIndex);
+                    Spot startSpot = computerMove.getStart();
+                    Spot endSpot = computerMove.getEnd();
+
+                    playerMove(currentTurn, startSpot.getJ(), startSpot.getI(), endSpot.getJ(), endSpot.getI());
                 }
             }
         }
+    }
+
+    private Spot getCurrentTurnsKingSpot() {
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                Piece pieceOnSpot = board.getSpot(i, j).getPiece();
+
+                if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == currentTurn.isWhiteSide())
+                    return board.getSpot(i, j);
+            }
+        }
+        return null;
     }
 
     private boolean isEnd() {

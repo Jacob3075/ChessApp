@@ -44,8 +44,8 @@ public abstract class Piece {
         // moving the piece from the start spot to the end spot, then checking if king is attacked
         Piece pieceMoved = start.getPiece();
         Piece pieceCaptured = end.getPiece();
-        end.setPiece(pieceMoved);
         start.setPiece(null);
+        end.setPiece(pieceMoved);
 
         // a piece which could be attacking the king
         Piece attackingPiece;
