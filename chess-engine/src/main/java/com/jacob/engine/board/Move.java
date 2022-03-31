@@ -56,4 +56,23 @@ public class Move {
         this.queenSideCastlingMove = queenSideCastlingMove;
     }
 
+    @Override
+    public String toString() {
+        if(isKingSideCastlingMove())
+            return "O-O";
+        else if(isQueenSideCastlingMove())
+            return "O-O-O";
+
+        // ascii value of a is 97
+        char startingColumn = (char) (start.getJ()+1+96);
+        int startingRow = start.getI()+1;
+        char endingColumn = (char) (end.getJ()+1+96);
+        int endingRow = end.getI()+1;
+        pieceMoved.getSymbol();
+
+        String result = "" + pieceMoved.getSymbol() + startingColumn + startingRow;
+        result += pieceCaptured != null ? "x" : "";
+        result += endingColumn + endingRow;
+        return result;
+    }
 }
