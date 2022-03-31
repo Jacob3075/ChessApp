@@ -3,6 +3,7 @@ package com.jacob.engine.board;
 import com.jacob.engine.pieces.*;
 
 public class Board {
+    private final int SIZE = 8;
     Spot[][] spots;
 
     public Board() {
@@ -11,11 +12,14 @@ public class Board {
     }
 
     public Spot getSpot(int i, int j) {
-        if(i < 0 || i > 7 || j < 0 || j > 7) {
+        if(i < 0 || i > 7 || j < 0 || j > 7)
             return null;
-        }
 
         return spots[i][j];
+    }
+
+    public int getSIZE() {
+        return this.SIZE;
     }
 
     public void resetBoard() {
