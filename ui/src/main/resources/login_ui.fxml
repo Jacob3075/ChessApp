@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?><?import javafx.scene.image.Image?><?import javafx.scene.image.ImageView?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
-    minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0"
-    xmlns="http://javafx.com/javafx/16" fx:controller="com.jacob.ui.controllers.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.jacob.ui.controllers.LoginController">
     <left>
-        <AnchorPane BorderPane.alignment="CENTER" prefHeight="407.0" prefWidth="228.0">
+        <AnchorPane prefHeight="407.0" prefWidth="228.0" BorderPane.alignment="CENTER">
             <ImageView fitHeight="400.0" fitWidth="285.0" layoutX="-53.0" pickOnBounds="true"
                 preserveRatio="true">
                 <Image url="@/chessLogo.jpg" />
@@ -13,30 +12,30 @@
         </AnchorPane>
     </left>
     <right>
-        <AnchorPane style="-fx-background-color: #ECECE7;" BorderPane.alignment="CENTER"
-            prefHeight="400.0" prefWidth="332.0">
+        <AnchorPane prefHeight="400.0" prefWidth="332.0" style="-fx-background-color: #ECECE7;"
+            BorderPane.alignment="CENTER">
             <Label layoutX="24.0" layoutY="143.0" text="Username:" />
-            <TextField layoutX="95.0" layoutY="139.0" prefHeight="26.0" prefWidth="173.0"
-                promptText="Username" fx:id="usernameTextField" />
+            <TextField fx:id="usernameTextField" layoutX="95.0" layoutY="139.0" prefHeight="26.0"
+                prefWidth="173.0" promptText="Username" />
             <Label layoutX="24.0" layoutY="191.0" text="Password:" />
-            <PasswordField layoutX="95.0" layoutY="187.0" prefHeight="26.0" prefWidth="173.0"
-                promptText="Password" fx:id="enterPasswordField" />
-            <Button style="-fx-background-color: #000000;" layoutX="23.0" layoutY="266.0"
-                mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" text="Login"
-                textFill="WHITE" fx:id="loginButton">
+            <PasswordField fx:id="enterPasswordField" layoutX="95.0" layoutY="187.0"
+                prefHeight="26.0" prefWidth="173.0" promptText="Password" />
+            <Button fx:id="loginButton" layoutX="23.0" layoutY="266.0" mnemonicParsing="false"
+                prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;"
+                text="Login" textFill="WHITE">
                 <font>
                     <Font size="16.0" />
                 </font>
             </Button>
-            <Button style="-fx-background-color: #000000;" layoutX="23.0" layoutY="316.0"
-                mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" text="Cancel"
-                textFill="WHITE" fx:id="cancelButton">
+            <Button fx:id="registerButton" layoutX="23.0" layoutY="316.0" mnemonicParsing="false"
+                prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;"
+                text="Register" textFill="WHITE">
                 <font>
                     <Font size="16.0" />
                 </font>
             </Button>
-            <Label alignment="CENTER" layoutX="22.0" layoutY="236.0" prefHeight="17.0"
-                prefWidth="246.0" textFill="#fc0f0f" fx:id="loginMessageLabel" />
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="22.0" layoutY="236.0"
+                prefHeight="17.0" prefWidth="246.0" textFill="#fc0f0f" />
         </AnchorPane>
     </right>
 </BorderPane>
