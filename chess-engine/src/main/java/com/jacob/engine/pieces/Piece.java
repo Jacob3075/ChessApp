@@ -9,13 +9,13 @@ public abstract class Piece {
     private int value;
 
     protected Piece(boolean white, String symbol, int value) {
-        this.setWhite(white);
-        this.setSymbol(symbol);
-        this.setValue(value);
+        setWhite(white);
+        setSymbol(symbol);
+        setValue(value);
     }
 
     public boolean isWhite() {
-        return this.white;
+        return white;
     }
 
     public void setWhite(boolean white) {
@@ -23,11 +23,14 @@ public abstract class Piece {
     }
 
     public String getSymbol() {
-        return this.symbol;
+        return symbol;
     }
 
     public void setSymbol(String symbol) {
-        this.symbol = symbol;
+        if(isWhite())
+            this.symbol = symbol.toUpperCase();
+        else
+            this.symbol = symbol.toLowerCase();
     }
 
     public abstract boolean canMove(Board board, Spot start, Spot end);
@@ -37,7 +40,7 @@ public abstract class Piece {
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 
     public boolean isKingAttackedAfterMove(Board board, Spot start, Spot end) {
