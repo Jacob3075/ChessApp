@@ -163,57 +163,24 @@ public class Game {
 
     private void makeMove(Move move) {
         Piece movedPiece = move.getPieceMoved();
-        Piece capturedPiece = move.getPieceCaptured();
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        if(movedPiece instanceof King)
+        if(movedPiece instanceof Pawn)
+            makePawnMove(move);
+        else if(movedPiece instanceof King)
             makeKingMove(move);
-
-        // moving a pawn
-        else if(movedPiece instanceof Pawn) {
-            // updating the pawn to record that it has been moved
-            ((Pawn) movedPiece).setMoved(true);
-
-            // en passant
-            if(((Pawn) movedPiece).isEnPassantPossible()) {
-                ((Pawn) movedPiece).setEnPassantPossible(false);
-                capturedPiece = board.getSpot(start.getI(), end.getJ()).getPiece();
-                board.getSpot(start.getI(), end.getJ()).setPiece(null);
-            }
-
-            // pawn promotion
-            if(((Pawn) movedPiece).isPromotionPossible()) {
-                ((Pawn) movedPiece).setPromotionPossible(false);
-
-                // finding what piece to promote the pawn to
-                Scanner in = new Scanner(System.in);
-                System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
-                int choice = in.nextInt();
-
-                // promoting the pawn
-                switch (choice) {
-                    case 1 -> movedPiece = new Queen(movedPiece.isWhite());
-                    case 2 -> movedPiece = new Rook(movedPiece.isWhite());
-                    case 3 -> movedPiece = new Bishop(movedPiece.isWhite());
-                    case 4 -> movedPiece = new Knight(movedPiece.isWhite());
-                }
-            }
-
-            end.setPiece(movedPiece);
-            start.setPiece(null);
-        }
         else {
             start.setPiece(null);
             end.setPiece(movedPiece);
         }
 
         // store the captured piece
-        if(capturedPiece != null) {
+        if(move.getPieceCaptured() != null) {
             if(currentTurn == players[0])
-                piecesCapturedByPlayerZero.add(capturedPiece);
+                piecesCapturedByPlayerZero.add(move.getPieceCaptured());
             else
-                piecesCapturedByPlayerOne.add(capturedPiece);
+                piecesCapturedByPlayerOne.add(move.getPieceCaptured());
         }
 
         // checking if a pawn moved 2 spots in the previous move
@@ -231,6 +198,59 @@ public class Game {
             currentTurn = players[1];
         else
             currentTurn = players[0];
+    }
+
+    private void makePawnMove(Move move) {
+        Piece movedPiece = move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        if(((Pawn) movedPiece).isEnPassantPossible())
+            makeEnPassantMove(move);
+        else if(((Pawn) movedPiece).isPromotionPossible())
+            makePawnPromotionMove(move);
+        else {
+            start.setPiece(null);
+            end.setPiece(movedPiece);
+            ((Pawn) movedPiece).setMoved(true);
+        }
+    }
+
+    private void makeEnPassantMove(Move move) {
+        Pawn pawn = (Pawn) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        Spot capturedPieceSpot = board.getSpot(start.getI(), end.getJ());
+        Piece capturedPiece = capturedPieceSpot.getPiece();
+
+        move.setPieceCaptured(capturedPiece);
+        capturedPieceSpot.setPiece(null);
+        start.setPiece(null);
+        end.setPiece(pawn);
+
+        pawn.setEnPassantPossible(false);
+        pawn.setMoved(true);
+    }
+
+    private void makePawnPromotionMove(Move move) {
+        Pawn pawn = (Pawn) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
+        int choice = in.nextInt();
+
+        start.setPiece(null);
+        switch (choice) {
+            case 1 -> end.setPiece(new Queen(pawn.isWhite()));
+            case 2 -> end.setPiece(new Rook(pawn.isWhite()));
+            case 3 -> end.setPiece(new Bishop(pawn.isWhite()));
+            case 4 -> end.setPiece(new Knight(pawn.isWhite()));
+        }
+
+        pawn.setPromotionPossible(false);
     }
 
     private void makeKingMove(Move move) {
