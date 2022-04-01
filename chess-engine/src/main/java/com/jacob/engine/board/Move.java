@@ -58,6 +58,7 @@ public class Move {
 
     @Override
     public String toString() {
+        // following algebraic notation
         if(isKingSideCastlingMove())
             return "O-O";
         else if(isQueenSideCastlingMove())
@@ -68,11 +69,10 @@ public class Move {
         int startingRow = start.getI()+1;
         char endingColumn = (char) (end.getJ()+1+96);
         int endingRow = end.getI()+1;
-        pieceMoved.getSymbol();
 
         String result = "" + pieceMoved.getSymbol() + startingColumn + startingRow;
-        result += pieceCaptured != null ? "x" : "";
-        result += endingColumn + endingRow;
+        result += pieceCaptured == null ? "" : "x";
+        result += "" + endingColumn + endingRow;
         return result;
     }
 }
