@@ -3,12 +3,11 @@ package com.jacob.engine.board;
 import com.jacob.engine.pieces.*;
 
 public class Board {
-    private final int SIZE = 8;
     Spot[][] spots;
 
     public Board() {
         spots = new Spot[8][8];
-        this.resetBoard();
+        setBoardToStartingPosition();
     }
 
     public Spot getSpot(int i, int j) {
@@ -18,11 +17,11 @@ public class Board {
         return spots[i][j];
     }
 
-    public int getSIZE() {
-        return this.SIZE;
+    public int getSize() {
+        return 8;
     }
 
-    public void resetBoard() {
+    public void setBoardToStartingPosition() {
         // initialize white pieces
         spots[0][0] = new Spot(0, 0, new Rook(true));
         spots[0][1] = new Spot(0, 1, new Knight(true));
@@ -64,20 +63,43 @@ public class Board {
             for(int j = 0; j < 8; j++) {
                 Piece piece = spots[i][j].getPiece();
 
-                if(piece == null) {
+                if(piece == null)
                     System.out.print(". ");
-                }
                 else {
-                    if(piece.isWhite()) {
+                    if(piece.isWhite())
                         System.out.print(piece.getSymbol().toUpperCase() + " ");
-                    }
-                    else {
+                    else
                         System.out.print(piece.getSymbol() + " ");
-                    }
                 }
             }
             System.out.println();
         }
         System.out.println("---------------");
+    }
+
+    public int getEvaluation() {
+        /*
+           by convention, white pieces increase the evaluation by the corresponding piece's value,
+           and black pieces decrease the evaluation. In the end, if the evaluation is positive it
+           implies that white has a better position and if its negative then black has a better
+           position
+         */
+
+        int evaluation = 0;
+
+        for(int row = 0; row < 8; row++) {
+            for(int column = 0; column < 8; column++) {
+                Piece currentPiece = getSpot(row, column).getPiece();
+
+                if(currentPiece != null) {
+                    if(currentPiece.isWhite())
+                        evaluation += currentPiece.getValue();
+                    else
+                        evaluation -= currentPiece.getValue();
+                }
+            }
+        }
+
+        return evaluation;
     }
 }
