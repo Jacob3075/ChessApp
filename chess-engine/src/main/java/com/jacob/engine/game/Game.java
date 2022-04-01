@@ -15,30 +15,27 @@ public class Game {
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
-    private final List<Piece> piecesCapturedByPlayerZero;
-    private final List<Piece> piecesCapturedByPlayerOne;
 
-    public Game(Player p1, Player p2) {
+    public Game(Player playerZero, Player playerOne) {
         players = new Player[2];
-        players[0] = p1;
-        players[1] = p2;
+        players[0] = playerZero;
+        players[1] = playerOne;
 
         board = new Board();
         movesPlayed = new ArrayList<>();
-        piecesCapturedByPlayerZero = new ArrayList<>();
-        piecesCapturedByPlayerOne = new ArrayList<>();
 
         // white plays first
-        if(p1.isWhiteSide())
-            currentTurn = p1;
+        if(playerZero.isWhiteSide())
+            currentTurn = playerZero;
         else
-            currentTurn = p2;
+            currentTurn = playerOne;
 
         // main game loop
-        status = GameStatus.ACTIVE;
+        setStatus(GameStatus.ACTIVE);
         while(!isEnd()) {
             board.displayBoard();
             initiateNextTurn();
+            System.out.println(board.getEvaluation());
         }
 
         for(Move move : movesPlayed)
@@ -83,8 +80,8 @@ public class Game {
     }
 
     private Spot getCurrentTurnsKingSpot() {
-        for(int row = 0; row < board.getSIZE(); row++) {
-            for(int column = 0; column < board.getSIZE(); column++) {
+        for(int row = 0; row < board.getSize(); row++) {
+            for(int column = 0; column < board.getSize(); column++) {
                 Piece pieceOnSpot = board.getSpot(row, column).getPiece();
 
                 if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == currentTurn.isWhiteSide())
@@ -131,7 +128,7 @@ public class Game {
 
         boolean isMoveLegal = isMovePossible(humanMove, currentTurn);
         while(!isMoveLegal) {
-            System.out.println("Illegal move. Enter a different move: ");
+            System.out.print("Illegal move. Enter a different move: ");
             moveSpots = getHumanMoveStartAndEndSpots();
             humanMove = new Move(currentTurn, moveSpots[0], moveSpots[1]);
             isMoveLegal = isMovePossible(humanMove, currentTurn);
@@ -150,6 +147,15 @@ public class Game {
 
         Spot start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
         Spot end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
+        while(start == null || end == null) {
+            System.out.print("Illegal move. Enter a different move: ");
+            for(int i = 0; i < 4; i++)
+                moveCoordinates[i] = in.nextInt()-1;
+
+            start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
+            end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
+        }
+
         return new Spot[]{start, end};
     }
 
@@ -175,29 +181,17 @@ public class Game {
             end.setPiece(movedPiece);
         }
 
-        // store the captured piece
-        if(move.getPieceCaptured() != null) {
-            if(currentTurn == players[0])
-                piecesCapturedByPlayerZero.add(move.getPieceCaptured());
-            else
-                piecesCapturedByPlayerOne.add(move.getPieceCaptured());
-        }
-
-        // checking if a pawn moved 2 spots in the previous move
+        // if a pawn moved on the previous turn, we set its movedTwoSpotsOnPreviousTurn value to false
+        // we need to do this as this value is used to confirm whether an en passant move is possible
         if(!movesPlayed.isEmpty()) {
             Piece pieceMovedOnPreviousTurn = movesPlayed.get(movesPlayed.size()-1).getPieceMoved();
             if(pieceMovedOnPreviousTurn instanceof Pawn)
                 ((Pawn) pieceMovedOnPreviousTurn).setMovedTwoSpotsOnPreviousTurn(false);
         }
 
-        // store the move
         movesPlayed.add(move);
 
-        // set the current turn to the other player
-        if(currentTurn == players[0])
-            currentTurn = players[1];
-        else
-            currentTurn = players[0];
+        passCurrentTurnToOtherPlayer();
     }
 
     private void makePawnMove(Move move) {
@@ -313,32 +307,11 @@ public class Game {
         move.setQueenSideCastlingMove(true);
     }
 
-    public List<Piece> getPiecesCapturedByPlayerZero() {
-        return piecesCapturedByPlayerZero;
-    }
-
-    public List<Piece> getPiecesCapturedByPlayerOne() {
-        return piecesCapturedByPlayerOne;
-    }
-    
-    private int getEvaluation() {
-        int evaluation = 0;
-        
-        // iterating through all the spots and updating the rating based on the pieces on the board
-        for(int row = 0; row < 8; row++) {
-            for(int column = 0; column < 8; column++) {
-                Piece currentPiece = board.getSpot(row, column).getPiece();
-
-                if(currentPiece != null) {
-                    if(currentPiece.isWhite())
-                        evaluation += currentPiece.getValue();
-                    else
-                        evaluation -= currentPiece.getValue();
-                }
-            }
-        }
-        
-        return evaluation;
+    private void passCurrentTurnToOtherPlayer() {
+        if(currentTurn == players[0])
+            currentTurn = players[1];
+        else
+            currentTurn = players[0];
     }
 
 }
