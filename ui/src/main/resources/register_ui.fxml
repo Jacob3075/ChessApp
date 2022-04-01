@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?><?import javafx.scene.image.Image?><?import javafx.scene.image.ImageView?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
-    minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0"
-    xmlns="http://javafx.com/javafx/11.0.14-internal"
-    fx:controller="com.jacob.ui.controllers.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.jacob.ui.controllers.RegisterController">
     <left>
         <AnchorPane BorderPane.alignment="CENTER" prefHeight="407.0" prefWidth="228.0">
             <ImageView fitHeight="400.0" fitWidth="285.0" layoutX="-53.0" pickOnBounds="true"
@@ -30,20 +28,14 @@
                 </font>
             </Button>
             <Button style="-fx-background-color: #000000;" layoutX="22.0" layoutY="342.0"
-                mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" text="Close"
-                textFill="WHITE" fx:id="closeButton">
+                mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" text="Login"
+                textFill="WHITE" fx:id="loginButton">
                 <font>
                     <Font size="16.0" />
                 </font>
             </Button>
             <Label alignment="CENTER" layoutX="22.0" layoutY="264.0" prefHeight="17.0"
-                prefWidth="246.0" textFill="#fc0f0f" fx:id="loginMessageLabel" />
-            <Label layoutX="24.0" layoutY="64.0" text="Firstname:" />
-            <TextField layoutX="95.0" layoutY="60.0" prefHeight="26.0" prefWidth="173.0"
-                promptText="Firstname" fx:id="firstnameTextField1" />
-            <Label layoutX="23.0" layoutY="105.0" text="Lastname:" />
-            <TextField layoutX="94.0" layoutY="101.0" prefHeight="26.0" prefWidth="173.0"
-                promptText="Lastname" fx:id="lastnameTextField11" />
+                prefWidth="246.0" textFill="#fc0f0f" fx:id="registerMessageLabel" />
             <Label layoutX="24.0" layoutY="230.0" text="Confirm:" />
             <PasswordField layoutX="95.0" layoutY="226.0" prefHeight="26.0" prefWidth="173.0"
                 promptText="Confirm Password" fx:id="confirmPasswordField" />
