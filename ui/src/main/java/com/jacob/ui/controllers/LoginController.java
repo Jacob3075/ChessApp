@@ -1,23 +1,19 @@
 package com.jacob.ui.controllers;
 
+import com.jacob.ui.JavaFxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -57,16 +53,6 @@ public class LoginController implements Initializable {
     }
 
     private void showRegisterScreen(@NotNull ActionEvent event) {
-        try {
-            FXMLLoader registerFxmlLoader = new FXMLLoader(registerSceneFxml.getURL());
-            registerFxmlLoader.setControllerFactory(context::getBean);
-            Scene registerScene = new Scene(registerFxmlLoader.load());
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(registerScene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+        JavaFxUtils.changeScene(event, registerSceneFxml, context);
     }
 }

@@ -29,7 +29,7 @@
             </Button>
             <Button fx:id="registerButton" layoutX="23.0" layoutY="316.0" mnemonicParsing="false"
                 prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;"
-                text="Register" textFill="WHITE">
+                text="Goto Register" textFill="WHITE">
                 <font>
                     <Font size="16.0" />
                 </font>
