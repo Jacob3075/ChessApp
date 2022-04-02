@@ -27,14 +27,17 @@ public class LoginController implements Initializable {
     @FXML private PasswordField enterPasswordField;
 
     private final Resource registerSceneFxml;
+    private final Resource gameSceneFxml;
     private final ApplicationContext context;
     private final UserService userService;
 
     public LoginController(
             @Value("classpath:/view/register_ui.fxml") Resource registerSceneFxml,
+            @Value("classpath:/view/chess-board.fxml") Resource gameSceneFxml,
             ApplicationContext context,
             UserService userService) {
         this.registerSceneFxml = registerSceneFxml;
+        this.gameSceneFxml = gameSceneFxml;
         this.context = context;
         this.userService = userService;
     }
@@ -59,6 +62,7 @@ public class LoginController implements Initializable {
 
         if (userService.login(username, password)) {
             loginMessageLabel.setText("Logged in");
+            JavaFxUtils.changeScene(event, gameSceneFxml, context);
         } else {
             loginMessageLabel.setText("Invalid username and password");
         }
