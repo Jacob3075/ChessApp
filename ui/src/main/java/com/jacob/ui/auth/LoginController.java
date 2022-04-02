@@ -1,7 +1,7 @@
 package com.jacob.ui.auth;
 
 import com.jacob.database.user.UserService;
-import com.jacob.ui.JavaFxUtils;
+import com.jacob.ui.utils.JavaFxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

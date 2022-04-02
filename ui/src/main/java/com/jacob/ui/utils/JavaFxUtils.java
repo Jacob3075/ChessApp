@@ -1,4 +1,4 @@
-package com.jacob.ui;
+package com.jacob.ui.utils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

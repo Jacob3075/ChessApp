@@ -1,10 +1,12 @@
 package com.jacob.ui.game;
 
+import com.jacob.engine.pieces.Pawn;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -31,16 +33,20 @@ public class GameController implements Initializable {
         for (int i = 0; i < 8; i++) {
             rowCells.clear();
             for (int j = 0; j < 8; j++) {
-                rowCells.add(new Tile(i, j));
+                rowCells.add(new Tile(i, j, this::onTileClicked));
             }
             gameBoard.addRow(i, rowCells.toArray(new Tile[8]));
         }
     }
 
+    private void onTileClicked(MouseEvent mouseEvent, @NotNull Tile tile) {
+        getBoardCell(tile.getIndex()).setPiece(new Pawn(false));
+    }
+
     /**
      * @see <a href="https://stackoverflow.com/a/41348291/13181948">Stackoverflow Answer</a>
      */
-    private Node getBoardCell(int i, int j) {
-        return gameBoard.getChildren().get(i * 8 + j);
+    private Tile getBoardCell(int index) {
+        return (Tile) gameBoard.getChildren().get(index + 1);
     }
 }
