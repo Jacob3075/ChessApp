@@ -30,35 +30,35 @@
                     stroke="BLACK" strokeType="INSIDE" styleClass="board_square" width="50.0" />
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/rook_black.png" />
+                    <Image url="@/images/pieces/rook_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="100.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/bishop_black.png" />
+                    <Image url="@/images/pieces/bishop_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="250.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/bishop_black.png" />
+                    <Image url="@/images/pieces/bishop_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="350.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/rook_black.png" />
+                    <Image url="@/images/pieces/rook_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/queen_black.png" />
+                    <Image url="@/images/pieces/queen_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="200.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/king_black.png" />
+                    <Image url="@/images/pieces/king_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="300.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/knight_black.png" />
+                    <Image url="@/images/pieces/knight_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="50.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/knight_black.png" />
+                    <Image url="@/images/pieces/knight_black.png" />
                 </ImageView>
             </Pane>
             <Pane layoutY="50.0">
@@ -87,35 +87,35 @@
                     width="50.0" />
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="50.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="100.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="200.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="250.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="300.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="350.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_black.png" />
+                    <Image url="@/images/pieces/pawn_black.png" />
                 </ImageView>
             </Pane>
             <Pane layoutY="100.0">
@@ -244,35 +244,35 @@
                     width="50.0" />
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="-2.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="48.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="98.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="148.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="198.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="248.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="298.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="348.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/pawn_white.png" />
+                    <Image url="@/images/pieces/pawn_white.png" />
                 </ImageView>
             </Pane>
             <Pane layoutY="350.0">
@@ -301,35 +301,35 @@
                     width="50.0" />
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="2.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/rook_white.png" />
+                    <Image url="@/images/pieces/rook_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="52.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/knight_white.png" />
+                    <Image url="@/images/pieces/knight_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="102.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/bishop_white.png" />
+                    <Image url="@/images/pieces/bishop_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="252.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/bishop_white.png" />
+                    <Image url="@/images/pieces/bishop_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="302.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/knight_white.png" />
+                    <Image url="@/images/pieces/knight_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="352.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/rook_white.png" />
+                    <Image url="@/images/pieces/rook_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="152.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/queen_white.png" />
+                    <Image url="@/images/pieces/queen_white.png" />
                 </ImageView>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="202.0" pickOnBounds="true"
                     preserveRatio="true">
-                    <Image url="@/pieces/king_white.png" />
+                    <Image url="@/images/pieces/king_white.png" />
                 </ImageView>
             </Pane>
         </Group>

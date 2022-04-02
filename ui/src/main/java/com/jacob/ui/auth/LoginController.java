@@ -1,4 +1,4 @@
-package com.jacob.ui.controllers;
+package com.jacob.ui.auth;
 
 import com.jacob.database.user.UserService;
 import com.jacob.ui.JavaFxUtils;
@@ -31,7 +31,7 @@ public class LoginController implements Initializable {
     private final UserService userService;
 
     public LoginController(
-            @Value("classpath:/register_ui.fxml") Resource registerSceneFxml,
+            @Value("classpath:/view/register_ui.fxml") Resource registerSceneFxml,
             ApplicationContext context,
             UserService userService) {
         this.registerSceneFxml = registerSceneFxml;

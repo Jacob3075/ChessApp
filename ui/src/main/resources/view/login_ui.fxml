@@ -2,12 +2,12 @@
 
 <?import javafx.scene.control.*?><?import javafx.scene.image.Image?><?import javafx.scene.image.ImageView?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-    fx:controller="com.jacob.ui.controllers.LoginController">
+    fx:controller="com.jacob.ui.auth.LoginController">
     <left>
         <AnchorPane prefHeight="407.0" prefWidth="228.0" BorderPane.alignment="CENTER">
             <ImageView fitHeight="400.0" fitWidth="285.0" layoutX="-53.0" pickOnBounds="true"
                 preserveRatio="true">
-                <Image url="@/chessLogo.jpg" />
+                <Image url="@/images/chessLogo.jpg" />
             </ImageView>
         </AnchorPane>
     </left>
