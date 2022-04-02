@@ -1,5 +1,6 @@
 package com.jacob.ui.controllers;
 
+import com.jacob.database.user.UserService;
 import com.jacob.ui.JavaFxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,12 +28,15 @@ public class LoginController implements Initializable {
 
     private final Resource registerSceneFxml;
     private final ApplicationContext context;
+    private final UserService userService;
 
     public LoginController(
             @Value("classpath:/register_ui.fxml") Resource registerSceneFxml,
-            ApplicationContext context) {
+            ApplicationContext context,
+            UserService userService) {
         this.registerSceneFxml = registerSceneFxml;
         this.context = context;
+        this.userService = userService;
     }
 
     @Override
@@ -42,14 +46,22 @@ public class LoginController implements Initializable {
     }
 
     private void loginButtonOnAction(ActionEvent event) {
-        boolean isUserNameOrPasswordEmpty =
-                usernameTextField.getText().isBlank() || enterPasswordField.getText().isBlank();
+        loginMessageLabel.setText("");
+
+        String username = usernameTextField.getText();
+        String password = enterPasswordField.getText();
+        boolean isUserNameOrPasswordEmpty = username.isBlank() || password.isBlank();
+
         if (isUserNameOrPasswordEmpty) {
             loginMessageLabel.setText("Please enter username and password.");
             return;
         }
 
-        loginMessageLabel.setText("Logged in");
+        if (userService.login(username, password)) {
+            loginMessageLabel.setText("Logged in");
+        } else {
+            loginMessageLabel.setText("Invalid username and password");
+        }
     }
 
     private void showRegisterScreen(@NotNull ActionEvent event) {

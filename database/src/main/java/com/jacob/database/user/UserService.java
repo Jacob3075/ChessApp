@@ -1,6 +1,5 @@
 package com.jacob.database.user;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,10 +10,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean login(@NotNull User user) {
-        return userRepository
-                .findByUsernameAndPassword(user.getUsername(), user.getPassword())
-                .isPresent();
+    public boolean login(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password).isPresent();
     }
 
     public User registerUser(String username, String password) {
