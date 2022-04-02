@@ -59,18 +59,14 @@ public class Board {
     }
 
     public void displayBoard() {
-        for(int i = 7; i >= 0; i--) {
-            for(int j = 0; j < 8; j++) {
-                Piece piece = spots[i][j].getPiece();
+        for(int row = getSize()-1; row >= 0; row--) {
+            for(int column = 0; column < getSize(); column++) {
+                Piece piece = spots[row][column].getPiece();
 
                 if(piece == null)
                     System.out.print(". ");
-                else {
-                    if(piece.isWhite())
-                        System.out.print(piece.getSymbol().toUpperCase() + " ");
-                    else
-                        System.out.print(piece.getSymbol() + " ");
-                }
+                else
+                    System.out.print(piece.getSymbol() + " ");
             }
             System.out.println();
         }
