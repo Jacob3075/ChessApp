@@ -64,7 +64,7 @@ public class Game {
                 setAndDeclareDraw();
         }
         else {
-            if(currentTurn instanceof ComputerPlayer)
+            if(!currentTurn.isHumanPlayer())
                 makeComputerMove(possibleMoves);
             else {
                 if(currentTurn == players[0])
