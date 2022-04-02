@@ -42,6 +42,10 @@ public class Game {
             System.out.println(move);
     }
 
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+
     private boolean isEnd() {
         return getStatus() != GameStatus.ACTIVE;
     }
@@ -110,10 +114,6 @@ public class Game {
         setStatus(GameStatus.DRAW);
     }
 
-    public void setStatus(GameStatus status) {
-        this.status = status;
-    }
-
     private void makeComputerMove(List<Move> possibleMoves) {
         Random random = new Random();
         int randomIndex = random.nextInt(possibleMoves.size());
@@ -125,8 +125,8 @@ public class Game {
     private void makeHumanMove() {
         Spot[] moveSpots = getHumanMoveStartAndEndSpots();
         Move humanMove = new Move(currentTurn, moveSpots[0], moveSpots[1]);
-
         boolean isMoveLegal = isMovePossible(humanMove, currentTurn);
+
         while(!isMoveLegal) {
             System.out.print("Illegal move. Enter a different move: ");
             moveSpots = getHumanMoveStartAndEndSpots();
@@ -144,14 +144,13 @@ public class Game {
         int[] moveCoordinates = new int[4]; // startCol, startRow, endCol, endRow
         for(int i = 0; i < 4; i++)
             moveCoordinates[i] = in.nextInt()-1;
-
         Spot start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
         Spot end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
+
         while(start == null || end == null) {
             System.out.print("Illegal move. Enter a different move: ");
             for(int i = 0; i < 4; i++)
                 moveCoordinates[i] = in.nextInt()-1;
-
             start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
             end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
         }
@@ -169,19 +168,17 @@ public class Game {
 
     private void makeMove(Move move) {
         Piece movedPiece = move.getPieceMoved();
-        Spot start = move.getStart();
-        Spot end = move.getEnd();
 
         if(movedPiece instanceof Pawn)
             makePawnMove(move);
         else if(movedPiece instanceof King)
             makeKingMove(move);
         else {
-            start.setPiece(null);
-            end.setPiece(movedPiece);
+            move.getStart().setPiece(null);
+            move.getEnd().setPiece(movedPiece);
         }
 
-        // if a pawn moved on the previous turn, we set its movedTwoSpotsOnPreviousTurn value to false
+        // if a pawn moved on the previous turn, we set its movedTwoSpotsOnPreviousTurn value to false.
         // we need to do this as this value is used to confirm whether an en passant move is possible
         if(!movesPlayed.isEmpty()) {
             Piece pieceMovedOnPreviousTurn = movesPlayed.get(movesPlayed.size()-1).getPieceMoved();
@@ -195,18 +192,18 @@ public class Game {
     }
 
     private void makePawnMove(Move move) {
-        Piece movedPiece = move.getPieceMoved();
+        Pawn pawn = (Pawn) move.getPieceMoved();
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        if(((Pawn) movedPiece).isEnPassantPossible())
+        if(pawn.isEnPassantPossible())
             makeEnPassantMove(move);
-        else if(((Pawn) movedPiece).isPromotionPossible())
+        else if(pawn.isPromotionPossible())
             makePawnPromotionMove(move);
         else {
             start.setPiece(null);
-            end.setPiece(movedPiece);
-            ((Pawn) movedPiece).setMoved(true);
+            end.setPiece(pawn);
+            pawn.setMoved(true);
         }
     }
 
@@ -252,10 +249,10 @@ public class Game {
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        if(king.isCastlingPossible()) {
-            if(start.getJ() < end.getJ())
+        if(king.isTryingToCastle()) {
+            if(start.getJ() < end.getJ()) // the king is moving to the right, so king side castling
                 makeKingSideCastlingMove(move);
-            else
+            else // the king is moving to the left, so queen side castling
                 makeQueenSideCastlingMove(move);
         }
         else {
@@ -271,12 +268,11 @@ public class Game {
         Spot end = move.getEnd();
 
         Spot initialRookSpot = board.getSpot(start.getI(), start.getJ()+3);
+        Rook rook = (Rook) initialRookSpot.getPiece();
         Spot finalRookSpot = board.getSpot(start.getI(), start.getJ()+1);
 
-        Rook rook = (Rook) initialRookSpot.getPiece();
         initialRookSpot.setPiece(null);
         finalRookSpot.setPiece(rook);
-
         start.setPiece(null);
         end.setPiece(king);
 
@@ -292,12 +288,11 @@ public class Game {
         Spot end = move.getEnd();
 
         Spot initialRookSpot = board.getSpot(start.getI(), start.getJ()-4);
+        Rook rook = (Rook) initialRookSpot.getPiece();
         Spot finalRookSpot = board.getSpot(start.getI(), start.getJ()-1);
 
-        Rook rook = (Rook) initialRookSpot.getPiece();
         initialRookSpot.setPiece(null);
         finalRookSpot.setPiece(rook);
-
         start.setPiece(null);
         end.setPiece(king);
 
