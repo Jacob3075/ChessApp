@@ -32,9 +32,8 @@ public class Board {
         spots[0][6] = new Spot(0, 6, new Knight(true));
         spots[0][7] = new Spot(0, 7, new Rook(true));
         // initialize white pawns
-        for (int j = 0; j < 8; j++) {
-            spots[1][j] = new Spot(1, j, new Pawn(true));
-        }
+        for (int column = 0; column < 8; column++)
+            spots[1][column] = new Spot(1, column, new Pawn(true));
 
         // initialize black pieces
         spots[7][0] = new Spot(7, 0, new Rook(false));
@@ -46,14 +45,13 @@ public class Board {
         spots[7][6] = new Spot(7, 6, new Knight(false));
         spots[7][7] = new Spot(7, 7, new Rook(false));
         // initialize black pawns
-        for (int j = 0; j < 8; j++) {
-            spots[6][j] = new Spot(6, j, new Pawn(false));
-        }
+        for (int column = 0; column < 8; column++)
+            spots[6][column] = new Spot(6, column, new Pawn(false));
 
         // initialize remaining spots without any piece
-        for (int i = 2; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                spots[i][j] = new Spot(i, j, null);
+        for (int row = 2; row < 6; row++) {
+            for (int column = 0; column < 8; column++) {
+                spots[row][column] = new Spot(row, column, null);
             }
         }
     }
