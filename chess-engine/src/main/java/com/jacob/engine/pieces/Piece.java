@@ -4,37 +4,25 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
 
 public abstract class Piece {
-    private boolean white = false;
-    private String symbol;
-    private int value;
+    private final boolean isWhite;
+    private final String symbol;
+    private final int value;
 
-    protected Piece(boolean white, String symbol, int value) {
-        this.setWhite(white);
-        this.setSymbol(symbol);
-        this.setValue(value);
+    protected Piece(boolean isWhite, String symbol, int value) {
+        this.isWhite = isWhite;
+        this.symbol = symbol;
+        this.value = value;
     }
 
     public boolean isWhite() {
-        return this.white;
-    }
-
-    public void setWhite(boolean white) {
-        this.white = white;
+        return this.isWhite;
     }
 
     public String getSymbol() {
         return this.symbol;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
     public abstract boolean canMove(Board board, Spot start, Spot end);
-
-    public void setValue(int value) {
-        this.value = value;
-    }
 
     public int getValue() {
         return this.value;
@@ -285,5 +273,23 @@ public abstract class Piece {
         start.setPiece(pieceMoved);
         end.setPiece(pieceCaptured);
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Piece piece)) return false;
+
+        if (isWhite != piece.isWhite) return false;
+        if (value != piece.value) return false;
+        return symbol.equals(piece.symbol);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (isWhite ? 1 : 0);
+        result = 31 * result + symbol.hashCode();
+        result = 31 * result + value;
+        return result;
     }
 }
