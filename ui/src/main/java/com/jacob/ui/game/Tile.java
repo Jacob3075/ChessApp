@@ -35,7 +35,7 @@ public class Tile extends Label {
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
 
-        setPrefSize(50, 50);
+        setPrefSize(100, 100);
         setAlignment(Pos.CENTER);
         setBackground(new Background(tileBackground));
         setOnMouseClicked(mouseEvent -> onClicked.accept(mouseEvent, this));
