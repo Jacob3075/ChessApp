@@ -32,8 +32,8 @@ public class LoginController implements Initializable {
     private final UserService userService;
 
     public LoginController(
-            @Value("classpath:/view/register_ui.fxml") Resource registerSceneFxml,
-            @Value("classpath:/view/chess-board.fxml") Resource gameSceneFxml,
+            @Value("classpath:/view/register_page.fxml") Resource registerSceneFxml,
+            @Value("classpath:/view/board.fxml") Resource gameSceneFxml,
             ApplicationContext context,
             UserService userService) {
         this.registerSceneFxml = registerSceneFxml;

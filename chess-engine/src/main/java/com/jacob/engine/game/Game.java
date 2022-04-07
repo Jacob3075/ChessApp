@@ -64,7 +64,7 @@ public class Game {
     public GameStatus getStatus() {
         return status;
     }
-    
+
     private void initiateNextTurn() {
         List<Move> possibleMoves = currentTurn.generateMoves(board);
 
