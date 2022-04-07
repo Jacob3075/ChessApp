@@ -8,7 +8,7 @@ public class Move {
     private final Spot start;
     private final Spot end;
     private final Piece pieceMoved;
-    private final Piece pieceCaptured;
+    private Piece pieceCaptured;
     private boolean kingSideCastlingMove;
     private boolean queenSideCastlingMove;
 
@@ -16,8 +16,8 @@ public class Move {
         this.player = player;
         this.start = start;
         this.end = end;
-        this.pieceMoved = start.getPiece();
-        this.pieceCaptured = end.getPiece();
+        pieceMoved = start.getPiece();
+        pieceCaptured = end.getPiece();
     }
 
     public Spot getStart() {
@@ -34,6 +34,10 @@ public class Move {
 
     public Piece getPieceCaptured() {
         return pieceCaptured;
+    }
+
+    public void setPieceCaptured(Piece pieceCaptured) {
+        this.pieceCaptured = pieceCaptured;
     }
 
     public Player getPlayer() {
@@ -56,4 +60,23 @@ public class Move {
         this.queenSideCastlingMove = queenSideCastlingMove;
     }
 
+    @Override
+    public String toString() {
+        // following algebraic notation
+        if(isKingSideCastlingMove())
+            return "O-O";
+        else if(isQueenSideCastlingMove())
+            return "O-O-O";
+
+        // ascii value of a is 97
+        char startingColumn = (char) (start.getJ()+1+96);
+        int startingRow = start.getI()+1;
+        char endingColumn = (char) (end.getJ()+1+96);
+        int endingRow = end.getI()+1;
+
+        String result = "" + pieceMoved.getSymbol() + startingColumn + startingRow;
+        result += pieceCaptured == null ? "" : "x";
+        result += "" + endingColumn + endingRow;
+        return result;
+    }
 }
