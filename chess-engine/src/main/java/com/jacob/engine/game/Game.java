@@ -20,7 +20,6 @@ public class Game {
     private final List<Move> movesPlayed;
     private final List<Piece> piecesCapturedByPlayerZero;
     private final List<Piece> piecesCapturedByPlayerOne;
-    private Random random = new Random();
 
     public Game(Player p1, Player p2) {
         // initializing the players
@@ -84,6 +83,7 @@ public class Game {
                     }
                 }
                 else {
+                    Random random = new Random();
                     int randomIndex = random.nextInt(possibleMoves.size());
                     Move computerMove = possibleMoves.get(randomIndex);
                     Spot startSpot = computerMove.getStart();
