@@ -35,7 +35,7 @@ public class GameController implements Initializable {
             for (int j = 0; j < 8; j++) {
                 rowCells.add(new Tile(i, j, this::onTileClicked));
             }
-            gameBoard.addRow(i, rowCells.toArray(new Tile[8]));
+            gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.jacob.ui.game;
 
-import com.jacob.engine.pieces.Bishop;
 import com.jacob.engine.pieces.Piece;
 import com.jacob.ui.utils.PieceUtils;
 import javafx.geometry.Insets;
@@ -27,10 +26,8 @@ public class Tile extends Label {
 
     Tile(int i, int j, BiConsumer<MouseEvent, Tile> onClicked) {
         index = i * 8 + j;
-        piece =
-                PieceUtils.DEFAULT_PIECE_POSITIONS.getOrDefault(
-                        new Pair<>(i, j), new Bishop(false));
-        boolean isWhiteCell = (index + (i % 2 == 0 ? 1 : 0)) % 2 == 0;
+        piece = PieceUtils.DEFAULT_PIECE_POSITIONS.get(new Pair<>(i, j));
+        boolean isWhiteCell = (index + (i % 2 == 0 ? 0 : 1)) % 2 == 0;
         color = isWhiteCell ? WHITE : BLACK;
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
@@ -58,8 +55,8 @@ public class Tile extends Label {
 
         Image image = new Image(getClass().getResource(pieceResourcePath).toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }
