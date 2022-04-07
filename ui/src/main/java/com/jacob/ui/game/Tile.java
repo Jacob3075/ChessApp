@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -15,7 +14,7 @@ import javafx.scene.paint.Paint;
 import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class Tile extends Label {
     private static final Paint WHITE = Paint.valueOf("#202020");
@@ -23,11 +22,15 @@ public class Tile extends Label {
     private final Paint color;
     private final int index;
     @Nullable private Piece piece;
+    private final int row;
+    private final int column;
 
-    Tile(int i, int j, BiConsumer<MouseEvent, Tile> onClicked) {
-        index = i * 8 + j;
-        piece = PieceUtils.DEFAULT_PIECE_POSITIONS.get(new Pair<>(i, j));
-        boolean isWhiteCell = (index + (i % 2 == 0 ? 0 : 1)) % 2 == 0;
+    Tile(int row, int column, Consumer<Tile> onClicked) {
+        this.row = row;
+        this.column = column;
+        index = row * 8 + column;
+        piece = PieceUtils.DEFAULT_PIECE_POSITIONS.get(new Pair<>(row, column));
+        boolean isWhiteCell = (index + (row % 2 == 0 ? 0 : 1)) % 2 == 0;
         color = isWhiteCell ? WHITE : BLACK;
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
@@ -35,7 +38,7 @@ public class Tile extends Label {
         setPrefSize(100, 100);
         setAlignment(Pos.CENTER);
         setBackground(new Background(tileBackground));
-        setOnMouseClicked(mouseEvent -> onClicked.accept(mouseEvent, this));
+        setOnMouseClicked(mouseEvent -> onClicked.accept(this));
 
         updateTileImage();
     }
@@ -76,5 +79,13 @@ public class Tile extends Label {
 
     public Paint getColor() {
         return color;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }

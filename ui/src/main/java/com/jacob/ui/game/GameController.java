@@ -1,9 +1,9 @@
 package com.jacob.ui.game;
 
-import com.jacob.engine.pieces.Pawn;
+import com.jacob.engine.board.Move;
+import com.jacob.engine.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
@@ -22,9 +22,12 @@ public class GameController implements Initializable {
     @FXML private VBox sideBar;
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final MoveCoordinator moveCoordinator;
 
     public GameController(ApplicationContext context) {
         this.context = context;
+        moveCoordinator =
+                new MoveCoordinator(Game.createGame(), this::updateBoard, this::showGameMessages);
     }
 
     @Override
@@ -33,20 +36,17 @@ public class GameController implements Initializable {
         for (int i = 0; i < 8; i++) {
             rowCells.clear();
             for (int j = 0; j < 8; j++) {
-                rowCells.add(new Tile(i, j, this::onTileClicked));
+                rowCells.add(new Tile(i, j, moveCoordinator::tileClicked));
             }
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
     }
 
-    private void onTileClicked(MouseEvent mouseEvent, @NotNull Tile tile) {
-        getBoardCell(tile.getIndex()).setPiece(new Pawn(false));
+    private void updateBoard(@NotNull Move move) {
+        logger.debug("move= {}", move);
     }
 
-    /**
-     * @see <a href="https://stackoverflow.com/a/41348291/13181948">Stackoverflow Answer</a>
-     */
-    private Tile getBoardCell(int index) {
-        return (Tile) gameBoard.getChildren().get(index + 1);
+    private void showGameMessages(String message) {
+        logger.debug("message = {}", message);
     }
 }
