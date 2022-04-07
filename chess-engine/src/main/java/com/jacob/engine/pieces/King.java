@@ -4,7 +4,7 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Spot;
 
 public class King extends Piece {
-    private boolean canCastle = false;
+    private boolean tryingToCastle = false;
     private boolean moved = false;
     private boolean queenSideCastlingDone = false;
     private boolean kingSideCastlingDone = false;
@@ -13,16 +13,16 @@ public class King extends Piece {
         super(white, "k", 0);
     }
 
-    public boolean isCastlingPossible() {
-        return this.canCastle;
+    public boolean isTryingToCastle() {
+        return tryingToCastle;
     }
 
-    public void setCastlingPossible(boolean canCastle) {
-        this.canCastle = canCastle;
+    public void setTryingToCastle(boolean tryingToCastle) {
+        this.tryingToCastle = tryingToCastle;
     }
 
     public boolean hasMoved() {
-        return this.moved;
+        return moved;
     }
 
     public void setMoved(boolean moved) {
@@ -69,11 +69,11 @@ public class King extends Piece {
 
         // the king can only move by exactly 2 spots if it's a castling move
         if(this.isValidCastling(board, start, end)) {
-            this.setCastlingPossible(true);
+            this.setTryingToCastle(true);
             return true;
         }
         else {
-            this.setCastlingPossible(false);
+            this.setTryingToCastle(false);
             return false;
         }
     }

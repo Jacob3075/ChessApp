@@ -24,27 +24,25 @@ public abstract class Player {
     public List<Move> generateMoves(Board board) {
         List<Move> possibleMoves = new ArrayList<>();
 
-        // going through all the spots to find a start spot
-        for(int si = 0; si < 8; si++) {
-            for(int sj = 0; sj < 8; sj++) {
-                Piece currentPiece = board.getSpot(si, sj).getPiece();
+        for(int startRow = 0; startRow < board.getSize(); startRow++) {
+            for(int startColumn = 0; startColumn < board.getSize(); startColumn++) {
+                Piece currentPiece = board.getSpot(startRow, startColumn).getPiece();
+
                 if(currentPiece != null && currentPiece.isWhite() == this.isWhiteSide()) {
-                    Spot start = board.getSpot(si, sj);
+                    Spot start = board.getSpot(startRow, startColumn);
 
-                    // going through all the spots to find an end spot
-                    for(int ei = 0; ei < 8; ei++) {
-                        for(int ej = 0; ej < 8; ej++) {
-                            Spot end = board.getSpot(ei, ej);
+                    for(int endRow = 0; endRow < board.getSize(); endRow++) {
+                        for(int endColumn = 0; endColumn < board.getSize(); endColumn++) {
+                            Spot end = board.getSpot(endRow, endColumn);
 
-                            // if the piece can move from the start spot to the end spot
-                            if(currentPiece.canMove(board, start, end)) {
-
-                                // adding the move to the list
+                            if(currentPiece.canMove(board, start, end))
                                 possibleMoves.add(new Move(this, start, end));
-                            }
+
                         }
                     }
+
                 }
+
             }
         }
 
