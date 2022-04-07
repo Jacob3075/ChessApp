@@ -1,9 +1,14 @@
 package com.jacob.engine.game;
 
-import com.jacob.engine.board.*;
+import com.jacob.engine.board.Board;
+import com.jacob.engine.board.Move;
+import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.*;
-import com.jacob.engine.player.*;
+import com.jacob.engine.player.ComputerPlayer;
+import com.jacob.engine.player.HumanPlayer;
+import com.jacob.engine.player.Player;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,8 +20,10 @@ public class Game {
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
+    private final Random random;
 
     public Game(Player playerZero, Player playerOne) {
+        random = new SecureRandom();
         players = new Player[2];
         players[0] = playerZero;
         players[1] = playerOne;
@@ -32,14 +39,18 @@ public class Game {
 
         // main game loop
         setStatus(GameStatus.ACTIVE);
-        while(!isEnd()) {
-            board.displayBoard();
-            initiateNextTurn();
-            System.out.println(board.getEvaluation());
-        }
+//        while(!isEnd()) {
+//            board.displayBoard();
+//            initiateNextTurn();
+//            System.out.println(board.getEvaluation());
+//        }
 
-        for(Move move : movesPlayed)
-            System.out.println(move);
+//        for(Move move : movesPlayed)
+//            System.out.println(move);
+    }
+
+    public static Game createGame() {
+        return new Game(new HumanPlayer(true), new ComputerPlayer(false));
     }
 
     public void setStatus(GameStatus status) {
@@ -53,7 +64,7 @@ public class Game {
     public GameStatus getStatus() {
         return status;
     }
-    
+
     private void initiateNextTurn() {
         List<Move> possibleMoves = currentTurn.generateMoves(board);
 
@@ -115,11 +126,10 @@ public class Game {
     }
 
     private void makeComputerMove(List<Move> possibleMoves) {
-        Random random = new Random();
         int randomIndex = random.nextInt(possibleMoves.size());
         Move computerMove = possibleMoves.get(randomIndex);
 
-        makeMove(computerMove);
+        makeValidMove(computerMove);
     }
 
     private void makeHumanMove() {
@@ -134,7 +144,7 @@ public class Game {
             isMoveLegal = isMovePossible(humanMove, currentTurn);
         }
 
-        makeMove(humanMove);
+        makeValidMove(humanMove);
     }
 
     private Spot[] getHumanMoveStartAndEndSpots() {
@@ -158,7 +168,7 @@ public class Game {
         return new Spot[]{start, end};
     }
 
-    private boolean isMovePossible(Move move, Player player) {
+    public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
         return player == currentTurn
                 && movedPiece != null
@@ -166,7 +176,7 @@ public class Game {
                 && movedPiece.canMove(board, move.getStart(), move.getEnd());
     }
 
-    private void makeMove(Move move) {
+    private void makeValidMove(Move move) {
         Piece movedPiece = move.getPieceMoved();
 
         if(movedPiece instanceof Pawn)
@@ -309,4 +319,17 @@ public class Game {
             currentTurn = players[0];
     }
 
+    public Player getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void makeMove(Move move) {
+        if (isMovePossible(move, move.getPlayer())) {
+            makeValidMove(move);
+        }
+    }
+
+    public Spot getSpot(int row, int column) {
+        return this.board.getSpot(row, column);
+    }
 }
