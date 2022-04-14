@@ -22,7 +22,7 @@ public abstract class Player {
     }
 
     // return the list of moves that the player can make
-    public List<Move> generateMoves(Board board) {
+    public List<Move> generatePossibleMoves(Board board) {
         List<Move> possibleMoves = new ArrayList<>();
 
         for(int startRow = 0; startRow < board.getSize(); startRow++) {
