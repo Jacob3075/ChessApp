@@ -3,6 +3,7 @@ package com.jacob.engine.player;
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
+import com.jacob.engine.pieces.King;
 import com.jacob.engine.pieces.Piece;
 
 import java.util.ArrayList;
@@ -48,4 +49,26 @@ public abstract class Player {
 
         return possibleMoves;
     }
+
+    public boolean isKingUnderAttack(Board board) {
+        Spot kingSpot = getKingSpot(board);
+        Piece king = kingSpot.getPiece();
+        return king.isKingAttackedAfterMove(board, kingSpot, kingSpot);
+    }
+
+    private Spot getKingSpot(Board board) {
+        Spot kingSpot = null;
+
+        for(int row = 0; row < board.getSize(); row++) {
+            for(int column = 0; column < board.getSize(); column++) {
+                Piece pieceOnSpot = board.getSpot(row, column).getPiece();
+
+                if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == this.isWhiteSide())
+                    kingSpot = board.getSpot(row, column);
+            }
+        }
+
+        return kingSpot;
+    }
+
 }
