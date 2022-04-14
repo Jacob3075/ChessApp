@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Game {
     private final Player[] players;
-    private final Board board;
+    public final Board board;
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
@@ -37,16 +37,7 @@ public class Game {
         else
             currentTurn = playerOne;
 
-        // main game loop
         setStatus(GameStatus.ACTIVE);
-//        while(!isEnd()) {
-//            board.displayBoard();
-//            initiateNextTurn();
-//            System.out.println(board.getEvaluation());
-//        }
-
-//        for(Move move : movesPlayed)
-//            System.out.println(move);
     }
 
     public static Game createGame() {
@@ -57,7 +48,7 @@ public class Game {
         this.status = status;
     }
 
-    private boolean isEnd() {
+    public boolean isEnd() {
         return getStatus() != GameStatus.ACTIVE;
     }
 
@@ -65,7 +56,7 @@ public class Game {
         return status;
     }
 
-    private void initiateNextTurn() {
+    public void initiateNextTurn() {
         List<Move> possibleMoves = currentTurn.generateMoves(board);
 
         if(possibleMoves.isEmpty()) {
