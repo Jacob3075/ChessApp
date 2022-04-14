@@ -77,42 +77,6 @@ public class Game {
         makeValidMove(computerMove);
     }
 
-    public void makeHumanMove() {
-        Spot[] moveSpots = getHumanMoveStartAndEndSpots();
-        Move humanMove = new Move(currentTurn, moveSpots[0], moveSpots[1]);
-        boolean isMoveLegal = isMovePossible(humanMove, currentTurn);
-
-        while(!isMoveLegal) {
-            System.out.print("Illegal move. Enter a different move: ");
-            moveSpots = getHumanMoveStartAndEndSpots();
-            humanMove = new Move(currentTurn, moveSpots[0], moveSpots[1]);
-            isMoveLegal = isMovePossible(humanMove, currentTurn);
-        }
-
-        makeValidMove(humanMove);
-    }
-
-    private Spot[] getHumanMoveStartAndEndSpots() {
-        Scanner in = new Scanner(System.in);
-
-        // subtracting 1 from the input since the game uses 0-based indexing and the input is expected to use 1-based
-        int[] moveCoordinates = new int[4]; // startCol, startRow, endCol, endRow
-        for(int i = 0; i < 4; i++)
-            moveCoordinates[i] = in.nextInt()-1;
-        Spot start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
-        Spot end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
-
-        while(start == null || end == null) {
-            System.out.print("Illegal move. Enter a different move: ");
-            for(int i = 0; i < 4; i++)
-                moveCoordinates[i] = in.nextInt()-1;
-            start = board.getSpot(moveCoordinates[1], moveCoordinates[0]);
-            end = board.getSpot(moveCoordinates[3], moveCoordinates[2]);
-        }
-
-        return new Spot[]{start, end};
-    }
-
     public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
         return player == currentTurn
@@ -121,7 +85,7 @@ public class Game {
                 && movedPiece.canMove(board, move.getStart(), move.getEnd());
     }
 
-    private void makeValidMove(Move move) {
+    public void makeValidMove(Move move) {
         Piece movedPiece = move.getPieceMoved();
 
         if(movedPiece instanceof Pawn)

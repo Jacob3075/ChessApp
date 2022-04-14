@@ -1,6 +1,7 @@
 package com.jacob.engine;
 
 import com.jacob.engine.board.Move;
+import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 
 import java.util.List;
@@ -49,7 +50,43 @@ public class Main {
             if(!game.getCurrentTurn().isHumanPlayer())
                 game.makeComputerMove(possibleMoves);
             else
-                game.makeHumanMove();
+                makeHumanMove();
         }
+    }
+
+    private static void makeHumanMove() {
+        Spot[] moveSpots = getHumanMoveStartAndEndSpots();
+        Move humanMove = new Move(game.getCurrentTurn(), moveSpots[0], moveSpots[1]);
+        boolean isMoveLegal = game.isMovePossible(humanMove, game.getCurrentTurn());
+
+        while(!isMoveLegal) {
+            System.out.print("Illegal move. Enter a different move: ");
+            moveSpots = getHumanMoveStartAndEndSpots();
+            humanMove = new Move(game.getCurrentTurn(), moveSpots[0], moveSpots[1]);
+            isMoveLegal = game.isMovePossible(humanMove, game.getCurrentTurn());
+        }
+
+        game.makeValidMove(humanMove);
+    }
+
+    private static Spot[] getHumanMoveStartAndEndSpots() {
+        Scanner in = new Scanner(System.in);
+
+        // subtracting 1 from the input since the game uses 0-based indexing and the input is expected to use 1-based
+        int[] moveCoordinates = new int[4]; // startCol, startRow, endCol, endRow
+        for(int i = 0; i < 4; i++)
+            moveCoordinates[i] = in.nextInt()-1;
+        Spot start = game.getBoard().getSpot(moveCoordinates[1], moveCoordinates[0]);
+        Spot end = game.getBoard().getSpot(moveCoordinates[3], moveCoordinates[2]);
+
+        while(start == null || end == null) {
+            System.out.print("Illegal move. Enter a different move: ");
+            for(int i = 0; i < 4; i++)
+                moveCoordinates[i] = in.nextInt()-1;
+            start = game.getBoard().getSpot(moveCoordinates[1], moveCoordinates[0]);
+            end = game.getBoard().getSpot(moveCoordinates[3], moveCoordinates[2]);
+        }
+
+        return new Spot[]{start, end};
     }
 }
