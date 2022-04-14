@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Game {
     private final Player[] players;
-    public final Board board;
+    private final Board board;
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
@@ -40,8 +40,12 @@ public class Game {
         setStatus(GameStatus.ACTIVE);
     }
 
-    public static Game createGame() {
-        return new Game(new HumanPlayer(true), new ComputerPlayer(false));
+    public static Game createNewGame(boolean isHumanWhite) {
+        return new Game(new HumanPlayer(isHumanWhite), new ComputerPlayer(!isHumanWhite));
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public void setStatus(GameStatus status) {
@@ -56,74 +60,24 @@ public class Game {
         return status;
     }
 
-    public void initiateNextTurn() {
-        List<Move> possibleMoves = currentTurn.generateMoves(board);
-
-        if(possibleMoves.isEmpty()) {
-            if(isCurrentTurnsKingUnderAttack())
-                setAndDeclareWin();
-            else
-                setAndDeclareDraw();
-        }
-        else {
-            if(!currentTurn.isHumanPlayer())
-                makeComputerMove(possibleMoves);
-            else {
-                if(currentTurn == players[0])
-                    System.out.print("Player Zero's Move: ");
-                else
-                    System.out.print("Player One's Move: ");
-
-                makeHumanMove();
-            }
-        }
-    }
-
-    private boolean isCurrentTurnsKingUnderAttack() {
-        Spot currentTurnsKingSpot = getCurrentTurnsKingSpot();
-        Piece currentTurnsKing = currentTurnsKingSpot.getPiece();
-        return currentTurnsKing.isKingAttackedAfterMove(board, currentTurnsKingSpot, currentTurnsKingSpot);
-    }
-
-    private Spot getCurrentTurnsKingSpot() {
-        for(int row = 0; row < board.getSize(); row++) {
-            for(int column = 0; column < board.getSize(); column++) {
-                Piece pieceOnSpot = board.getSpot(row, column).getPiece();
-
-                if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == currentTurn.isWhiteSide())
-                    return board.getSpot(row, column);
-            }
-        }
-
-        // this line will never be reached. just returning a random spot on the board.
-        return board.getSpot(0, 0);
-    }
-
-    private void setAndDeclareWin() {
-        if(currentTurn == players[0])
-            System.out.println("Player 1 wins!");
-        else
-            System.out.println("Player 0 Wins!");
-
+    public void setAndDeclareWin() {
         if(currentTurn.isWhiteSide())
             setStatus(GameStatus.BLACK_WIN);
         else
             setStatus(GameStatus.WHITE_WIN);
     }
 
-    private void setAndDeclareDraw() {
-        System.out.println("It's a draw.");
+    public void setAndDeclareDraw() {
         setStatus(GameStatus.DRAW);
     }
 
-    private void makeComputerMove(List<Move> possibleMoves) {
+    public void makeComputerMove(List<Move> possibleMoves) {
         int randomIndex = random.nextInt(possibleMoves.size());
         Move computerMove = possibleMoves.get(randomIndex);
-
         makeValidMove(computerMove);
     }
 
-    private void makeHumanMove() {
+    public void makeHumanMove() {
         Spot[] moveSpots = getHumanMoveStartAndEndSpots();
         Move humanMove = new Move(currentTurn, moveSpots[0], moveSpots[1]);
         boolean isMoveLegal = isMovePossible(humanMove, currentTurn);
