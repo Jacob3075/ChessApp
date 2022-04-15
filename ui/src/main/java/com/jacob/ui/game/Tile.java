@@ -1,6 +1,7 @@
 package com.jacob.ui.game;
 
-import com.jacob.engine.pieces.Bishop;
+import com.jacob.engine.board.Spot;
+import com.jacob.engine.game.Game;
 import com.jacob.engine.pieces.Piece;
 import com.jacob.ui.utils.PieceUtils;
 import javafx.geometry.Insets;
@@ -8,42 +9,45 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
-import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class Tile extends Label {
     private static final Paint WHITE = Paint.valueOf("#202020");
     private static final Paint BLACK = Paint.valueOf("#FFF1D9");
-    private final Paint color;
-    private final int index;
+    private static final Paint SELECTED = Paint.valueOf("#A6560D");
+    private Paint color;
     @Nullable private Piece piece;
+    private final Position position;
+    private final Consumer<Tile> onClicked;
 
-    Tile(int i, int j, BiConsumer<MouseEvent, Tile> onClicked) {
-        index = i * 8 + j;
-        piece =
-                PieceUtils.DEFAULT_PIECE_POSITIONS.getOrDefault(
-                        new Pair<>(i, j), new Bishop(false));
-        boolean isWhiteCell = (index + (i % 2 == 0 ? 1 : 0)) % 2 == 0;
-        color = isWhiteCell ? WHITE : BLACK;
-
-        BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+    Tile(int row, int column, Consumer<Tile> onClicked) {
+        this.onClicked = onClicked;
+        this.position = new Position(row, column);
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
 
         setPrefSize(100, 100);
         setAlignment(Pos.CENTER);
-        setBackground(new Background(tileBackground));
-        setOnMouseClicked(mouseEvent -> onClicked.accept(mouseEvent, this));
+        setOnMouseClicked(mouseEvent -> tileClicked());
 
         updateTileImage();
     }
 
+    private void tileClicked() {
+        this.color = SELECTED;
+        this.onClicked.accept(this);
+        updateTileImage();
+    }
+
     private void updateTileImage() {
+        BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        setBackground(new Background(tileBackground));
+
         if (piece == null) {
             setGraphic(null);
             return;
@@ -58,26 +62,28 @@ public class Tile extends Label {
 
         Image image = new Image(getClass().getResource(pieceResourcePath).toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }
 
-    public @Nullable Piece getPiece() {
-        return piece;
-    }
-
     public void setPiece(@Nullable Piece piece) {
         this.piece = piece;
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
         updateTileImage();
     }
 
-    public int getIndex() {
-        return index;
+    public void resetColor() {
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
+        updateTileImage();
     }
 
-    public Paint getColor() {
-        return color;
+    public Position getPosition() {
+        return position;
+    }
+
+    public Spot convertToSpot(Game game) {
+        return game.getSpot(position.row(), position.column());
     }
 }

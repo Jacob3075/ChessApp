@@ -3,14 +3,15 @@ package com.jacob.engine.player;
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
+import com.jacob.engine.pieces.King;
 import com.jacob.engine.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    public boolean whiteSide;
-    public boolean humanPlayer;
+    protected boolean whiteSide;
+    protected boolean humanPlayer;
 
     public boolean isWhiteSide() {
         return this.whiteSide;
@@ -21,27 +22,22 @@ public abstract class Player {
     }
 
     // return the list of moves that the player can make
-    public List<Move> generateMoves(Board board) {
+    public List<Move> generatePossibleMoves(Board board) {
         List<Move> possibleMoves = new ArrayList<>();
 
-        // going through all the spots to find a start spot
-        for(int si = 0; si < 8; si++) {
-            for(int sj = 0; sj < 8; sj++) {
-                Piece currentPiece = board.getSpot(si, sj).getPiece();
-                if(currentPiece != null && currentPiece.isWhite() == this.isWhiteSide()) {
-                    Spot start = board.getSpot(si, sj);
+        for (int startRow = 0; startRow < board.getSize(); startRow++) {
+            for (int startColumn = 0; startColumn < board.getSize(); startColumn++) {
+                Piece currentPiece = board.getSpot(startRow, startColumn).getPiece();
 
-                    // going through all the spots to find an end spot
-                    for(int ei = 0; ei < 8; ei++) {
-                        for(int ej = 0; ej < 8; ej++) {
-                            Spot end = board.getSpot(ei, ej);
+                if (currentPiece != null && currentPiece.isWhite() == this.isWhiteSide()) {
+                    Spot start = board.getSpot(startRow, startColumn);
 
-                            // if the piece can move from the start spot to the end spot
-                            if(currentPiece.canMove(board, start, end)) {
+                    for (int endRow = 0; endRow < board.getSize(); endRow++) {
+                        for (int endColumn = 0; endColumn < board.getSize(); endColumn++) {
+                            Spot end = board.getSpot(endRow, endColumn);
 
-                                // adding the move to the list
-                                possibleMoves.add(new Move(this, start, end));
-                            }
+                            if (currentPiece.canMove(board, start, end))
+                                possibleMoves.add(new Move(this, start, end, () -> 1));
                         }
                     }
                 }
@@ -49,5 +45,27 @@ public abstract class Player {
         }
 
         return possibleMoves;
+    }
+
+    public boolean isKingUnderAttack(Board board) {
+        Spot kingSpot = getKingSpot(board);
+        Piece king = kingSpot.getPiece();
+        return king.isKingAttackedAfterMove(board, kingSpot, kingSpot);
+    }
+
+    private Spot getKingSpot(Board board) {
+        Spot kingSpot = null;
+
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int column = 0; column < board.getSize(); column++) {
+                Piece pieceOnSpot = board.getSpot(row, column).getPiece();
+
+                if (pieceOnSpot instanceof King && pieceOnSpot.isWhite() == this.isWhiteSide())
+                    kingSpot = board.getSpot(row, column);
+            }
+        }
+
+        assert kingSpot != null;
+        return kingSpot;
     }
 }

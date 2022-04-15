@@ -4,13 +4,14 @@ import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.pieces.*;
+import com.jacob.engine.player.ComputerPlayer;
 import com.jacob.engine.player.HumanPlayer;
 import com.jacob.engine.player.Player;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
     private final Player[] players;
@@ -18,264 +19,223 @@ public class Game {
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
-    private final List<Piece> piecesCapturedByPlayerZero;
-    private final List<Piece> piecesCapturedByPlayerOne;
+    private final Random random;
 
-    public Game(Player p1, Player p2) {
-        // initializing the players
-        this.players = new Player[2];
-        players[0] = p1;
-        players[1] = p2;
+    public Game(Player playerZero, Player playerOne) {
+        random = new SecureRandom();
+        players = new Player[2];
+        players[0] = playerZero;
+        players[1] = playerOne;
 
-        // creating the board and other required fields
-        this.board = new Board();
-        this.movesPlayed = new ArrayList<>();
-        this.piecesCapturedByPlayerZero = new ArrayList<>();
-        this.piecesCapturedByPlayerOne = new ArrayList<>();
+        board = new Board();
+        movesPlayed = new ArrayList<>();
 
         // white plays first
-        if(p1.isWhiteSide())
-            this.currentTurn = p1;
+        if(playerZero.isWhiteSide())
+            currentTurn = playerZero;
         else
-            this.currentTurn = p2;
+            currentTurn = playerOne;
 
-        this.status = GameStatus.ACTIVE;
-
-        // main game loop
-        Scanner in = new Scanner(System.in);
-        while(!this.isEnd()) {
-            board.displayBoard();
-
-            // checking if the game is still active
-            List<Move> possibleMoves = currentTurn.generateMoves(board);
-
-            if(possibleMoves.isEmpty()) {
-                Spot currentTurnsKingSpot = getCurrentTurnsKingSpot();
-                Piece currentTurnsKing = currentTurnsKingSpot.getPiece();
-                if(currentTurnsKing.isKingAttackedAfterMove(board, currentTurnsKingSpot, currentTurnsKingSpot)) {
-                    if(currentTurn == players[0])
-                        System.out.println("Player 1 wins!");
-                    else
-                        System.out.println("Player 0 Wins!");
-
-                    if(currentTurn.isWhiteSide())
-                        this.setStatus(GameStatus.BLACK_WIN);
-                    else
-                        this.setStatus(GameStatus.WHITE_WIN);
-                }
-                else {
-                    System.out.println("It's a draw.");
-                    this.setStatus(GameStatus.DRAW);
-                }
-            }
-            else {
-                if(currentTurn == players[0])
-                    System.out.println("Player Zero's Move: ");
-                else
-                    System.out.println("Player One's Move: ");
-
-                if(currentTurn instanceof HumanPlayer) {
-                    //                                        start j       start i       end j         end i
-                    boolean isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
-                    while(!isLegal) {
-                        System.out.println("Illegal move. Enter a different move: ");
-                        isLegal = playerMove(currentTurn, in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
-                    }
-                }
-                else {
-                    Random random = new Random();
-                    int randomIndex = random.nextInt(possibleMoves.size());
-                    Move computerMove = possibleMoves.get(randomIndex);
-                    Spot startSpot = computerMove.getStart();
-                    Spot endSpot = computerMove.getEnd();
-
-                    playerMove(currentTurn, startSpot.getJ(), startSpot.getI(), endSpot.getJ(), endSpot.getI());
-                }
-            }
-        }
+        setStatus(GameStatus.ACTIVE);
     }
 
-    private Spot getCurrentTurnsKingSpot() {
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                Piece pieceOnSpot = board.getSpot(i, j).getPiece();
-
-                if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == currentTurn.isWhiteSide())
-                    return board.getSpot(i, j);
-            }
-        }
-        return null;
+    public static Game createNewGame(boolean isHumanWhite) {
+        return new Game(new HumanPlayer(isHumanWhite), new ComputerPlayer(!isHumanWhite));
     }
 
-    private boolean isEnd() {
-        return this.getStatus() != GameStatus.ACTIVE;
-    }
-
-    public GameStatus getStatus() {
-        return this.status;
+    public Board getBoard() {
+        return this.board;
     }
 
     public void setStatus(GameStatus status) {
         this.status = status;
     }
 
-    public List<Piece> getPiecesCapturedByPlayerZero() {
-        return this.piecesCapturedByPlayerZero;
+    public boolean isEnd() {
+        return getStatus() != GameStatus.ACTIVE;
     }
 
-    public List<Piece> getPiecesCapturedByPlayerOne() {
-        return this.piecesCapturedByPlayerOne;
-    }
-    
-    private int getEvaluation() {
-        int evaluation = 0;
-        
-        // iterating through all the spots and updating the rating based on the pieces on the board
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                Piece currentPiece = board.getSpot(i, j).getPiece();
-
-                if(currentPiece != null) {
-                    if(currentPiece.isWhite())
-                        evaluation += currentPiece.getValue();
-                    else
-                        evaluation -= currentPiece.getValue();
-                }
-            }
-        }
-        
-        return evaluation;
+    public GameStatus getStatus() {
+        return status;
     }
 
-    private boolean playerMove(Player player, int startJ, int startI, int endJ, int endI) {
-        Spot startSpot = board.getSpot(startI, startJ);
-        Spot endSpot = board.getSpot(endI, endJ);
-        Move move = new Move(player, startSpot, endSpot);
-        return this.makeMove(move, player);
+    public void setAndDeclareWin() {
+        if(currentTurn.isWhiteSide())
+            setStatus(GameStatus.BLACK_WIN);
+        else
+            setStatus(GameStatus.WHITE_WIN);
     }
 
-    private boolean makeMove(Move move, Player player) {
+    public void setAndDeclareDraw() {
+        setStatus(GameStatus.DRAW);
+    }
+
+    public void makeComputerMove(List<Move> possibleMoves) {
+        int randomIndex = random.nextInt(possibleMoves.size());
+        Move computerMove = possibleMoves.get(randomIndex);
+        makeValidMove(computerMove);
+    }
+
+    public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
-        Piece capturedPiece = move.getPieceCaptured();
+        return player == currentTurn
+                && movedPiece != null
+                && movedPiece.isWhite() == player.isWhiteSide()
+                && movedPiece.canMove(board, move.getStart(), move.getEnd());
+    }
 
-        if(movedPiece == null) {
-            return false;
+    public void makeValidMove(Move move) {
+        Piece movedPiece = move.getPieceMoved();
+
+        if(movedPiece instanceof Pawn)
+            makePawnMove(move);
+        else if(movedPiece instanceof King)
+            makeKingMove(move);
+        else {
+            move.getStart().setPiece(null);
+            move.getEnd().setPiece(movedPiece);
         }
 
-        // checks if it's the player's turn
-        if(player != currentTurn) {
-            return false;
+        // if a pawn moved on the previous turn, we set its movedTwoSpotsOnPreviousTurn value to false.
+        // we need to do this as this value is used to confirm whether an en passant move is possible
+        if(!movesPlayed.isEmpty()) {
+            Piece pieceMovedOnPreviousTurn = movesPlayed.get(movesPlayed.size()-1).getPieceMoved();
+            if(pieceMovedOnPreviousTurn instanceof Pawn)
+                ((Pawn) pieceMovedOnPreviousTurn).setMovedTwoSpotsOnPreviousTurn(false);
         }
 
-        // checks if the player is moving their piece or opponents piece
-        if(movedPiece.isWhite() != player.isWhiteSide()) {
-            return false;
-        }
+        movesPlayed.add(move);
 
-        // checks if the move is valid
-        if(!movedPiece.canMove(board, move.getStart(), move.getEnd())) {
-            return false;
-        }
+        passCurrentTurnToOtherPlayer();
+    }
 
+    private void makePawnMove(Move move) {
+        Pawn pawn = (Pawn) move.getPieceMoved();
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        // moving a king
-        if(movedPiece instanceof King) {
-            // castling
-            if(((King) movedPiece).isCastlingPossible()) {
-                // moving the castle side rook from its start spot to its end spot
-                Spot rookSpot;
-                Piece rook;
-                // king side castle
-                if(start.getJ() < end.getJ()) {
-                    rookSpot = board.getSpot(start.getI(), start.getJ()+3);
-                    rook = rookSpot.getPiece();
-                    board.getSpot(start.getI(), start.getJ()+1).setPiece(rook);
-
-                    move.setKingSideCastlingMove(true);
-                    ((King) movedPiece).setKingSideCastlingDone(true);
-                }
-                // queen side castle
-                else {
-                    rookSpot = board.getSpot(start.getI(), start.getJ()-4);
-                    rook = rookSpot.getPiece();
-                    board.getSpot(start.getI(), start.getJ()-1).setPiece(rook);
-
-                    move.setQueenSideCastlingMove(true);
-                    ((King) movedPiece).setQueenSideCastlingDone(true);
-                }
-                rookSpot.setPiece(null);
-                ((Rook) rook).setMoved(true);
-            }
-
-            // updating the king to record that it has been moved
-            ((King) movedPiece).setMoved(true);
+        if(pawn.isEnPassantPossible())
+            makeEnPassantMove(move);
+        else if(pawn.isPromotionPossible())
+            makePawnPromotionMove(move);
+        else {
+            start.setPiece(null);
+            end.setPiece(pawn);
+            pawn.setMoved(true);
         }
-        // moving a pawn
-        else if(movedPiece instanceof Pawn) {
-            // updating the pawn to record that it has been moved
-            ((Pawn) movedPiece).setMoved(true);
+    }
 
-            // en passant
-            if(((Pawn) movedPiece).isEnPassantPossible()) {
-                ((Pawn) movedPiece).setEnPassantPossible(false);
-                capturedPiece = board.getSpot(start.getI(), end.getJ()).getPiece();
-                board.getSpot(start.getI(), end.getJ()).setPiece(null);
-            }
+    private void makeEnPassantMove(Move move) {
+        Pawn pawn = (Pawn) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
 
-            // pawn promotion
-            if(((Pawn) movedPiece).isPromotionPossible()) {
-                ((Pawn) movedPiece).setPromotionPossible(false);
+        Spot capturedPieceSpot = board.getSpot(start.getI(), end.getJ());
+        Piece capturedPiece = capturedPieceSpot.getPiece();
 
-                // finding what piece to promote the pawn to
-                Scanner in = new Scanner(System.in);
-                System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
-                int choice = in.nextInt();
-
-                // promoting the pawn
-                switch (choice) {
-                    case 1 -> movedPiece = new Queen(movedPiece.isWhite());
-                    case 2 -> movedPiece = new Rook(movedPiece.isWhite());
-                    case 3 -> movedPiece = new Bishop(movedPiece.isWhite());
-                    case 4 -> movedPiece = new Knight(movedPiece.isWhite());
-                }
-            }
-        }
-
-        // store the captured piece
-        if(capturedPiece != null) {
-            if(currentTurn == players[0]) {
-                piecesCapturedByPlayerZero.add(capturedPiece);
-            }
-            else {
-                piecesCapturedByPlayerOne.add(capturedPiece);
-            }
-        }
-
-        // moving the piece from start spot to end spot
-        end.setPiece(movedPiece);
+        move.setPieceCaptured(capturedPiece);
+        capturedPieceSpot.setPiece(null);
         start.setPiece(null);
+        end.setPiece(pawn);
 
-        // checking if a pawn moved 2 spots in the previous move
-        if(movesPlayed.size() > 0) {
-            Piece pieceMovedOnPreviousTurn = movesPlayed.get(movesPlayed.size()-1).getPieceMoved();
-            if(pieceMovedOnPreviousTurn instanceof Pawn) {
-                ((Pawn) pieceMovedOnPreviousTurn).setMovedTwoSpotsOnPreviousTurn(false);
-            }
+        pawn.setEnPassantPossible(false);
+        pawn.setMoved(true);
+    }
+
+    private void makePawnPromotionMove(Move move) {
+        Pawn pawn = (Pawn) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        int choice = move.getGetPromotionChoice().getAsInt();
+
+        start.setPiece(null);
+        switch (choice) {
+            case 1 -> end.setPiece(new Queen(pawn.isWhite()));
+            case 2 -> end.setPiece(new Rook(pawn.isWhite()));
+            case 3 -> end.setPiece(new Bishop(pawn.isWhite()));
+            case 4 -> end.setPiece(new Knight(pawn.isWhite()));
         }
 
-        // store the move
-        movesPlayed.add(move);
+        pawn.setPromotionPossible(false);
+    }
 
-        // set the current turn to the other player
-        if(this.currentTurn == players[0]) {
-            this.currentTurn = players[1];
+    private void makeKingMove(Move move) {
+        King king = (King) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        if(king.isTryingToCastle()) {
+            if(start.getJ() < end.getJ()) // the king is moving to the right, so king side castling
+                makeKingSideCastlingMove(move);
+            else // the king is moving to the left, so queen side castling
+                makeQueenSideCastlingMove(move);
         }
         else {
-            this.currentTurn = players[0];
+            start.setPiece(null);
+            end.setPiece(king);
+            king.setMoved(true);
         }
+    }
 
-        return true;
+    private void makeKingSideCastlingMove(Move move) {
+        King king = (King) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        Spot initialRookSpot = board.getSpot(start.getI(), start.getJ()+3);
+        Rook rook = (Rook) initialRookSpot.getPiece();
+        Spot finalRookSpot = board.getSpot(start.getI(), start.getJ()+1);
+
+        initialRookSpot.setPiece(null);
+        finalRookSpot.setPiece(rook);
+        start.setPiece(null);
+        end.setPiece(king);
+
+        rook.setMoved(true);
+        king.setMoved(true);
+        king.setKingSideCastlingDone(true);
+        move.setKingSideCastlingMove(true);
+    }
+
+    private void makeQueenSideCastlingMove(Move move) {
+        King king = (King) move.getPieceMoved();
+        Spot start = move.getStart();
+        Spot end = move.getEnd();
+
+        Spot initialRookSpot = board.getSpot(start.getI(), start.getJ()-4);
+        Rook rook = (Rook) initialRookSpot.getPiece();
+        Spot finalRookSpot = board.getSpot(start.getI(), start.getJ()-1);
+
+        initialRookSpot.setPiece(null);
+        finalRookSpot.setPiece(rook);
+        start.setPiece(null);
+        end.setPiece(king);
+
+        rook.setMoved(true);
+        king.setMoved(true);
+        king.setQueenSideCastlingDone(true);
+        move.setQueenSideCastlingMove(true);
+    }
+
+    private void passCurrentTurnToOtherPlayer() {
+        if(currentTurn == players[0])
+            currentTurn = players[1];
+        else
+            currentTurn = players[0];
+    }
+
+    public Player getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void makeMove(Move move) {
+        if (isMovePossible(move, move.getPlayer())) {
+            makeValidMove(move);
+        }
+    }
+
+    public Spot getSpot(int row, int column) {
+        return this.board.getSpot(row, column);
     }
 }

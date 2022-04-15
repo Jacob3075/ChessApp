@@ -10,7 +10,7 @@ public abstract class Piece {
 
     protected Piece(boolean isWhite, String symbol, int value) {
         this.isWhite = isWhite;
-        this.symbol = symbol;
+        this.symbol = isWhite ? symbol.toUpperCase() : symbol;
         this.value = value;
     }
 
