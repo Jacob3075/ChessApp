@@ -27,7 +27,8 @@ public class GameController implements Initializable {
     public GameController(ApplicationContext context) {
         this.context = context;
         moveCoordinator =
-                new MoveCoordinator(Game.createGame(), this::updateBoard, this::showGameMessages);
+                new MoveCoordinator(
+                        Game.createNewGame(true), this::updateBoard, this::showGameMessages);
     }
 
     @Override

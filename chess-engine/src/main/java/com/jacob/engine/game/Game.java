@@ -1,6 +1,5 @@
 package com.jacob.engine.game;
 
-import com.jacob.engine.Main;
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
@@ -148,7 +147,7 @@ public class Game {
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        int choice = Main.getPawnPromotionChoice();
+        int choice = move.getGetPromotionChoice().getAsInt();
 
         start.setPiece(null);
         switch (choice) {

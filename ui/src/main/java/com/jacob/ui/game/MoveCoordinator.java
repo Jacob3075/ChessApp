@@ -41,7 +41,7 @@ public class MoveCoordinator {
     public void playMove() {
         Spot startSpot = convertTileToSpot(this.startTile);
         Spot endSpot = convertTileToSpot(this.endTile);
-        Move move = new Move(game.getCurrentTurn(), startSpot, endSpot);
+        Move move = new Move(game.getCurrentTurn(), startSpot, endSpot, () -> 1);
 
         if (!game.isMovePossible(move, game.getCurrentTurn())) {
             showGameMessages.accept("Move is not possible");

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    public boolean whiteSide;
-    public boolean humanPlayer;
+    protected boolean whiteSide;
+    protected boolean humanPlayer;
 
     public boolean isWhiteSide() {
         return this.whiteSide;
@@ -25,25 +25,22 @@ public abstract class Player {
     public List<Move> generatePossibleMoves(Board board) {
         List<Move> possibleMoves = new ArrayList<>();
 
-        for(int startRow = 0; startRow < board.getSize(); startRow++) {
-            for(int startColumn = 0; startColumn < board.getSize(); startColumn++) {
+        for (int startRow = 0; startRow < board.getSize(); startRow++) {
+            for (int startColumn = 0; startColumn < board.getSize(); startColumn++) {
                 Piece currentPiece = board.getSpot(startRow, startColumn).getPiece();
 
-                if(currentPiece != null && currentPiece.isWhite() == this.isWhiteSide()) {
+                if (currentPiece != null && currentPiece.isWhite() == this.isWhiteSide()) {
                     Spot start = board.getSpot(startRow, startColumn);
 
-                    for(int endRow = 0; endRow < board.getSize(); endRow++) {
-                        for(int endColumn = 0; endColumn < board.getSize(); endColumn++) {
+                    for (int endRow = 0; endRow < board.getSize(); endRow++) {
+                        for (int endColumn = 0; endColumn < board.getSize(); endColumn++) {
                             Spot end = board.getSpot(endRow, endColumn);
 
-                            if(currentPiece.canMove(board, start, end))
-                                possibleMoves.add(new Move(this, start, end));
-
+                            if (currentPiece.canMove(board, start, end))
+                                possibleMoves.add(new Move(this, start, end, () -> 1));
                         }
                     }
-
                 }
-
             }
         }
 
@@ -59,16 +56,16 @@ public abstract class Player {
     private Spot getKingSpot(Board board) {
         Spot kingSpot = null;
 
-        for(int row = 0; row < board.getSize(); row++) {
-            for(int column = 0; column < board.getSize(); column++) {
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int column = 0; column < board.getSize(); column++) {
                 Piece pieceOnSpot = board.getSpot(row, column).getPiece();
 
-                if(pieceOnSpot instanceof King && pieceOnSpot.isWhite() == this.isWhiteSide())
+                if (pieceOnSpot instanceof King && pieceOnSpot.isWhite() == this.isWhiteSide())
                     kingSpot = board.getSpot(row, column);
             }
         }
 
+        assert kingSpot != null;
         return kingSpot;
     }
-
 }
