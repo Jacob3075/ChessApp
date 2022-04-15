@@ -31,7 +31,7 @@ public class Tile extends Label {
         this.position = new Position(row, column);
         this.color = position.isWhiteCell() ? WHITE : BLACK;
 
-        setPrefSize(100, 100);
+        setPrefSize(75, 75);
         setAlignment(Pos.CENTER);
         setOnMouseClicked(mouseEvent -> tileClicked());
 
@@ -62,8 +62,8 @@ public class Tile extends Label {
 
         Image image = new Image(getClass().getResource(pieceResourcePath).toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(75);
+        imageView.setFitWidth(75);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }

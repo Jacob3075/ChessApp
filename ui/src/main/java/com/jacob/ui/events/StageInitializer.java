@@ -30,7 +30,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             FXMLLoader fxmlLoader = new FXMLLoader(fxml.getURL());
             fxmlLoader.setControllerFactory(context::getBean);
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 1000, 800);
+            Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
