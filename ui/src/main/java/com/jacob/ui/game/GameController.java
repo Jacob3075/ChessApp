@@ -44,6 +44,7 @@ public class GameController implements Initializable {
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
+        initializeNextTurn();
     }
 
     private void tileClicked(Tile tile) {
