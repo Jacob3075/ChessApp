@@ -1,5 +1,7 @@
 package com.jacob.ui.game;
 
+import com.jacob.engine.board.Move;
+import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,24 +15,22 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 @Component
 public class GameController implements Initializable {
-    private final Game game;
     @FXML private GridPane gameBoard;
     @FXML private VBox sideBar;
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
-    private final MoveCoordinator moveCoordinator;
+    private final Game game = Game.createNewGame(true);
+    private Tile startTile;
+    private Tile endTile;
 
     public GameController(ApplicationContext context) {
         this.context = context;
-        game = Game.createNewGame(true);
-        moveCoordinator =
-                new MoveCoordinator(
-                        game, this::showGameMessages, this::updateBoard, this::gameCompleted);
     }
 
     @Override
@@ -39,11 +39,29 @@ public class GameController implements Initializable {
         for (int i = 0; i < 8; i++) {
             rowCells.clear();
             for (int j = 0; j < 8; j++) {
-                rowCells.add(new Tile(i, j, moveCoordinator::tileClicked));
+                rowCells.add(new Tile(i, j, this::tileClicked));
             }
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
+    }
+
+    private void tileClicked(Tile tile) {
+        if (!game.getCurrentTurn().isHumanPlayer()) {
+            showGameMessages("Not players turn");
+            return;
+        }
+
+        if (startTile == null) {
+            startTile = tile;
+            return;
+        }
+
+        endTile = tile;
+        playMove();
+        startTile = null;
+        endTile = null;
+        initializeNextTurn();
     }
 
     private void updateBoard() {
@@ -66,8 +84,36 @@ public class GameController implements Initializable {
                         .getPiece());
     }
 
-    private void showGameMessages(String message) {
-        logger.info("message = {}", message);
+    private void playMove() {
+        Spot startSpot = startTile.convertToSpot(game);
+        Spot endSpot = endTile.convertToSpot(game);
+        Move move = new Move(game.getCurrentTurn(), startSpot, endSpot, () -> 1);
+
+        if (!game.isMovePossible(move, game.getCurrentTurn())) {
+            showGameMessages("Move is not possible, " + move);
+            return;
+        }
+
+        game.makeMove(move);
+        updateBoard();
+    }
+
+    private void initializeNextTurn() {
+        List<Move> possibleMoves = game.getCurrentTurn().generatePossibleMoves(game.getBoard());
+
+        if (possibleMoves.isEmpty()) {
+            gameCompleted();
+            return;
+        }
+        if (!game.getCurrentTurn().isHumanPlayer()) {
+            computerMove(possibleMoves);
+        }
+    }
+
+    private void computerMove(List<Move> possibleMoves) {
+        game.makeComputerMove(possibleMoves);
+        updateBoard();
+        initializeNextTurn();
     }
 
     private void gameCompleted() {
@@ -75,5 +121,9 @@ public class GameController implements Initializable {
             game.setAndDeclareWin();
         } else game.setAndDeclareDraw();
         showGameMessages("Game Over: " + game.getStatus());
+    }
+
+    private void showGameMessages(String message) {
+        logger.info("message = {}", message);
     }
 }

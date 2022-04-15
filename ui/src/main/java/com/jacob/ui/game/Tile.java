@@ -1,5 +1,7 @@
 package com.jacob.ui.game;
 
+import com.jacob.engine.board.Spot;
+import com.jacob.engine.game.Game;
 import com.jacob.engine.pieces.Piece;
 import com.jacob.ui.utils.PieceUtils;
 import javafx.geometry.Insets;
@@ -73,5 +75,9 @@ public class Tile extends Label {
 
     public Paint getColor() {
         return color;
+    }
+
+    public Spot convertToSpot(Game game) {
+        return game.getSpot(position.row(), position.column());
     }
 }
