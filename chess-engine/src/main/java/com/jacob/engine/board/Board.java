@@ -56,7 +56,15 @@ public class Board {
         }
     }
 
-    public void displayBoard() {
+    public void displayBoard(boolean isPlayerWhite) {
+        if(isPlayerWhite)
+            displayBoardInWhitesPerspective();
+        else
+            displayBoardInBlacksPerspective();
+        System.out.println("---------------");
+    }
+
+    private void displayBoardInWhitesPerspective() {
         for(int row = getSize()-1; row >= 0; row--) {
             for(int column = 0; column < getSize(); column++) {
                 Piece piece = spots[row][column].getPiece();
@@ -68,7 +76,20 @@ public class Board {
             }
             System.out.println();
         }
-        System.out.println("---------------");
+    }
+
+    private void displayBoardInBlacksPerspective() {
+        for(int row = 0; row < getSize(); row++) {
+            for(int column = getSize()-1; column >= 0; column--) {
+                Piece piece = spots[row][column].getPiece();
+
+                if(piece == null)
+                    System.out.print(". ");
+                else
+                    System.out.print(piece.getSymbol() + " ");
+            }
+            System.out.println();
+        }
     }
 
     public int getEvaluation() {
