@@ -89,4 +89,9 @@ public class Main {
 
         return new Spot[]{start, end};
     }
+
+    public static int getPawnPromotionChoice() {
+        System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
+        return in.nextInt();
+    }
 }

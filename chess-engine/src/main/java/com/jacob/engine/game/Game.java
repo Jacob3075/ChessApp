@@ -1,5 +1,6 @@
 package com.jacob.engine.game;
 
+import com.jacob.engine.Main;
 import com.jacob.engine.board.Board;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
@@ -148,9 +149,7 @@ public class Game {
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter your choice:\n1. Queen\n2. Rook\n3. Bishop\n4. Knight");
-        int choice = in.nextInt();
+        int choice = Main.getPawnPromotionChoice();
 
         start.setPiece(null);
         switch (choice) {
