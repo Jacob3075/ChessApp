@@ -20,24 +20,34 @@ import java.util.function.Consumer;
 public class Tile extends Label {
     private static final Paint WHITE = Paint.valueOf("#202020");
     private static final Paint BLACK = Paint.valueOf("#FFF1D9");
+    private static final Paint SELECTED = Paint.valueOf("#A6560D");
+    private Paint color;
     @Nullable private Piece piece;
     private final Position position;
+    private final Consumer<Tile> onClicked;
 
     Tile(int row, int column, Consumer<Tile> onClicked) {
+        this.onClicked = onClicked;
         this.position = new Position(row, column);
-        Paint color = position.isWhiteCell() ? WHITE : BLACK;
-
-        BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
 
         setPrefSize(100, 100);
         setAlignment(Pos.CENTER);
-        setBackground(new Background(tileBackground));
-        setOnMouseClicked(mouseEvent -> onClicked.accept(this));
+        setOnMouseClicked(mouseEvent -> tileClicked());
 
         updateTileImage();
     }
 
+    private void tileClicked() {
+        this.color = SELECTED;
+        this.onClicked.accept(this);
+        updateTileImage();
+    }
+
     private void updateTileImage() {
+        BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        setBackground(new Background(tileBackground));
+
         if (piece == null) {
             setGraphic(null);
             return;
@@ -60,6 +70,12 @@ public class Tile extends Label {
 
     public void setPiece(@Nullable Piece piece) {
         this.piece = piece;
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
+        updateTileImage();
+    }
+
+    public void resetColor() {
+        this.color = position.isWhiteCell() ? WHITE : BLACK;
         updateTileImage();
     }
 

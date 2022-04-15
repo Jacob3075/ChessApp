@@ -92,6 +92,8 @@ public class GameController implements Initializable {
 
         if (!game.isMovePossible(move, game.getCurrentTurn())) {
             showGameMessages("Move is not possible, " + move);
+            startTile.resetColor();
+            endTile.resetColor();
             return;
         }
 

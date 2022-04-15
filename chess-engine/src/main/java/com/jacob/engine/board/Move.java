@@ -80,7 +80,8 @@ public class Move {
         char endingColumn = (char) (end.getJ() + 1 + 96);
         int endingRow = end.getI() + 1;
 
-        String result = "" + pieceMoved.getSymbol() + startingColumn + startingRow;
+        String result = pieceMoved == null ? "" : pieceMoved.getSymbol();
+        result += startingColumn + startingRow;
         result += pieceCaptured == null ? "" : "x";
         result += "" + endingColumn + endingRow;
         return result;
