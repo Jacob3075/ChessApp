@@ -28,7 +28,9 @@ public class GameController implements Initializable {
     public GameController(ApplicationContext context) {
         this.context = context;
         game = Game.createNewGame(true);
-        moveCoordinator = new MoveCoordinator(game, this::updateBoard, this::showGameMessages);
+        moveCoordinator =
+                new MoveCoordinator(
+                        game, this::showGameMessages, this::updateBoard, this::gameCompleted);
     }
 
     @Override
@@ -45,14 +47,9 @@ public class GameController implements Initializable {
     }
 
     private void updateBoard() {
-        logger.debug("updating}");
         gameBoard.getChildren().stream()
                 .mapMulti(this::getAllTilesInGameBoard)
                 .forEach(this::updateTilesWithPieces);
-    }
-
-    private void showGameMessages(String message) {
-        logger.debug("message = {}", message);
     }
 
     private void getAllTilesInGameBoard(Node node, Consumer<Tile> stream) {
@@ -67,5 +64,16 @@ public class GameController implements Initializable {
                 game.getBoard()
                         .getSpot(tile.getPosition().row(), tile.getPosition().column())
                         .getPiece());
+    }
+
+    private void showGameMessages(String message) {
+        logger.info("message = {}", message);
+    }
+
+    private void gameCompleted() {
+        if (game.getCurrentTurn().isKingUnderAttack(game.getBoard())) {
+            game.setAndDeclareWin();
+        } else game.setAndDeclareDraw();
+        showGameMessages("Game Over: " + game.getStatus());
     }
 }
