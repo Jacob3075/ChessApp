@@ -20,14 +20,12 @@ import java.util.function.Consumer;
 public class Tile extends Label {
     private static final Paint WHITE = Paint.valueOf("#202020");
     private static final Paint BLACK = Paint.valueOf("#FFF1D9");
-    private final Paint color;
     @Nullable private Piece piece;
     private final Position position;
 
     Tile(int row, int column, Consumer<Tile> onClicked) {
         this.position = new Position(row, column);
-        boolean isWhiteCell = (position.index() + (row % 2 == 0 ? 0 : 1)) % 2 == 0;
-        color = isWhiteCell ? WHITE : BLACK;
+        Paint color = position.isWhiteCell() ? WHITE : BLACK;
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
 
@@ -60,10 +58,6 @@ public class Tile extends Label {
         setGraphic(imageView);
     }
 
-    public @Nullable Piece getPiece() {
-        return piece;
-    }
-
     public void setPiece(@Nullable Piece piece) {
         this.piece = piece;
         updateTileImage();
@@ -71,10 +65,6 @@ public class Tile extends Label {
 
     public Position getPosition() {
         return position;
-    }
-
-    public Paint getColor() {
-        return color;
     }
 
     public Spot convertToSpot(Game game) {
