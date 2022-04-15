@@ -9,13 +9,12 @@ import java.util.function.Consumer;
 
 public class MoveCoordinator {
     private final Game game;
-    private final Consumer<Move> onValidMove;
+    private final Runnable onValidMove;
     private final Consumer<String> showGameMessages;
     private Tile startTile;
     private Tile endTile;
 
-    public MoveCoordinator(
-            Game game, Consumer<Move> onValidMove, Consumer<String> showGameMessages) {
+    public MoveCoordinator(Game game, Runnable onValidMove, Consumer<String> showGameMessages) {
         this.game = game;
         this.onValidMove = onValidMove;
         this.showGameMessages = showGameMessages;
@@ -49,10 +48,10 @@ public class MoveCoordinator {
         }
 
         game.makeMove(move);
-        onValidMove.accept(move);
+        onValidMove.run();
     }
 
     private Spot convertTileToSpot(@NotNull Tile tile) {
-        return game.getSpot(tile.getRow(), tile.getColumn());
+        return game.getSpot(tile.getPosition().row(), tile.getPosition().column());
     }
 }

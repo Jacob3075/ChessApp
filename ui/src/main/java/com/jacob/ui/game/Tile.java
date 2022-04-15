@@ -11,7 +11,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
-import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -20,17 +19,12 @@ public class Tile extends Label {
     private static final Paint WHITE = Paint.valueOf("#202020");
     private static final Paint BLACK = Paint.valueOf("#FFF1D9");
     private final Paint color;
-    private final int index;
     @Nullable private Piece piece;
-    private final int row;
-    private final int column;
+    private final Position position;
 
     Tile(int row, int column, Consumer<Tile> onClicked) {
-        this.row = row;
-        this.column = column;
-        index = row * 8 + column;
-        piece = PieceUtils.DEFAULT_PIECE_POSITIONS.get(new Pair<>(row, column));
-        boolean isWhiteCell = (index + (row % 2 == 0 ? 0 : 1)) % 2 == 0;
+        this.position = new Position(row, column);
+        boolean isWhiteCell = (position.index() + (row % 2 == 0 ? 0 : 1)) % 2 == 0;
         color = isWhiteCell ? WHITE : BLACK;
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
@@ -73,19 +67,11 @@ public class Tile extends Label {
         updateTileImage();
     }
 
-    public int getIndex() {
-        return index;
+    public Position getPosition() {
+        return position;
     }
 
     public Paint getColor() {
         return color;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
     }
 }

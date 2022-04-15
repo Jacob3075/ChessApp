@@ -1,12 +1,11 @@
 package com.jacob.ui.game;
 
-import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -15,9 +14,11 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 @Component
 public class GameController implements Initializable {
+    private final Game game;
     @FXML private GridPane gameBoard;
     @FXML private VBox sideBar;
     private final ApplicationContext context;
@@ -26,9 +27,8 @@ public class GameController implements Initializable {
 
     public GameController(ApplicationContext context) {
         this.context = context;
-        moveCoordinator =
-                new MoveCoordinator(
-                        Game.createNewGame(true), this::updateBoard, this::showGameMessages);
+        game = Game.createNewGame(true);
+        moveCoordinator = new MoveCoordinator(game, this::updateBoard, this::showGameMessages);
     }
 
     @Override
@@ -41,13 +41,31 @@ public class GameController implements Initializable {
             }
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
+        updateBoard();
     }
 
-    private void updateBoard(@NotNull Move move) {
-        logger.debug("move= {}", move);
+    private void updateBoard() {
+        logger.debug("updating}");
+        gameBoard.getChildren().stream()
+                .mapMulti(this::getAllTilesInGameBoard)
+                .forEach(this::updateTilesWithPieces);
     }
 
     private void showGameMessages(String message) {
         logger.debug("message = {}", message);
+    }
+
+    private void getAllTilesInGameBoard(Node node, Consumer<Tile> stream) {
+        try {
+            stream.accept(((Tile) node));
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void updateTilesWithPieces(Tile tile) {
+        tile.setPiece(
+                game.getBoard()
+                        .getSpot(tile.getPosition().row(), tile.getPosition().column())
+                        .getPiece());
     }
 }
