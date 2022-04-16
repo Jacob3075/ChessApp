@@ -18,9 +18,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class Tile extends Label {
-    private static final Paint WHITE = Paint.valueOf("#202020");
-    private static final Paint BLACK = Paint.valueOf("#FFF1D9");
-    private static final Paint SELECTED = Paint.valueOf("#A6560D");
+    private static final Paint WHITE = Paint.valueOf("#F0D9B5");
+    private static final Paint BLACK = Paint.valueOf("#B58863");
+    private static final Paint SELECTED = Paint.valueOf("#CBCF74");
     private Paint color;
     @Nullable private Piece piece;
     private final Position position;
