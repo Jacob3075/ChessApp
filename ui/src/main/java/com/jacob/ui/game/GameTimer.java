@@ -1,5 +1,7 @@
 package com.jacob.ui.game;
 
+import javafx.scene.Node;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -9,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 
-public class GameTimer {
+public class GameTimer extends Node {
     JFrame display;
     JLabel counterLabel;
     Font font = new Font("Arial", Font.PLAIN, 70);
@@ -26,14 +28,14 @@ public class GameTimer {
         new GameTimer();
     }
 
-    public GameTimer() {
+    public Node GameTimer() {
         display = new JFrame();
-        display.setSize(400, 200);
+        display.setSize(200, 200);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.setLayout(null);
 
         counterLabel = new JLabel();
-        counterLabel.setBounds(100, 30, 200, 100);
+        counterLabel.setBounds(0, 30, 200, 100);
         counterLabel.setHorizontalAlignment(JLabel.CENTER);
         counterLabel.setFont(font);
 
@@ -45,6 +47,7 @@ public class GameTimer {
         minute = 5;
         showTimer();
         timer.start();
+        return null;
     }
 
 
