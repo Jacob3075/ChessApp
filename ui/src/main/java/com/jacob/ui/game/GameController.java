@@ -45,11 +45,24 @@ public class GameController implements Initializable {
             for (int j = 0; j < 8; j++) {
                 rowCells.add(new Tile(i, j, this::tileClicked));
             }
-            gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
+            gameBoard.addRow(7-i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
         initializeNextTurn();
     }
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        ArrayList<Tile> rowCells = new ArrayList<>();
+//        for (int i = 0; i < 8; i++) {
+//            rowCells.clear();
+//            for (int j = 7; j >= 0; j--) {
+//                rowCells.add(new Tile(i, j, this::tileClicked));
+//            }
+//            gameBoard.addRow(i, rowCells.toArray(new Tile[8]));
+//        }
+//        updateBoard();
+//        initializeNextTurn();
+//    }
 
     private void tileClicked(Tile tile) {
         if (!game.getCurrentTurn().isHumanPlayer()) {
