@@ -39,6 +39,10 @@ public class Game {
         setStatus(GameStatus.ACTIVE);
     }
 
+    public List<Move> getMovesPlayed() {
+        return movesPlayed;
+    }
+
     public static Game createNewGame(boolean isHumanWhite) {
         return new Game(new HumanPlayer(isHumanWhite), new ComputerPlayer(!isHumanWhite));
     }
