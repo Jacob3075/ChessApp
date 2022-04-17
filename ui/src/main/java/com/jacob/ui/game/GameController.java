@@ -77,7 +77,6 @@ public class GameController implements Initializable {
 
         endTile = tile;
         playMove();
-        start();
         startTile = null;
         endTile = null;
         initializeNextTurn();
@@ -116,6 +115,7 @@ public class GameController implements Initializable {
         }
 
         game.makeMove(move);
+        start();
         updateBoard();
     }
 
@@ -128,7 +128,10 @@ public class GameController implements Initializable {
         }
         if (!game.getCurrentTurn().isHumanPlayer()) {
             computerMove(possibleMoves);
+            start();
         }
+
+
     }
 
     private void computerMove(List<Move> possibleMoves) {
@@ -151,8 +154,11 @@ public class GameController implements Initializable {
     public void start()
     {
         try {
+            List<Move> movesPLayed = game.getMovesPlayed();
+            Move movePlayed = movesPLayed.get(movesPLayed.size()-1);
             Stage stage = new Stage();
-            Label label = new Label("this is VBox");
+            Label label = new Label(movePlayed.toString());
+
             GameTimer ttimer = new GameTimer();
             sideBar.getChildren().add(label);
             sideBar.getChildren().add(ttimer.GameTimer());
