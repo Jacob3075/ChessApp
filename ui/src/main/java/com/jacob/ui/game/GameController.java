@@ -3,26 +3,17 @@ package com.jacob.ui.game;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -201,64 +192,5 @@ public class GameController implements Initializable {
 
 }
 
-
-//
-//    public class CountdownActionEvent implements EventHandler<ActionEvent> {
-//
-//        private Label timer;
-//        private Timeline animation;
-//
-//        public CountdownActionEvent() {
-//        }
-//
-//        @Override
-//        public void handle(ActionEvent event) {
-//            animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-//                try {
-//                    startCountdown();
-//                } catch (InterruptedException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }));
-//            animation.setCycleCount(Timeline.INDEFINITE);
-//            animation.play();
-//
-//        }
-//
-//        private void startCountdown() throws InterruptedException {
-//            Integer minutes = 9;
-//            Integer seconds = 59;
-//            timerMinutes.setText("10");
-//            timerSeconds.setText("00");
-//            Thread thrd = new Thread();
-//
-//            for (minutes = 9; minutes >= 0; minutes--) {
-//                for (seconds = 59; seconds >= 0; seconds--) {
-//                    timerMinutes.setText(String.valueOf(minutes));
-//                    System.out.println(minutes + "+" + seconds);
-//                    timerSeconds.setText(String.valueOf(seconds));
-//                    thrd.sleep(1000);
-//                }
-//            }
-//
-//        }
-//    }
-//
-//    public void start()
-//    {
-//        try {
-//            Stage stage = new Stage();
-//            Label label = new Label("this is VBox");
-//            GameTimer ttimer = new GameTimer();
-//            sideBar.getChildren().add(label);
-//            sideBar.getChildren().add(ttimer.GameTimer());
-//            Scene scene = new Scene(sideBar, 100, 100);
-//            stage.setScene(scene);
-//            stage.show();
-//        }
-//        catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
 
 
