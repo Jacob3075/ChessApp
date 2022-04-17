@@ -19,17 +19,17 @@ import java.util.ResourceBundle;
 import java.util.function.IntSupplier;
 
 @Component
-public class GameController implements Initializable {
+public class PlayNewGameController implements Initializable {
     @FXML private BoardController boardController;
     @FXML private VBox sideBar;
     private final ApplicationContext context;
     private final Resource pawnPromotionPopupFxml;
-    private final Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
     private final IntSupplier getPawnPromotionChoice = this::getPawnPromotionChoice;
 
-    public GameController(
+    public PlayNewGameController(
             ApplicationContext context,
             @Value("classpath:/view/pawn_promotion_popup.fxml") Resource pawnPromotionPopupFxml) {
         this.context = context;

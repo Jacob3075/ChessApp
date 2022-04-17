@@ -2,7 +2,7 @@
 
 <?import javafx.scene.Cursor?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?>
 <HBox minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/17"
-    fx:controller="com.jacob.ui.game.GameController" xmlns:fx="http://javafx.com/fxml/1">
+    fx:controller="com.jacob.ui.game.PlayNewGameController" xmlns:fx="http://javafx.com/fxml/1">
     <fx:include source="board.fxml" fx:id="board" />
     <VBox alignment="CENTER_RIGHT" fx:id="sideBar">
         <cursor>
