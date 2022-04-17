@@ -6,10 +6,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ECECE7;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomePage">
    <children>
-      <Button fx:id="userButton" layoutX="177.0" layoutY="102.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;" text="username" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
       <Button fx:id="newGameButton" layoutX="177.0" layoutY="181.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="245.0" style="-fx-background-color: #000000;" text="New Game" textFill="WHITE">
          <font>
             <Font size="18.0" />
@@ -20,5 +16,10 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Label layoutX="208.0" layoutY="90.0" text="\@username">
+         <font>
+            <Font name="Arial Black" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
