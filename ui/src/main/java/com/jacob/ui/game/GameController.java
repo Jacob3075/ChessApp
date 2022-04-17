@@ -3,15 +3,21 @@ package com.jacob.ui.game;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -25,10 +31,14 @@ import java.util.function.Consumer;
 
 @Component
 public class GameController implements Initializable {
+    @FXML
     public Text timerMinutes;
+    @FXML
     public Text timerSeconds;
-    @FXML private GridPane gameBoard;
-    @FXML private VBox sideBar;
+    @FXML
+    private GridPane gameBoard;
+    @FXML
+    private VBox sideBar;
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private final Game game = Game.createNewGame(true);
@@ -51,7 +61,11 @@ public class GameController implements Initializable {
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
-        startCountdown();
+//        try {
+//            startCountdown();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         initializeNextTurn();
     }
 
@@ -139,14 +153,71 @@ public class GameController implements Initializable {
         logger.info("message = {}", message);
     }
 
-    private void startCountdown() {
-        
+    private void startCountdown() throws InterruptedException {
+        Integer minutes = 9;
+        Integer seconds = 59;
+        timerMinutes.setText("10");
+        timerSeconds.setText("00");
+        Thread thrd = new Thread();
+
+        for (minutes = 9; minutes >= 0; minutes--) {
+            for (seconds = 59; seconds >= 0; seconds--) {
+                timerMinutes.setText(String.valueOf(minutes));
+                System.out.println(minutes + "+" + seconds);
+                timerSeconds.setText(String.valueOf(seconds));
+                thrd.sleep(1000);
+            }
+        }
+
     }
 
 
 
+}
 
 
+//
+//    public class CountdownActionEvent implements EventHandler<ActionEvent> {
+//
+//        private Label timer;
+//        private Timeline animation;
+//
+//        public CountdownActionEvent() {
+//        }
+//
+//        @Override
+//        public void handle(ActionEvent event) {
+//            animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+//                try {
+//                    startCountdown();
+//                } catch (InterruptedException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }));
+//            animation.setCycleCount(Timeline.INDEFINITE);
+//            animation.play();
+//
+//        }
+//
+//        private void startCountdown() throws InterruptedException {
+//            Integer minutes = 9;
+//            Integer seconds = 59;
+//            timerMinutes.setText("10");
+//            timerSeconds.setText("00");
+//            Thread thrd = new Thread();
+//
+//            for (minutes = 9; minutes >= 0; minutes--) {
+//                for (seconds = 59; seconds >= 0; seconds--) {
+//                    timerMinutes.setText(String.valueOf(minutes));
+//                    System.out.println(minutes + "+" + seconds);
+//                    timerSeconds.setText(String.valueOf(seconds));
+//                    thrd.sleep(1000);
+//                }
+//            }
+//
+//        }
+//    }
+//
 //    public void start()
 //    {
 //        try {
@@ -164,5 +235,4 @@ public class GameController implements Initializable {
 //        }
 //    }
 
-}
 
