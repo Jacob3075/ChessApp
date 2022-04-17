@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,8 @@ import java.util.function.Consumer;
 
 @Component
 public class GameController implements Initializable {
+    public Text timerMinutes;
+    public Text timerSeconds;
     @FXML private GridPane gameBoard;
     @FXML private VBox sideBar;
     private final ApplicationContext context;
@@ -48,8 +51,10 @@ public class GameController implements Initializable {
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
+        startCountdown();
         initializeNextTurn();
     }
+
 
     private void tileClicked(Tile tile) {
         if (!game.getCurrentTurn().isHumanPlayer()) {
@@ -64,7 +69,6 @@ public class GameController implements Initializable {
 
         endTile = tile;
         playMove();
-        start();
         startTile = null;
         endTile = null;
         initializeNextTurn();
@@ -135,22 +139,30 @@ public class GameController implements Initializable {
         logger.info("message = {}", message);
     }
 
-    public void start()
-    {
-        try {
-            Stage stage = new Stage();
-            Label label = new Label("this is VBox");
-            GameTimer ttimer = new GameTimer();
-            sideBar.getChildren().add(label);
-            sideBar.getChildren().add(ttimer.GameTimer());
-            Scene scene = new Scene(sideBar, 100, 100);
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    private void startCountdown() {
+        
     }
+
+
+
+
+
+//    public void start()
+//    {
+//        try {
+//            Stage stage = new Stage();
+//            Label label = new Label("this is VBox");
+//            GameTimer ttimer = new GameTimer();
+//            sideBar.getChildren().add(label);
+//            sideBar.getChildren().add(ttimer.GameTimer());
+//            Scene scene = new Scene(sideBar, 100, 100);
+//            stage.setScene(scene);
+//            stage.show();
+//        }
+//        catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 }
 

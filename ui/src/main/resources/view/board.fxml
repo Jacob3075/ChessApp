@@ -52,7 +52,7 @@
                                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <children>
-                                    <Text layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" wrappingWidth="98.11376190185547">
+                                    <Text fx:id="timerMinutes" layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" wrappingWidth="98.11376190185547">
                                        <font>
                                           <Font size="79.0" />
                                        </font>
@@ -61,7 +61,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="25.0" layoutY="53.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3E2C9;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Text layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="98.11376190185547">
+                                    <Text fx:id="timerSeconds" layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="98.11376190185547">
                                        <font>
                                           <Font size="79.0" />
                                        </font>
