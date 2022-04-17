@@ -80,13 +80,22 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="5.0" />
                      </GridPane.margin>
                      <children>
-                        <TableView layoutY="1.0" prefHeight="292.0" prefWidth="260.0" style="-fx-background-color: F3E2C9;">
+                        <TableView fx:id="displayMovesTable" layoutY="1.0" prefHeight="292.0" prefWidth="260.0" style="-fx-background-color: F3E2C9;">
                           <columns>
                             <TableColumn fx:id="moveNumberDisplay" prefWidth="56.33331298828125" text="Moves" />
                             <TableColumn fx:id="whiteMoveDisplay" prefWidth="100.33331298828125" text="White" />
                               <TableColumn fx:id="blackMoveDisplay" prefWidth="103.0" text="Black" />
                           </columns>
                         </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <Label contentDisplay="CENTER" layoutX="65.0" layoutY="21.0" text="Chess" textAlignment="CENTER">
+                           <font>
+                              <Font name="Arial Black" size="51.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </children>
