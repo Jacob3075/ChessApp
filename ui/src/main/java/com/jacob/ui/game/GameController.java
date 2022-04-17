@@ -5,6 +5,9 @@ import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -32,15 +37,17 @@ import java.util.function.Consumer;
 @Component
 public class GameController implements Initializable {
     @FXML
-    public Text timerMinutes;
+    private Text timerMinutes;
     @FXML
-    public Text timerSeconds;
+    private Text timerSeconds;
     @FXML
-    public TableColumn moveNumberDisplay;
+    private TableView<DisplayMoves> displayMovesTable;
     @FXML
-    public TableColumn whiteMoveDisplay;
+    private TableColumn<DisplayMoves, Integer> moveNumberDisplay;
     @FXML
-    public TableColumn blackMoveDisplay;
+    private TableColumn<DisplayMoves, String> whiteMoveDisplay;
+    @FXML
+    private TableColumn<DisplayMoves, String> blackMoveDisplay;
     @FXML
     private GridPane gameBoard;
     @FXML
@@ -73,6 +80,19 @@ public class GameController implements Initializable {
 //            e.printStackTrace();
 //        }
         initializeNextTurn();
+        displayMoves();
+    }
+
+    ObservableList<DisplayMoves> list = FXCollections.observableArrayList(
+            new DisplayMoves(1, "movebyW", "movebyB")
+    );
+
+    private void displayMoves() {
+        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, Integer>("Moves"));
+        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyW"));
+        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyB"));
+
+        displayMovesTable.setItems(list);
     }
 
 
