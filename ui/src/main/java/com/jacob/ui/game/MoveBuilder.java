@@ -12,6 +12,8 @@ public class MoveBuilder {
     private Tile endTile;
 
     public void addTile(Tile tile) {
+        tile.tileClicked();
+
         if (startTile == null) {
             startTile = tile;
             return;
