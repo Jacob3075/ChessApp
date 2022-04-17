@@ -1,6 +1,6 @@
 package com.jacob.ui.utils;
 
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,7 +16,7 @@ public class JavaFxUtils {
     private JavaFxUtils() {}
 
     public static void changeScene(
-            @NotNull ActionEvent event,
+            @NotNull Event event,
             @NotNull Resource targetSceneFxml,
             @NotNull ApplicationContext context) {
         try {
