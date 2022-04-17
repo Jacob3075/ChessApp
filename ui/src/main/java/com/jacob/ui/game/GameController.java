@@ -36,6 +36,12 @@ public class GameController implements Initializable {
     @FXML
     public Text timerSeconds;
     @FXML
+    public TableColumn moveNumberDisplay;
+    @FXML
+    public TableColumn whiteMoveDisplay;
+    @FXML
+    public TableColumn blackMoveDisplay;
+    @FXML
     private GridPane gameBoard;
     @FXML
     private VBox sideBar;
