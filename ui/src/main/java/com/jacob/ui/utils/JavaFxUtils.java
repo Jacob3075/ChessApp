@@ -31,4 +31,18 @@ public class JavaFxUtils {
             e.getCause();
         }
     }
+
+    public static void showPopupAndWait(@NotNull Resource targetSceneFxml, Object controller) {
+        try {
+            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            targetFxmlLoader.setController(controller);
+            Scene targetScene = new Scene(targetFxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(targetScene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 }
