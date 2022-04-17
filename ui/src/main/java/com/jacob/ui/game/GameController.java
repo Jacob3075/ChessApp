@@ -83,18 +83,6 @@ public class GameController implements Initializable {
         displayMoves();
     }
 
-    ObservableList<DisplayMoves> list = FXCollections.observableArrayList(
-            new DisplayMoves(1, "movebyW", "movebyB")
-    );
-
-    private void displayMoves() {
-        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, Integer>("Moves"));
-        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyW"));
-        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyB"));
-
-        displayMovesTable.setItems(list);
-    }
-
 
     private void tileClicked(Tile tile) {
         if (!game.getCurrentTurn().isHumanPlayer()) {
@@ -177,6 +165,18 @@ public class GameController implements Initializable {
 
     private void showGameMessages(String message) {
         logger.info("message = {}", message);
+    }
+
+    ObservableList<DisplayMoves> list = FXCollections.observableArrayList(
+            new DisplayMoves(1, "movebyW", "movebyB")
+    );
+
+    private void displayMoves() {
+        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, Integer>("Moves"));
+        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyW"));
+        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<DisplayMoves, String>("movebyB"));
+
+        displayMovesTable.setItems(list);
     }
 
     private void startCountdown() throws InterruptedException {
