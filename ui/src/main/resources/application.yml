@@ -1,9 +1,10 @@
 spring:
   jpa:
     show-sql: true
+    generate-ddl: true
     hibernate:
       ddl-auto: update
   datasource:
-    url: "jdbc:mysql://localhost:3306/chess_db"
+    url: "jdbc:mysql://localhost:3306/chessdb"
     username: root
-    password: 1234
+    password: Lingaraj@123

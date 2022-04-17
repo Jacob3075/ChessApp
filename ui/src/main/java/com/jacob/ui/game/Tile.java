@@ -19,9 +19,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class Tile extends Label {
-    private static final Paint WHITE = Paint.valueOf("#202020");
-    private static final Paint BLACK = Paint.valueOf("#FFF1D9");
-    private static final Paint SELECTED = Paint.valueOf("#A6560D");
+    private static final Paint WHITE = Paint.valueOf("#F0D9B5");
+    private static final Paint BLACK = Paint.valueOf("#B58863");
+    private static final Paint SELECTED = Paint.valueOf("#CBCF74");
     private Paint color;
     @Nullable private Piece piece;
     private final Position position;
@@ -32,7 +32,7 @@ public class Tile extends Label {
         this.position = new Position(row, column);
         this.color = position.isWhiteCell() ? WHITE : BLACK;
 
-        setPrefSize(100, 100);
+        setPrefSize(75, 75);
         setAlignment(Pos.CENTER);
         setOnMouseClicked(this::tileClicked);
 
@@ -63,8 +63,8 @@ public class Tile extends Label {
 
         Image image = new Image(getClass().getResource(pieceResourcePath).toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(75);
+        imageView.setFitWidth(75);
         imageView.setPreserveRatio(true);
         setGraphic(imageView);
     }
