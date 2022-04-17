@@ -15,7 +15,7 @@ public class JavaFxUtils {
 
     private JavaFxUtils() {}
 
-    public static void changeScene(
+    public static Object changeScene(
             @NotNull Event event,
             @NotNull Resource targetSceneFxml,
             @NotNull ApplicationContext context) {
@@ -26,13 +26,16 @@ public class JavaFxUtils {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(targetScene);
             stage.show();
+            return targetFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
             e.getCause();
+            return null;
         }
     }
 
-    public static void showPopupAndWait(@NotNull Resource targetSceneFxml, Object controller) {
+    public static void showPopupAndWait(
+            @NotNull Resource targetSceneFxml, @NotNull Object controller) {
         try {
             FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
             targetFxmlLoader.setController(controller);

@@ -1,9 +1,11 @@
 package com.jacob.ui.home;
 
+import com.jacob.ui.game.ViewPastGameController;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
@@ -21,19 +23,34 @@ public class HomePageController implements Initializable {
     @FXML private Button newGameButton;
     @FXML private Button savedGamesButton;
     private final Resource viewPastGameFxml;
+    private final Resource playNewGameFxml;
     private final ApplicationContext context;
 
     public HomePageController(
             @Value("classpath:/view/view_past_game.fxml") Resource viewPastGameFxml,
+            @Value("classpath:/view/play_new_game.fxml") Resource playNewGameFxml,
             ApplicationContext context) {
         this.viewPastGameFxml = viewPastGameFxml;
+        this.playNewGameFxml = playNewGameFxml;
         this.context = context;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        savedGamesButton.setOnMouseClicked(
-                event -> JavaFxUtils.changeScene(event, viewPastGameFxml, context));
+        savedGamesButton.setOnMouseClicked(this::openPastGame);
+        newGameButton.setOnMouseClicked(this::playNewGame);
+    }
+
+    private void playNewGame(MouseEvent mouseEvent) {
+        JavaFxUtils.changeScene(mouseEvent, playNewGameFxml, context);
+    }
+
+    private void openPastGame(MouseEvent event) {
+        var viewPastGameController =
+                (ViewPastGameController) JavaFxUtils.changeScene(event, viewPastGameFxml, context);
+        assert viewPastGameController != null;
+        viewPastGameController.setDate(1);
+        viewPastGameController.initializePage();
     }
 }
