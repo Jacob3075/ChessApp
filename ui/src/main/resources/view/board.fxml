@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?><?import javafx.scene.layout.GridPane?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?>
-<HBox minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/17"
-    fx:controller="com.jacob.ui.game.GameController" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane gridLinesVisible="true" fx:id="gameBoard">
-        <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-        </cursor>
-    </GridPane>
-    <VBox alignment="CENTER_RIGHT" fx:id="sideBar" />
-</HBox>
+<?import javafx.scene.Cursor?><?import javafx.scene.layout.GridPane?>
+<GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.jacob.ui.game.BoardController" gridLinesVisible="true" fx:id="boardGrid">
+    <cursor>
+        <Cursor fx:constant="OPEN_HAND" />
+    </cursor>
+</GridPane>

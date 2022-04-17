@@ -18,7 +18,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private final ApplicationContext context;
 
     public StageInitializer(
-            @Value("classpath:/view/board.fxml") Resource fxml, ApplicationContext context) {
+            @Value("classpath:/view/play_new_game.fxml") Resource fxml, ApplicationContext context) {
         this.fxml = fxml;
         this.context = context;
     }

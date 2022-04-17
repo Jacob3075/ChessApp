@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
 
     public LoginController(
             @Value("classpath:/view/register_page.fxml") Resource registerSceneFxml,
-            @Value("classpath:/view/board.fxml") Resource gameSceneFxml,
+            @Value("classpath:/view/play_new_game.fxml") Resource gameSceneFxml,
             ApplicationContext context,
             UserService userService) {
         this.registerSceneFxml = registerSceneFxml;

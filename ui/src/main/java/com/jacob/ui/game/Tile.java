@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -33,14 +34,14 @@ public class Tile extends Label {
 
         setPrefSize(100, 100);
         setAlignment(Pos.CENTER);
-        setOnMouseClicked(mouseEvent -> tileClicked());
+        setOnMouseClicked(this::tileClicked);
 
         updateTileImage();
     }
 
-    private void tileClicked() {
-        this.color = SELECTED;
-        this.onClicked.accept(this);
+    private void tileClicked(MouseEvent mouseEvent) {
+        color = SELECTED;
+        onClicked.accept(this);
         updateTileImage();
     }
 
@@ -70,12 +71,12 @@ public class Tile extends Label {
 
     public void setPiece(@Nullable Piece piece) {
         this.piece = piece;
-        this.color = position.isWhiteCell() ? WHITE : BLACK;
+        color = position.isWhiteCell() ? WHITE : BLACK;
         updateTileImage();
     }
 
     public void resetColor() {
-        this.color = position.isWhiteCell() ? WHITE : BLACK;
+        color = position.isWhiteCell() ? WHITE : BLACK;
         updateTileImage();
     }
 

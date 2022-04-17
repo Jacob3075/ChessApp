@@ -5,8 +5,6 @@ import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +12,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
 @Component
 public class GameController implements Initializable {
-    @FXML private GridPane gameBoard;
+    @FXML private BoardController boardController;
     @FXML private VBox sideBar;
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -35,15 +31,9 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Tile> rowCells = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            rowCells.clear();
-            for (int j = 0; j < 8; j++) {
-                rowCells.add(new Tile(i, j, this::tileClicked));
-            }
-            gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
-        }
-        updateBoard();
+        boardController.setOnTileClicked(this::tileClicked);
+        boardController.setBoard(game.getBoard());
+        boardController.initializeBoard();
         initializeNextTurn();
     }
 
@@ -65,26 +55,6 @@ public class GameController implements Initializable {
         initializeNextTurn();
     }
 
-    private void updateBoard() {
-        gameBoard.getChildren().stream()
-                .mapMulti(this::getAllTilesInGameBoard)
-                .forEach(this::updateTilesWithPieces);
-    }
-
-    private void getAllTilesInGameBoard(Node node, Consumer<Tile> stream) {
-        try {
-            stream.accept(((Tile) node));
-        } catch (Exception ignored) {
-        }
-    }
-
-    private void updateTilesWithPieces(Tile tile) {
-        tile.setPiece(
-                game.getBoard()
-                        .getSpot(tile.getPosition().row(), tile.getPosition().column())
-                        .getPiece());
-    }
-
     private void playMove() {
         Spot startSpot = startTile.convertToSpot(game);
         Spot endSpot = endTile.convertToSpot(game);
@@ -98,7 +68,7 @@ public class GameController implements Initializable {
         }
 
         game.makeMove(move);
-        updateBoard();
+        boardController.updateBoard();
     }
 
     private void initializeNextTurn() {
@@ -115,7 +85,7 @@ public class GameController implements Initializable {
 
     private void computerMove(List<Move> possibleMoves) {
         game.makeComputerMove(possibleMoves);
-        updateBoard();
+        boardController.updateBoard();
         initializeNextTurn();
     }
 
