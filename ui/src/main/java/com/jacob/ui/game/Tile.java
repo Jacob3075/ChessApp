@@ -75,11 +75,6 @@ public class Tile extends Label {
         updateTileImage();
     }
 
-    public void resetColor() {
-        color = position.isWhiteCell() ? WHITE : BLACK;
-        updateTileImage();
-    }
-
     public Position getPosition() {
         return position;
     }

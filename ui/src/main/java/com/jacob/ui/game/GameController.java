@@ -1,7 +1,6 @@
 package com.jacob.ui.game;
 
 import com.jacob.engine.board.Move;
-import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,8 +21,7 @@ public class GameController implements Initializable {
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private final Game game = Game.createNewGame(true);
-    private Tile startTile;
-    private Tile endTile;
+    private final MoveBuilder moveBuilder = new MoveBuilder();
 
     public GameController(ApplicationContext context) {
         this.context = context;
@@ -43,27 +41,20 @@ public class GameController implements Initializable {
             return;
         }
 
-        if (startTile == null) {
-            startTile = tile;
-            return;
-        }
+        moveBuilder.addTile(tile);
+        Move move = moveBuilder.buildMoveOrNull(game, () -> 1);
 
-        endTile = tile;
-        playMove();
-        startTile = null;
-        endTile = null;
+        if (move == null) return;
+
+        playMove(move);
         initializeNextTurn();
+        moveBuilder.reset();
     }
 
-    private void playMove() {
-        Spot startSpot = startTile.convertToSpot(game);
-        Spot endSpot = endTile.convertToSpot(game);
-        Move move = new Move(game.getCurrentTurn(), startSpot, endSpot, () -> 1);
-
+    private void playMove(Move move) {
         if (!game.isMovePossible(move, game.getCurrentTurn())) {
             showGameMessages("Move is not possible, " + move);
-            startTile.resetColor();
-            endTile.resetColor();
+            boardController.updateBoard();
             return;
         }
 
