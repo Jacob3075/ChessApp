@@ -52,25 +52,26 @@
                                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
                                  <children>
-                                    <Text fx:id="timerMinutes" layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" wrappingWidth="98.11376190185547">
+                                    <Label fx:id="timerMinutes" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="1.0" prefHeight="75.0" prefWidth="82.0" text="10" textAlignment="CENTER">
                                        <font>
-                                          <Font size="79.0" />
+                                          <Font name="Arial Black" size="54.0" />
                                        </font>
-                                    </Text>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="25.0" layoutY="53.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3E2C9;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Text fx:id="timerSeconds" layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="98.11376190185547">
-                                       <font>
-                                          <Font size="79.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
                                  <GridPane.margin>
                                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                  </GridPane.margin>
+                                 <children>
+                                    <Label fx:id="timerSeconds" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="1.0" prefHeight="75.0" prefWidth="82.0" text="00" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Arial Black" size="54.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
                               </AnchorPane>
+                              <Button fx:id="trialButton" mnemonicParsing="false" text="Button" />
                            </children>
                         </GridPane>
                      </children>
