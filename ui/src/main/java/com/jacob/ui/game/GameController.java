@@ -3,17 +3,23 @@ package com.jacob.ui.game;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -28,9 +34,11 @@ import java.util.function.Consumer;
 @Component
 public class GameController implements Initializable {
     @FXML
-    private Text timerMinutes;
+    private Button trialButton;
     @FXML
-    private Text timerSeconds;
+    private Label timerMinutes;
+    @FXML
+    private Label timerSeconds;
     @FXML
     private TableView<DisplayMoves> displayMovesTable;
     @FXML
@@ -70,6 +78,7 @@ public class GameController implements Initializable {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
+        startCountDown();
         initializeNextTurn();
         displayMoves();
     }
@@ -170,25 +179,81 @@ public class GameController implements Initializable {
         displayMovesTable.setItems(list);
     }
 
-    private void startCountdown() throws InterruptedException {
-        Integer minutes = 9;
-        Integer seconds = 59;
-        timerMinutes.setText("10");
-        timerSeconds.setText("00");
-        Thread thrd = new Thread();
 
-        for (minutes = 9; minutes >= 0; minutes--) {
-            for (seconds = 59; seconds >= 0; seconds--) {
-                timerMinutes.setText(String.valueOf(minutes));
-                System.out.println(minutes + "+" + seconds);
-                timerSeconds.setText(String.valueOf(seconds));
-                thrd.sleep(1000);
-            }
+    //Countdown timer
+
+    private static final Integer STARTTIME = 59;
+    private static final Integer STARTMIN = 9;
+    private Timeline timeline;
+    private Integer timeSeconds = STARTTIME;
+    private Integer timeMinutes = STARTMIN;
+    public void startCountDown() {
+        timerSeconds.setText(timeSeconds.toString());
+        if(timeMinutes<10) {
+            timerMinutes.setText("0"+timeMinutes.toString());
         }
+        trialButton.setOnAction(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                trialButton.setOnAction(new EventHandler() {
+                    @Override
+                    public void handle(Event event) {
+                        if (timeline != null) {
+                            timeline.stop();
+                        }
+                        timeSeconds = STARTTIME;
+                        timeline = new Timeline();
+                        timeline.setCycleCount(Timeline.INDEFINITE);
+                        timeline.getKeyFrames().add(
+                                new KeyFrame(Duration.seconds(1),
+                                        new EventHandler() {
+                                            @Override
+                                            public void handle(Event event) {
+                                                timeSeconds--;
+                                                if(timeSeconds<10) {
+                                                    timerSeconds.setText("0"+timeSeconds.toString());
+                                                }
+                                                else {
+                                                    timerSeconds.setText(timeSeconds.toString());
+                                                }
+                                                if (timeSeconds <= 0) {
+                                                    timeline.stop();
+                                                }
+//                                                for (timeMinutes = 9; timeMinutes >= 0; timeMinutes--) {
+//                                                    for (timeSeconds = 59; timeSeconds >= 0; timeSeconds--) {
+//                                                        timerMinutes.setText(timeMinutes.toString());
+//                                                        timerSeconds.setText(timeSeconds.toString());
+//                                                    }
+//                                                }
+                                            }
+                                        }));
+                        timeline.playFromStart();
+                    }
 
+                });
+            }
+        });
     }
 
 
+
+//    private void startCountdown() throws InterruptedException {
+//        Integer minutes = 9;
+//        Integer seconds = 59;
+//        timerMinutes.setText("10");
+//        timerSeconds.setText("00");
+//        Thread thrd = new Thread();
+//
+//        for (minutes = 9; minutes >= 0; minutes--) {
+//            for (seconds = 59; seconds >= 0; seconds--) {
+//                timerMinutes.setText(String.valueOf(minutes));
+//                System.out.println(minutes + "+" + seconds);
+//                timerSeconds.setText(String.valueOf(seconds));
+//                thrd.sleep(1000);
+//            }
+//        }
+//
+//    }
 
 }
 
