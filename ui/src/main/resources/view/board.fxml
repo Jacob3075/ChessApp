@@ -71,7 +71,6 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <Button fx:id="trialButton" mnemonicParsing="false" text="Button" />
                            </children>
                         </GridPane>
                      </children>

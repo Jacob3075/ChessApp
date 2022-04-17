@@ -7,12 +7,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,8 +33,6 @@ import java.util.function.Consumer;
 @Component
 public class GameController implements Initializable {
     @FXML
-    private Button trialButton;
-    @FXML
     private Label timerMinutes;
     @FXML
     private Label timerSeconds;
@@ -49,14 +46,11 @@ public class GameController implements Initializable {
     private TableColumn<DisplayMoves, String> blackMoveDisplay;
     @FXML
     private GridPane gameBoard;
-    @FXML
-    private VBox sideBar;
     private final ApplicationContext context;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private final Game game = Game.createNewGame(true);
     private Tile startTile;
     private Tile endTile;
-    private GameTimer ttimer;
 
     public GameController(ApplicationContext context) {
         this.context = context;
@@ -73,11 +67,6 @@ public class GameController implements Initializable {
             gameBoard.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
         updateBoard();
-//        try {
-//            startCountdown();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         startCountDown();
         initializeNextTurn();
         displayMoves();
@@ -183,57 +172,116 @@ public class GameController implements Initializable {
     //Countdown timer
 
     private static final Integer STARTTIME = 59;
-    private static final Integer STARTMIN = 9;
-    private Timeline timeline;
+    private static final Integer STARTMIN = 1;
+    private Timeline timeline = new Timeline();
     private Integer timeSeconds = STARTTIME;
     private Integer timeMinutes = STARTMIN;
     public void startCountDown() {
-        timerSeconds.setText(timeSeconds.toString());
-        if(timeMinutes<10) {
-            timerMinutes.setText("0"+timeMinutes.toString());
-        }
-        trialButton.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                trialButton.setOnAction(new EventHandler() {
+            if (!(timeMinutes < 0)) {
+                timerSeconds.setText(timeSeconds.toString());
+                if(timeMinutes<10) {
+                    timerMinutes.setText("0"+timeMinutes.toString());
+                }
+                else {
+                    timerMinutes.setText(timeMinutes.toString());
+                }
+                KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
                     @Override
-                    public void handle(Event event) {
-                        if (timeline != null) {
-                            timeline.stop();
+                    public void handle(ActionEvent event) {
+                        timeSeconds--;
+                        boolean isSecondsZero = timeSeconds == 0;
+                        boolean isMinutesZero = timeMinutes == 0;
+                        if (isSecondsZero) {
+                            timeSeconds--;
+                            timeSeconds = 60;
+                            timeMinutes--;
+                            System.out.println(timeMinutes+"+"+timeSeconds);
                         }
-                        timeSeconds = STARTTIME;
-                        timeline = new Timeline();
-                        timeline.setCycleCount(Timeline.INDEFINITE);
-                        timeline.getKeyFrames().add(
-                                new KeyFrame(Duration.seconds(1),
-                                        new EventHandler() {
-                                            @Override
-                                            public void handle(Event event) {
-                                                timeSeconds--;
-                                                if(timeSeconds<10) {
-                                                    timerSeconds.setText("0"+timeSeconds.toString());
-                                                }
-                                                else {
-                                                    timerSeconds.setText(timeSeconds.toString());
-                                                }
-                                                if (timeSeconds <= 0) {
-                                                    timeline.stop();
-                                                }
-//                                                for (timeMinutes = 9; timeMinutes >= 0; timeMinutes--) {
-//                                                    for (timeSeconds = 59; timeSeconds >= 0; timeSeconds--) {
-//                                                        timerMinutes.setText(timeMinutes.toString());
-//                                                        timerSeconds.setText(timeSeconds.toString());
-//                                                    }
-//                                                }
-                                            }
-                                        }));
-                        timeline.playFromStart();
+                        if (isMinutesZero) {
+                            timeline.stop();
+                            timeMinutes = 0;
+                            timeSeconds = 0;
+                        }
+                        if(timeSeconds<10) {
+                            timerSeconds.setText("0"+timeSeconds.toString());
+                        }
+                        else {
+                            timerSeconds.setText(timeSeconds.toString());
+                        }
+                        if(timeMinutes<10) {
+                            timerMinutes.setText("0"+timeMinutes.toString());
+                        }
+                        else {
+                            timerMinutes.setText(timeMinutes.toString());
+                        }
                     }
-
                 });
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.getKeyFrames().add(keyframe);
+                timeline.playFromStart();
             }
-        });
     }
+
+}
+
+
+
+
+
+
+
+//    private static final Integer STARTTIME = 59;
+//    private static final Integer STARTMIN = 9;
+//    private Timeline timeline;
+//    private Integer timeSeconds = STARTTIME;
+//    private Integer timeMinutes = STARTMIN;
+//    public void startCountDown() {
+//        timerSeconds.setText(timeSeconds.toString());
+//        if(timeMinutes<10) {
+//            timerMinutes.setText("0"+timeMinutes.toString());
+//        }
+//        trialButton.setOnAction(new EventHandler() {
+//            @Override
+//            public void handle(Event event) {
+//                trialButton.setOnAction(new EventHandler() {
+//                    @Override
+//                    public void handle(Event event) {
+//                        if (timeline != null) {
+//                            timeline.stop();
+//                        }
+//                        timeSeconds = STARTTIME;
+//                        timeline = new Timeline();
+//                        timeline.setCycleCount(Timeline.INDEFINITE);
+//                        timeline.getKeyFrames().add(
+//                                new KeyFrame(Duration.seconds(1),
+//                                        new EventHandler() {
+//                                            @Override
+//                                            public void handle(Event event) {
+//                                                timeSeconds--;
+//                                                if(timeSeconds<10) {
+//                                                    timerSeconds.setText("0"+timeSeconds.toString());
+//                                                }
+//                                                else {
+//                                                    timerSeconds.setText(timeSeconds.toString());
+//                                                }
+//                                                if (timeSeconds <= 0) {
+//                                                    timeline.stop();
+//                                                }
+////                                                for (timeMinutes = 9; timeMinutes >= 0; timeMinutes--) {
+////                                                    for (timeSeconds = 59; timeSeconds >= 0; timeSeconds--) {
+////                                                        timerMinutes.setText(timeMinutes.toString());
+////                                                        timerSeconds.setText(timeSeconds.toString());
+////                                                    }
+////                                                }
+//                                            }
+//                                        }));
+//                        timeline.playFromStart();
+//                    }
+//
+//                });
+//            }
+//        });
+//    }
 
 
 
@@ -255,7 +303,6 @@ public class GameController implements Initializable {
 //
 //    }
 
-}
 
 
 
