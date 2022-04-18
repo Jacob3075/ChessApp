@@ -238,4 +238,8 @@ public class Game {
     public Spot getSpot(int row, int column) {
         return this.board.getSpot(row, column);
     }
+
+    public List<Move> getMovesPlayed() {
+        return movesPlayed;
+    }
 }
