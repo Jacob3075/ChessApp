@@ -22,7 +22,7 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<PastGame> pastGamesPlayed;
 
     public User(String username, String password) {

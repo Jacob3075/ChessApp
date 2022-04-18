@@ -1,9 +1,6 @@
 package com.jacob.database.game_data;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString
+@AllArgsConstructor
 public class PlayedMove {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -19,4 +19,8 @@ public class UserService {
     public User registerUser(String username, String password) {
         return userRepository.save(new User(username, password));
     }
+
+    public User saveUser(User user) {
+        return userRepository.saveAndFlush(user);
+    }
 }
