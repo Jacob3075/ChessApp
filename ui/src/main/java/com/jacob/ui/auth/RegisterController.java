@@ -14,7 +14,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class RegisterController implements Initializable {
     @FXML private TextField usernameTextField;
     @FXML private PasswordField setPasswordField;

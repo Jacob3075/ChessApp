@@ -1,6 +1,6 @@
 package com.jacob.ui.utils;
 
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,8 +15,8 @@ public class JavaFxUtils {
 
     private JavaFxUtils() {}
 
-    public static void changeScene(
-            @NotNull ActionEvent event,
+    public static Object changeScene(
+            @NotNull Event event,
             @NotNull Resource targetSceneFxml,
             @NotNull ApplicationContext context) {
         try {
@@ -26,6 +26,23 @@ public class JavaFxUtils {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(targetScene);
             stage.show();
+            return targetFxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+            return null;
+        }
+    }
+
+    public static void showPopupAndWait(
+            @NotNull Resource targetSceneFxml, @NotNull Object controller) {
+        try {
+            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            targetFxmlLoader.setController(controller);
+            Scene targetScene = new Scene(targetFxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(targetScene);
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
             e.getCause();
