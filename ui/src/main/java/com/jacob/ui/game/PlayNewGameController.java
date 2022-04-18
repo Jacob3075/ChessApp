@@ -7,20 +7,14 @@ import com.jacob.engine.game.GameStatus;
 import com.jacob.ui.auth.UserAuthState;
 import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,23 +32,33 @@ import java.util.function.IntSupplier;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PlayNewGameController implements Initializable {
-    private final UserAuthState userAuthState;
-    private final Timeline timeline = new Timeline();
-    ObservableList<DisplayMoves> list =
-            FXCollections.observableArrayList(new DisplayMoves(1, "movebyW", "movebyB"));
     @FXML private BoardController boardController;
     @FXML private Label timerMinutes;
     @FXML private Label timerSeconds;
     @FXML private TableView<DisplayMoves> displayMovesTable;
-
+    private final UserAuthState userAuthState;
+    private final GameTimer gameTimer =
+            new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds);
+    ObservableList<DisplayMoves> list =
+            FXCollections.observableArrayList(new DisplayMoves(1, "whiteMove", "blackMove"));
+    @FXML private TableColumn<DisplayMoves, String> blackMoveDisplay;
     private final ApplicationContext context;
     private final Resource pawnPromotionPopupFxml;
     private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
-    private final IntSupplier getPawnPromotionChoice = this::getPawnPromotionChoice;
     @FXML private TableColumn<DisplayMoves, Integer> moveNumberDisplay;
+    private final IntSupplier getPawnPromotionChoice = this::getPawnPromotionChoice;
     @FXML private TableColumn<DisplayMoves, String> whiteMoveDisplay;
+
+    public PlayNewGameController(
+            ApplicationContext context,
+            @Value("classpath:/view/pawn_promotion_popup.fxml") Resource pawnPromotionPopupFxml,
+            UserAuthState userAuthState) {
+        this.context = context;
+        this.pawnPromotionPopupFxml = pawnPromotionPopupFxml;
+        this.userAuthState = userAuthState;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,7 +66,7 @@ public class PlayNewGameController implements Initializable {
         boardController.setBoard(game.getBoard());
         boardController.initializeBoard();
         initializeNextTurn();
-        startCountDown();
+        gameTimer.startCountDown();
         displayMoves();
     }
 
@@ -122,17 +126,6 @@ public class PlayNewGameController implements Initializable {
         return controller.getSelectedPiece();
     }
 
-    @FXML private TableColumn<DisplayMoves, String> blackMoveDisplay;
-
-    public PlayNewGameController(
-            ApplicationContext context,
-            @Value("classpath:/view/pawn_promotion_popup.fxml") Resource pawnPromotionPopupFxml,
-            UserAuthState userAuthState) {
-        this.context = context;
-        this.pawnPromotionPopupFxml = pawnPromotionPopupFxml;
-        this.userAuthState = userAuthState;
-    }
-
     private void showGameMessages(String message) {
         logger.info("message = {}", message);
     }
@@ -150,84 +143,20 @@ public class PlayNewGameController implements Initializable {
         // game.getStatus(), ButtonType.OK).showAndWait();
 
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
+        // FIXME: TAKES TOO LONG TO SAVE THE GAME, COULD BE DONE IN BACKGROUND THREAD.
         userAuthState.updateUserDetails(pastGame);
-    }
-
-    // Countdown timer
-
-    private static final Integer STARTTIME = 9;
-    private static final Integer STARTMIN = 0;
-
-    private void displayMoves() {
-        moveNumberDisplay.setCellValueFactory(
-                new PropertyValueFactory<DisplayMoves, Integer>("Moves"));
-        whiteMoveDisplay.setCellValueFactory(
-                new PropertyValueFactory<DisplayMoves, String>("movebyW"));
-        blackMoveDisplay.setCellValueFactory(
-                new PropertyValueFactory<DisplayMoves, String>("movebyB"));
-
-        displayMovesTable.setItems(list);
-    }
-    private Integer timeSeconds = STARTTIME;
-    private Integer timeMinutes = STARTMIN;
-
-    public void startCountDown() {
-        if (!(timeMinutes < 0)) {
-            Platform.runLater(() -> timerSeconds.setText(timeSeconds.toString()));
-            if (timeMinutes < 10) {
-                Platform.runLater(() -> timerMinutes.setText("0" + timeMinutes.toString()));
-            } else {
-                Platform.runLater(() -> timerMinutes.setText(timeMinutes.toString()));
-            }
-            KeyFrame keyframe =
-                    new KeyFrame(
-                            Duration.seconds(1),
-                            new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    timeSeconds--;
-                                    boolean isSecondsZero = timeSeconds == 0;
-                                    boolean isMinutesZero = timeMinutes == 0;
-                                    if (isSecondsZero) {
-                                        timeSeconds--;
-                                        timeSeconds = 60;
-                                        timeMinutes--;
-                                        System.out.println(timeMinutes + "+" + timeSeconds);
-                                    }
-                                    if (isMinutesZero && isSecondsZero) {
-                                        timeline.stop();
-                                        gameTimeOver();
-                                        timeMinutes = 0;
-                                        timeSeconds = 0;
-                                    }
-                                    if (timeSeconds < 10) {
-                                        Platform.runLater(
-                                                () ->
-                                                        timerSeconds.setText(
-                                                                "0" + timeSeconds.toString()));
-                                    } else {
-                                        Platform.runLater(
-                                                () -> timerSeconds.setText(timeSeconds.toString()));
-                                    }
-                                    if (timeMinutes < 10) {
-                                        Platform.runLater(
-                                                () ->
-                                                        timerMinutes.setText(
-                                                                "0" + timeMinutes.toString()));
-                                    } else {
-                                        Platform.runLater(
-                                                () -> timerMinutes.setText(timeMinutes.toString()));
-                                    }
-                                }
-                            });
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.getKeyFrames().add(keyframe);
-            timeline.playFromStart();
-        }
     }
 
     private void gameTimeOver() {
         //        game.setAndDeclareWin();
         //        gameCompleted();
+    }
+
+    public void displayMoves() {
+        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<>("Moves"));
+        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("whiteMove"));
+        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("blackMove"));
+
+        displayMovesTable.setItems(list);
     }
 }
