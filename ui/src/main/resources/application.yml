@@ -3,6 +3,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    generate-ddl: true
   datasource:
     url: "jdbc:mysql://localhost:3306/chess_db"
     username: root

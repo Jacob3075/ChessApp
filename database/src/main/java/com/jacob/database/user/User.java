@@ -1,14 +1,13 @@
 package com.jacob.database.user;
 
+import com.jacob.database.game_data.PastGame;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +21,9 @@ public class User {
 
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<PastGame> pastGamesPlayed;
 
     public User(String username, String password) {
         this.username = username;
