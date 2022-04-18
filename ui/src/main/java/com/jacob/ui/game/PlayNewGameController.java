@@ -2,18 +2,18 @@ package com.jacob.ui.game;
 
 import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
+import com.jacob.engine.game.GameStatus;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -103,10 +103,15 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void initializeNextTurn() {
+        if (game.getStatus() != GameStatus.ACTIVE) {
+            checkGameWinner();
+            return;
+        }
+
         List<Move> possibleMoves = game.getCurrentTurn().generatePossibleMoves(game.getBoard());
 
         if (possibleMoves.isEmpty()) {
-            gameCompleted();
+            checkGameWinner();
             return;
         }
         if (!game.getCurrentTurn().isHumanPlayer()) {
@@ -126,12 +131,16 @@ public class PlayNewGameController implements Initializable {
         return controller.getSelectedPiece();
     }
 
-    private void gameCompleted() {
-
+    private void checkGameWinner() {
         if (game.getCurrentTurn().isKingUnderAttack(game.getBoard())) {
             game.setAndDeclareWin();
         } else game.setAndDeclareDraw();
+        gameCompleted();
+    }
+
+    private void gameCompleted() {
         showGameMessages("Game Over: " + game.getStatus());
+        new Alert(Alert.AlertType.CONFIRMATION, "Game Over, winner is: " + game.getStatus(), ButtonType.OK).showAndWait();
     }
 
     private void showGameMessages(String message) {
@@ -154,19 +163,19 @@ public class PlayNewGameController implements Initializable {
 
     //Countdown timer
 
-    private static final Integer STARTTIME = 59;
-    private static final Integer STARTMIN = 1;
+    private static final Integer STARTTIME = 9;
+    private static final Integer STARTMIN = 0;
     private Timeline timeline = new Timeline();
     private Integer timeSeconds = STARTTIME;
     private Integer timeMinutes = STARTMIN;
 
     public void startCountDown() {
         if (!(timeMinutes < 0)) {
-            timerSeconds.setText(timeSeconds.toString());
+            Platform.runLater(() -> timerSeconds.setText(timeSeconds.toString()));
             if (timeMinutes < 10) {
-                timerMinutes.setText("0" + timeMinutes.toString());
+                Platform.runLater(() -> timerMinutes.setText("0" + timeMinutes.toString()));
             } else {
-                timerMinutes.setText(timeMinutes.toString());
+                Platform.runLater(() -> timerMinutes.setText(timeMinutes.toString()));
             }
             KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
                 @Override
@@ -180,26 +189,32 @@ public class PlayNewGameController implements Initializable {
                         timeMinutes--;
                         System.out.println(timeMinutes + "+" + timeSeconds);
                     }
-                    if (isMinutesZero) {
+                    if (isMinutesZero && isSecondsZero) {
                         timeline.stop();
+                        gameTimeOver();
                         timeMinutes = 0;
                         timeSeconds = 0;
                     }
                     if (timeSeconds < 10) {
-                        timerSeconds.setText("0" + timeSeconds.toString());
+                        Platform.runLater(() -> timerSeconds.setText("0" + timeSeconds.toString()));
                     } else {
-                        timerSeconds.setText(timeSeconds.toString());
+                        Platform.runLater(() -> timerSeconds.setText(timeSeconds.toString()));
                     }
                     if (timeMinutes < 10) {
-                        timerMinutes.setText("0" + timeMinutes.toString());
+                        Platform.runLater(() -> timerMinutes.setText("0" + timeMinutes.toString()));
                     } else {
-                        timerMinutes.setText(timeMinutes.toString());
+                        Platform.runLater(() -> timerMinutes.setText(timeMinutes.toString()));
                     }
                 }
-            });;
+            });
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.getKeyFrames().add(keyframe);
             timeline.playFromStart();
         }
+    }
+
+    private void gameTimeOver() {
+        game.setAndDeclareWin();
+        gameCompleted();
     }
 }
