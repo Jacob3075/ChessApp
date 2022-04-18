@@ -22,7 +22,11 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<PastGame> pastGamesPlayed;
 
     public User(String username, String password) {

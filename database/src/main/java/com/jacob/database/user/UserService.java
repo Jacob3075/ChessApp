@@ -21,6 +21,6 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 }

@@ -23,7 +23,7 @@ public class PastGame {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "pastGame")
+    @OneToMany(mappedBy = "pastGame", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlayedMove> playedMoves;
 
     private String createdTime;
