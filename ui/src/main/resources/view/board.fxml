@@ -2,7 +2,7 @@
 
 <?import javafx.scene.Cursor?><?import javafx.scene.layout.GridPane?>
 <GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-    fx:controller="com.jacob.ui.game.BoardController" gridLinesVisible="true" fx:id="boardGrid">
+          fx:controller="com.jacob.ui.game.BoardController" gridLinesVisible="true" fx:id="boardGrid">
     <cursor>
         <Cursor fx:constant="OPEN_HAND" />
     </cursor>

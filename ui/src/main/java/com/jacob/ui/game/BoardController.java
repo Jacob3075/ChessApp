@@ -4,12 +4,15 @@ import com.jacob.engine.board.Board;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BoardController {
     @FXML private GridPane boardGrid;
     private Consumer<Tile> onTileClicked;

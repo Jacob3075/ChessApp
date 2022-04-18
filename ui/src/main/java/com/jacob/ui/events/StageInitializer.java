@@ -18,7 +18,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private final ApplicationContext context;
 
     public StageInitializer(
-            @Value("classpath:/view/play_new_game.fxml") Resource fxml, ApplicationContext context) {
+            @Value("classpath:/view/home_page.fxml") Resource fxml, ApplicationContext context) {
         this.fxml = fxml;
         this.context = context;
     }
@@ -30,7 +30,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             FXMLLoader fxmlLoader = new FXMLLoader(fxml.getURL());
             fxmlLoader.setControllerFactory(context::getBean);
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 800, 600);
+            Scene scene = new Scene(root, 900, 600);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -11,7 +11,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class LoginController implements Initializable {
     @FXML private Button registerButton;
     @FXML private Button loginButton;

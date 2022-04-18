@@ -40,12 +40,16 @@ public class Tile extends Label {
     }
 
     private void tileClicked(MouseEvent mouseEvent) {
-        color = SELECTED;
         onClicked.accept(this);
+    }
+
+    public void tileClicked() {
+        color = SELECTED;
         updateTileImage();
     }
 
     private void updateTileImage() {
+
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
         setBackground(new Background(tileBackground));
 
@@ -71,11 +75,6 @@ public class Tile extends Label {
 
     public void setPiece(@Nullable Piece piece) {
         this.piece = piece;
-        color = position.isWhiteCell() ? WHITE : BLACK;
-        updateTileImage();
-    }
-
-    public void resetColor() {
         color = position.isWhiteCell() ? WHITE : BLACK;
         updateTileImage();
     }
