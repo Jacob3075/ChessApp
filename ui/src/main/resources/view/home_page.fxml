@@ -16,7 +16,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="208.0" layoutY="90.0" text="\@username">
+      <Label fx:id="username" layoutX="208.0" layoutY="90.0" text="\@username">
          <font>
             <Font name="Arial Black" size="30.0" />
          </font>

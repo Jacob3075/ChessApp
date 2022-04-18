@@ -2,6 +2,8 @@ package com.jacob.database.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -10,8 +12,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean login(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password).isPresent();
+    public Optional<User> login(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     public User registerUser(String username, String password) {

@@ -33,16 +33,19 @@ public class LoginController implements Initializable {
     private final Resource gameSceneFxml;
     private final ApplicationContext context;
     private final UserService userService;
+    private final UserAuthState userAuthState;
 
     public LoginController(
             @Value("classpath:/view/register_page.fxml") Resource registerSceneFxml,
-            @Value("classpath:/view/play_new_game.fxml") Resource gameSceneFxml,
+            @Value("classpath:/view/home_page.fxml") Resource gameSceneFxml,
             ApplicationContext context,
-            UserService userService) {
+            UserService userService,
+            UserAuthState userAuthState) {
         this.registerSceneFxml = registerSceneFxml;
         this.gameSceneFxml = gameSceneFxml;
         this.context = context;
         this.userService = userService;
+        this.userAuthState = userAuthState;
     }
 
     @Override
@@ -63,12 +66,15 @@ public class LoginController implements Initializable {
             return;
         }
 
-        if (userService.login(username, password)) {
-            loginMessageLabel.setText("Logged in");
-            JavaFxUtils.changeScene(event, gameSceneFxml, context);
-        } else {
-            loginMessageLabel.setText("Invalid username and password");
-        }
+        userService
+                .login(username, password)
+                .ifPresentOrElse(
+                        user -> {
+                            loginMessageLabel.setText("Logged in");
+                            userAuthState.loginUser(user);
+                            JavaFxUtils.changeScene(event, gameSceneFxml, context);
+                        },
+                        () -> loginMessageLabel.setText("Invalid username and password"));
     }
 
     private void showRegisterScreen(@NotNull ActionEvent event) {
