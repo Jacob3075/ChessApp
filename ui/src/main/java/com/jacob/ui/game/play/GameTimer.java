@@ -1,4 +1,4 @@
-package com.jacob.ui.game;
+package com.jacob.ui.game.play;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

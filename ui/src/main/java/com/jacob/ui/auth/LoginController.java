@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
     private final UserAuthState userAuthState;
 
     public LoginController(
-            @Value("classpath:/view/register_page.fxml") Resource registerSceneFxml,
+            @Value("classpath:/view/auth/register_page.fxml") Resource registerSceneFxml,
             @Value("classpath:/view/home_page.fxml") Resource gameSceneFxml,
             ApplicationContext context,
             UserService userService,

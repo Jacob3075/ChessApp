@@ -1,6 +1,7 @@
-package com.jacob.ui.game;
+package com.jacob.ui.game.view;
 
 import com.jacob.engine.game.Game;
+import com.jacob.ui.game.BoardController;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.config.BeanDefinition;

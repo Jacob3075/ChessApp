@@ -1,7 +1,7 @@
 package com.jacob.ui.home;
 
 import com.jacob.ui.auth.UserAuthState;
-import com.jacob.ui.game.ViewPastGameController;
+import com.jacob.ui.game.view.ViewPastGameController;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,8 +30,8 @@ public class HomePageController implements Initializable {
     private final UserAuthState userAuthState;
 
     public HomePageController(
-            @Value("classpath:/view/view_past_game.fxml") Resource viewPastGameFxml,
-            @Value("classpath:/view/play_new_game.fxml") Resource playNewGameFxml,
+            @Value("classpath:/view/game/view/view_past_game.fxml") Resource viewPastGameFxml,
+            @Value("classpath:/view/game/play/play_new_game.fxml") Resource playNewGameFxml,
             ApplicationContext context,
             UserAuthState userAuthState) {
         this.viewPastGameFxml = viewPastGameFxml;

@@ -1,10 +1,13 @@
-package com.jacob.ui.game;
+package com.jacob.ui.game.play;
 
 import com.jacob.database.game_data.PastGame;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
 import com.jacob.engine.game.GameStatus;
 import com.jacob.ui.auth.UserAuthState;
+import com.jacob.ui.game.BoardController;
+import com.jacob.ui.game.MoveHistory;
+import com.jacob.ui.game.Tile;
 import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
@@ -31,7 +34,7 @@ public class PlayNewGameController implements Initializable {
     @FXML private BoardController boardController;
     @FXML private Label timerMinutes;
     @FXML private Label timerSeconds;
-    @FXML private TableView<DisplayMoves> displayMovesTable;
+    @FXML private TableView<MoveHistory.DisplayMoves> displayMovesTable;
     private final UserAuthState userAuthState;
     private MoveHistory moveHistory;
     private final ApplicationContext context;
@@ -44,7 +47,8 @@ public class PlayNewGameController implements Initializable {
 
     public PlayNewGameController(
             ApplicationContext context,
-            @Value("classpath:/view/pawn_promotion_popup.fxml") Resource pawnPromotionPopupFxml,
+            @Value("classpath:/view/game/play/pawn_promotion_popup.fxml")
+                    Resource pawnPromotionPopupFxml,
             @Value("classpath:/view/home_page.fxml") Resource homeScreenPopupFxml,
             UserAuthState userAuthState) {
         this.context = context;

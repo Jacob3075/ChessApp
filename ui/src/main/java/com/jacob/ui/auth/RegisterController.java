@@ -38,7 +38,7 @@ public class RegisterController implements Initializable {
     private final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     public RegisterController(
-            @Value("classpath:/view/login_page.fxml") Resource loginSceneFxml,
+            @Value("classpath:/view/auth/login_page.fxml") Resource loginSceneFxml,
             ApplicationContext context,
             UserService userService) {
         this.loginSceneFxml = loginSceneFxml;

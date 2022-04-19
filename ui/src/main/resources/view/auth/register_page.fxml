@@ -7,7 +7,7 @@
         <AnchorPane BorderPane.alignment="CENTER" prefHeight="407.0" prefWidth="228.0">
             <ImageView fitHeight="400.0" fitWidth="285.0" layoutX="-53.0" pickOnBounds="true"
                 preserveRatio="true">
-                <Image url="@../images/chessLogo.jpg" />
+                <Image url="@../../images/chessLogo.jpg" />
             </ImageView>
         </AnchorPane>
     </left>

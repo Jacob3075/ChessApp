@@ -1,8 +1,9 @@
-package com.jacob.ui.game;
+package com.jacob.ui.game.play;
 
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
+import com.jacob.ui.game.Tile;
 import org.springframework.lang.Nullable;
 
 import java.util.function.IntSupplier;
