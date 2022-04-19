@@ -138,18 +138,21 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void gameCompleted() {
-        showGameMessages("Game Over: " + game.getStatus());
-        //        new Alert(Alert.AlertType.CONFIRMATION, "Game Over, winner is: " +
-        // game.getStatus(), ButtonType.OK).showAndWait();
+        //        new Alert(
+        //                        Alert.AlertType.CONFIRMATION,
+        //                        "Game Over, winner is: " + game.getStatus(),
+        //                        ButtonType.OK)
+        //                .showAndWait();
 
-        PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         // FIXME: TAKES TOO LONG TO SAVE THE GAME, COULD BE DONE IN BACKGROUND THREAD.
+        PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);
+        showGameMessages("Game Over: " + game.getStatus());
     }
 
     private void gameTimeOver() {
-        //        game.setAndDeclareWin();
-        //        gameCompleted();
+        game.setAndDeclareWin();
+        gameCompleted();
     }
 
     public void displayMoves() {

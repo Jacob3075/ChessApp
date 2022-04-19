@@ -24,6 +24,6 @@ public class UserAuthState {
 
     public void updateUserDetails(PastGame pastGame) {
         user.getPastGamesPlayed().add(pastGame);
-        user = userService.saveUser(user);
+        userService.saveUser(user);
     }
 }

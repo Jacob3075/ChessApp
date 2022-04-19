@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class GameTimer {
-    private static final int START_SECONDS = 59;
-    private static final int START_MIN = 1;
+    private static final int START_SECONDS = 10;
+    private static final int START_MIN = 0;
 
     private final Runnable gameTimeOver;
     private final Label timerMinutes;

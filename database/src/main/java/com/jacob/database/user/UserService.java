@@ -1,5 +1,6 @@
 package com.jacob.database.user;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,7 +21,8 @@ public class UserService {
         return userRepository.save(new User(username, password));
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    @Async
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }
