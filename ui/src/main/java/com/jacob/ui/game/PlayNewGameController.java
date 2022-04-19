@@ -37,8 +37,7 @@ public class PlayNewGameController implements Initializable {
     @FXML private Label timerSeconds;
     @FXML private TableView<DisplayMoves> displayMovesTable;
     private final UserAuthState userAuthState;
-    private final GameTimer gameTimer =
-            new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds);
+    private GameTimer gameTimer;
     ObservableList<DisplayMoves> list =
             FXCollections.observableArrayList(new DisplayMoves(1, "whiteMove", "blackMove"));
     @FXML private TableColumn<DisplayMoves, String> blackMoveDisplay;
@@ -62,6 +61,7 @@ public class PlayNewGameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        gameTimer = new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds);
         boardController.setOnTileClicked(this::tileClicked);
         boardController.setBoard(game.getBoard());
         boardController.initializeBoard();
@@ -153,9 +153,9 @@ public class PlayNewGameController implements Initializable {
     }
 
     public void displayMoves() {
-        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<>("Moves"));
-        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("whiteMove"));
-        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("blackMove"));
+        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<>("moves"));
+        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("moveByW"));
+        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("moveByB"));
 
         displayMovesTable.setItems(list);
     }
