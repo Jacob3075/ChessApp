@@ -58,8 +58,8 @@ public class Main {
             if (game.getCurrentTurn().isKingUnderAttack(game.getBoard())) game.setAndDeclareWin();
             else game.setAndDeclareDraw();
         } else {
-            if (!game.getCurrentTurn().isHumanPlayer()) game.makeComputerMove(possibleMoves);
-            else makeHumanMove();
+//            if (!game.getCurrentTurn().isHumanPlayer()) game.makeComputerMove(possibleMoves);
+//            else makeHumanMove();
         }
     }
 

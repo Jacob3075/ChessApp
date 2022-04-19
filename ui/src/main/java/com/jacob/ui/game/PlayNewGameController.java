@@ -7,14 +7,10 @@ import com.jacob.engine.game.GameStatus;
 import com.jacob.ui.auth.UserAuthState;
 import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,18 +33,13 @@ public class PlayNewGameController implements Initializable {
     @FXML private Label timerSeconds;
     @FXML private TableView<DisplayMoves> displayMovesTable;
     private final UserAuthState userAuthState;
-    private GameTimer gameTimer;
-    ObservableList<DisplayMoves> list =
-            FXCollections.observableArrayList(new DisplayMoves(1, "whiteMove", "blackMove"));
-    @FXML private TableColumn<DisplayMoves, String> blackMoveDisplay;
+    private MoveHistory moveHistory;
     private final ApplicationContext context;
     private final Resource pawnPromotionPopupFxml;
     private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
-    @FXML private TableColumn<DisplayMoves, Integer> moveNumberDisplay;
     private final IntSupplier getPawnPromotionChoice = this::getPawnPromotionChoice;
-    @FXML private TableColumn<DisplayMoves, String> whiteMoveDisplay;
 
     public PlayNewGameController(
             ApplicationContext context,
@@ -61,13 +52,15 @@ public class PlayNewGameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gameTimer = new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds);
+        new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds).startCountDown();
+        moveHistory = new MoveHistory(displayMovesTable);
+        moveHistory.initializeView();
+
         boardController.setOnTileClicked(this::tileClicked);
         boardController.setBoard(game.getBoard());
         boardController.initializeBoard();
+
         initializeNextTurn();
-        gameTimer.startCountDown();
-        displayMoves();
     }
 
     private void tileClicked(Tile tile) {
@@ -94,6 +87,7 @@ public class PlayNewGameController implements Initializable {
         }
 
         game.makeMove(move);
+        moveHistory.updatePlayedMoves(move);
         boardController.updateBoard();
     }
 
@@ -115,8 +109,10 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void computerMove(List<Move> possibleMoves) {
-        game.makeComputerMove(possibleMoves);
+        Move computerMove = game.getComputerMove(possibleMoves);
+        game.makeValidMove(computerMove);
         boardController.updateBoard();
+        moveHistory.updatePlayedMoves(computerMove);
         initializeNextTurn();
     }
 
@@ -144,7 +140,6 @@ public class PlayNewGameController implements Initializable {
         //                        ButtonType.OK)
         //                .showAndWait();
 
-        // FIXME: TAKES TOO LONG TO SAVE THE GAME, COULD BE DONE IN BACKGROUND THREAD.
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);
         showGameMessages("Game Over: " + game.getStatus());
@@ -153,13 +148,5 @@ public class PlayNewGameController implements Initializable {
     private void gameTimeOver() {
         game.setAndDeclareWin();
         gameCompleted();
-    }
-
-    public void displayMoves() {
-        moveNumberDisplay.setCellValueFactory(new PropertyValueFactory<>("moves"));
-        whiteMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("moveByW"));
-        blackMoveDisplay.setCellValueFactory(new PropertyValueFactory<>("moveByB"));
-
-        displayMovesTable.setItems(list);
     }
 }

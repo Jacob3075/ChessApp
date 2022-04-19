@@ -70,11 +70,16 @@ public class Game {
         setStatus(GameStatus.DRAW);
     }
 
-    public void makeComputerMove(List<Move> possibleMoves) {
-        int randomIndex = random.nextInt(possibleMoves.size());
-        Move computerMove = possibleMoves.get(randomIndex);
-        makeValidMove(computerMove);
+    @Deprecated
+    public void makeComputerMove(Move move) {
+        makeValidMove(move);
     }
+
+    public Move getComputerMove(List<Move> possibleMoves){
+
+        int randomIndex = random.nextInt(possibleMoves.size());
+        return possibleMoves.get(randomIndex);
+}
 
     public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
