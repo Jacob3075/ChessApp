@@ -10,11 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -29,20 +27,12 @@ public class LoginController implements Initializable {
     @FXML private TextField usernameTextField;
     @FXML private PasswordField enterPasswordField;
 
-    private final Resource registerSceneFxml;
-    private final Resource gameSceneFxml;
     private final ApplicationContext context;
     private final UserService userService;
     private final UserAuthState userAuthState;
 
     public LoginController(
-            @Value("classpath:/view/auth/register_page.fxml") Resource registerSceneFxml,
-            @Value("classpath:/view/home_page.fxml") Resource gameSceneFxml,
-            ApplicationContext context,
-            UserService userService,
-            UserAuthState userAuthState) {
-        this.registerSceneFxml = registerSceneFxml;
-        this.gameSceneFxml = gameSceneFxml;
+            ApplicationContext context, UserService userService, UserAuthState userAuthState) {
         this.context = context;
         this.userService = userService;
         this.userAuthState = userAuthState;
@@ -72,12 +62,12 @@ public class LoginController implements Initializable {
                         user -> {
                             loginMessageLabel.setText("Logged in");
                             userAuthState.loginUser(user);
-                            JavaFxUtils.changeScene(event, gameSceneFxml, context);
+                            JavaFxUtils.changeScene(event, JavaFxUtils.Views.HOME, context);
                         },
                         () -> loginMessageLabel.setText("Invalid username and password"));
     }
 
     private void showRegisterScreen(@NotNull ActionEvent event) {
-        JavaFxUtils.changeScene(event, registerSceneFxml, context);
+        JavaFxUtils.changeScene(event, JavaFxUtils.Views.REGISTER, context);
     }
 }

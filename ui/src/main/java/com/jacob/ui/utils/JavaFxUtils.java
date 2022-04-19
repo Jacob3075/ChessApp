@@ -17,10 +17,11 @@ public class JavaFxUtils {
 
     public static Object changeScene(
             @NotNull Event event,
-            @NotNull Resource targetSceneFxml,
+            @NotNull String targetScenePath,
             @NotNull ApplicationContext context) {
         try {
-            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            FXMLLoader targetFxmlLoader =
+                    new FXMLLoader(JavaFxUtils.class.getResource(targetScenePath));
             targetFxmlLoader.setControllerFactory(context::getBean);
             Scene targetScene = new Scene(targetFxmlLoader.load());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -36,10 +37,11 @@ public class JavaFxUtils {
 
     public static Object changeScene(
             @NotNull Stage stage,
-            @NotNull Resource targetSceneFxml,
+            @NotNull String targetScenePath,
             @NotNull ApplicationContext context) {
         try {
-            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            FXMLLoader targetFxmlLoader =
+                    new FXMLLoader(JavaFxUtils.class.getResource(targetScenePath));
             targetFxmlLoader.setControllerFactory(context::getBean);
             Scene targetScene = new Scene(targetFxmlLoader.load());
             stage.setScene(targetScene);
@@ -65,5 +67,18 @@ public class JavaFxUtils {
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+    public static class Views {
+        public static final String LOGIN = "/view/auth/login_page.fxml";
+        public static final String REGISTER = "/view/auth/register_page.fxml";
+        public static final String HOME = "/view/home_page.fxml";
+        public static final String SAVED_GAMES = "/view/saved_games_page.fxml";
+        public static final String PLAY_GAME = "/view/game/play/play_new_game.fxml";
+        public static final String PAWN_PROMOTION_POPUP =
+                "/view/game/play/pawn_promotion_popup.fxml";
+        public static final String VIEW_GAME = "/view/game/view/view_past_game.fxml";
+
+        private Views() {}
     }
 }

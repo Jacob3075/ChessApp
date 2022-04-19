@@ -13,11 +13,9 @@ import javafx.scene.control.TextField;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -32,16 +30,11 @@ public class RegisterController implements Initializable {
     @FXML private Button registerButton;
     @FXML private Button loginButton;
     @FXML private Label registerMessageLabel;
-    private final Resource loginSceneFxml;
     private final ApplicationContext context;
     private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-    public RegisterController(
-            @Value("classpath:/view/auth/login_page.fxml") Resource loginSceneFxml,
-            ApplicationContext context,
-            UserService userService) {
-        this.loginSceneFxml = loginSceneFxml;
+    public RegisterController(ApplicationContext context, UserService userService) {
         this.context = context;
         this.userService = userService;
     }
@@ -79,6 +72,6 @@ public class RegisterController implements Initializable {
     }
 
     private void showLoginScreen(@NotNull ActionEvent event) {
-        JavaFxUtils.changeScene(event, loginSceneFxml, context);
+        JavaFxUtils.changeScene(event, JavaFxUtils.Views.LOGIN, context);
     }
 }

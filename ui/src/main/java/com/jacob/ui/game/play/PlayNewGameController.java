@@ -39,7 +39,6 @@ public class PlayNewGameController implements Initializable {
     private MoveHistory moveHistory;
     private final ApplicationContext context;
     private final Resource pawnPromotionPopupFxml;
-    private final Resource homeScreenPopupFxml;
     private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
@@ -49,11 +48,9 @@ public class PlayNewGameController implements Initializable {
             ApplicationContext context,
             @Value("classpath:/view/game/play/pawn_promotion_popup.fxml")
                     Resource pawnPromotionPopupFxml,
-            @Value("classpath:/view/home_page.fxml") Resource homeScreenPopupFxml,
             UserAuthState userAuthState) {
         this.context = context;
         this.pawnPromotionPopupFxml = pawnPromotionPopupFxml;
-        this.homeScreenPopupFxml = homeScreenPopupFxml;
         this.userAuthState = userAuthState;
     }
 
@@ -142,15 +139,19 @@ public class PlayNewGameController implements Initializable {
 
     private void gameCompleted() {
         showGameMessages("Game Over: " + game.getStatus());
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Game Over, winner is: " +
-                game.getStatus(), ButtonType.OK);
+        Alert a =
+                new Alert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Game Over, winner is: " + game.getStatus(),
+                        ButtonType.OK);
         a.show();
 
         final Button btnFoo = (Button) a.getDialogPane().lookupButton(ButtonType.OK);
-        btnFoo.setOnAction( event -> {
-            Stage stage = (Stage) (timerMinutes).getScene().getWindow();
-            JavaFxUtils.changeScene(stage, homeScreenPopupFxml, context);
-        } );
+        btnFoo.setOnAction(
+                event -> {
+                    Stage stage = (Stage) (timerMinutes).getScene().getWindow();
+                    JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
+                });
 
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);
