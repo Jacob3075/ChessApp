@@ -34,6 +34,24 @@ public class JavaFxUtils {
         }
     }
 
+    public static Object changeScene(
+            @NotNull Stage stage,
+            @NotNull Resource targetSceneFxml,
+            @NotNull ApplicationContext context) {
+        try {
+            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            targetFxmlLoader.setControllerFactory(context::getBean);
+            Scene targetScene = new Scene(targetFxmlLoader.load());
+            stage.setScene(targetScene);
+            stage.show();
+            return targetFxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+            return null;
+        }
+    }
+
     public static void showPopupAndWait(
             @NotNull Resource targetSceneFxml, @NotNull Object controller) {
         try {

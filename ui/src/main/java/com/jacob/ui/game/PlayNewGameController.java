@@ -9,12 +9,14 @@ import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.IntSupplier;
 
@@ -43,6 +46,7 @@ public class PlayNewGameController implements Initializable {
     @FXML private TableColumn<DisplayMoves, String> blackMoveDisplay;
     private final ApplicationContext context;
     private final Resource pawnPromotionPopupFxml;
+    private final Resource homeScreenPopupFxml;
     private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
@@ -53,9 +57,11 @@ public class PlayNewGameController implements Initializable {
     public PlayNewGameController(
             ApplicationContext context,
             @Value("classpath:/view/pawn_promotion_popup.fxml") Resource pawnPromotionPopupFxml,
+            @Value("classpath:/view/home_page.fxml") Resource homeScreenPopupFxml,
             UserAuthState userAuthState) {
         this.context = context;
         this.pawnPromotionPopupFxml = pawnPromotionPopupFxml;
+        this.homeScreenPopupFxml = homeScreenPopupFxml;
         this.userAuthState = userAuthState;
     }
 
@@ -139,8 +145,16 @@ public class PlayNewGameController implements Initializable {
 
     private void gameCompleted() {
         showGameMessages("Game Over: " + game.getStatus());
-        //        new Alert(Alert.AlertType.CONFIRMATION, "Game Over, winner is: " +
-        // game.getStatus(), ButtonType.OK).showAndWait();
+
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Game Over, winner is: " +
+        game.getStatus(), ButtonType.OK);
+        a.show();
+
+        final Button btnFoo = (Button) a.getDialogPane().lookupButton(ButtonType.OK);
+        btnFoo.setOnAction( event -> {
+            Stage stage = (Stage) (timerMinutes).getScene().getWindow();
+            JavaFxUtils.changeScene(stage, homeScreenPopupFxml, context);
+        } );
 
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         // FIXME: TAKES TOO LONG TO SAVE THE GAME, COULD BE DONE IN BACKGROUND THREAD.
@@ -148,8 +162,8 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void gameTimeOver() {
-        //        game.setAndDeclareWin();
-        //        gameCompleted();
+                game.setAndDeclareWin();
+                gameCompleted();
     }
 
     public void displayMoves() {
