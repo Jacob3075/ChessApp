@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,7 @@ public class RegisterController implements Initializable {
     }
 
     private void showLoginScreen(@NotNull ActionEvent event) {
-        JavaFxUtils.changeScene(event, JavaFxUtils.Views.LOGIN, context);
+        Stage stage = (Stage) registerMessageLabel.getScene().getWindow();
+        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.LOGIN, context);
     }
 }

@@ -139,19 +139,20 @@ public class PlayNewGameController implements Initializable {
 
     private void gameCompleted() {
         showGameMessages("Game Over: " + game.getStatus());
-        Alert a =
+        Alert alert =
                 new Alert(
                         Alert.AlertType.CONFIRMATION,
                         "Game Over, winner is: " + game.getStatus(),
                         ButtonType.OK);
-        a.show();
 
-        final Button btnFoo = (Button) a.getDialogPane().lookupButton(ButtonType.OK);
-        btnFoo.setOnAction(
+        final Button actionButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+        actionButton.setOnAction(
                 event -> {
-                    Stage stage = (Stage) (timerMinutes).getScene().getWindow();
+                    Stage stage = (Stage) timerMinutes.getScene().getWindow();
                     JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
                 });
+
+        alert.show();
 
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);

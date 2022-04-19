@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -38,13 +39,15 @@ public class HomePageController implements Initializable {
     }
 
     private void playNewGame(MouseEvent mouseEvent) {
-        JavaFxUtils.changeScene(mouseEvent, JavaFxUtils.Views.PLAY_GAME, context);
+        Stage stage = (Stage) username.getScene().getWindow();
+        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.PLAY_GAME, context);
     }
 
     private void openPastGame(MouseEvent event) {
+        Stage stage = (Stage) username.getScene().getWindow();
         var viewPastGameController =
                 (ViewPastGameController)
-                        JavaFxUtils.changeScene(event, JavaFxUtils.Views.VIEW_GAME, context);
+                        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.VIEW_GAME, context);
         assert viewPastGameController != null;
         viewPastGameController.setDate(1);
         viewPastGameController.initializePage();
