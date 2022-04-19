@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 
@@ -33,9 +32,10 @@ public class JavaFxUtils {
     }
 
     public static void showPopupAndWait(
-            @NotNull Resource targetSceneFxml, @NotNull Object controller) {
+            @NotNull String targetScenePath, @NotNull Object controller) {
         try {
-            FXMLLoader targetFxmlLoader = new FXMLLoader(targetSceneFxml.getURL());
+            FXMLLoader targetFxmlLoader =
+                    new FXMLLoader(JavaFxUtils.class.getResource(targetScenePath));
             targetFxmlLoader.setController(controller);
             Scene targetScene = new Scene(targetFxmlLoader.load());
             Stage stage = new Stage();

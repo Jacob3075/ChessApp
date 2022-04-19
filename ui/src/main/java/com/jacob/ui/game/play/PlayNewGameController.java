@@ -16,11 +16,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -38,19 +36,13 @@ public class PlayNewGameController implements Initializable {
     private final UserAuthState userAuthState;
     private MoveHistory moveHistory;
     private final ApplicationContext context;
-    private final Resource pawnPromotionPopupFxml;
     private final Logger logger = LoggerFactory.getLogger(PlayNewGameController.class);
     private final Game game = Game.createNewGame(true);
     private final MoveBuilder moveBuilder = new MoveBuilder();
     private final IntSupplier getPawnPromotionChoice = this::getPawnPromotionChoice;
 
-    public PlayNewGameController(
-            ApplicationContext context,
-            @Value("classpath:/view/game/play/pawn_promotion_popup.fxml")
-                    Resource pawnPromotionPopupFxml,
-            UserAuthState userAuthState) {
+    public PlayNewGameController(ApplicationContext context, UserAuthState userAuthState) {
         this.context = context;
-        this.pawnPromotionPopupFxml = pawnPromotionPopupFxml;
         this.userAuthState = userAuthState;
     }
 
@@ -122,7 +114,7 @@ public class PlayNewGameController implements Initializable {
 
     private int getPawnPromotionChoice() {
         PawnPromotionPopupController controller = new PawnPromotionPopupController();
-        JavaFxUtils.showPopupAndWait(pawnPromotionPopupFxml, controller);
+        JavaFxUtils.showPopupAndWait(JavaFxUtils.Views.PAWN_PROMOTION_POPUP, controller);
         return controller.getSelectedPiece();
     }
 
