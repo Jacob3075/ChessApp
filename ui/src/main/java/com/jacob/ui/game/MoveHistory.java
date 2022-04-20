@@ -8,15 +8,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MoveHistory {
-    private final TableView<DisplayMoves> displayMovesTable;
     private final ObservableList<DisplayMoves> list = FXCollections.observableArrayList();
     private Move whiteMove;
 
-    public MoveHistory(TableView<DisplayMoves> displayMovesTable) {
-        this.displayMovesTable = displayMovesTable;
-    }
-
-    public void initializeView() {
+    public void initializeView(TableView<DisplayMoves> displayMovesTable) {
         ObservableList<TableColumn<DisplayMoves, ?>> columns = displayMovesTable.getColumns();
         columns.get(0).setCellValueFactory(new PropertyValueFactory<>("moveIndex"));
         columns.get(1).setCellValueFactory(new PropertyValueFactory<>("whiteMove"));

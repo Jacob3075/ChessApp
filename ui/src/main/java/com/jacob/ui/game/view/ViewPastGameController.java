@@ -26,9 +26,7 @@ public class ViewPastGameController {
 
         //        pastGame.getPlayedMoves().stream().map(playedMove -> new Move)
 
-        boardController.setBoard(game.getBoard());
-        boardController.setOnTileClicked(tile -> {});
-        boardController.initializeBoard();
+        boardController.initializeBoard(game.getBoard(), tile -> {});
     }
 
     public void setDate(PastGame data) {

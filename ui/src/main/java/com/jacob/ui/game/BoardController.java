@@ -15,12 +15,10 @@ import java.util.function.Consumer;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BoardController {
     @FXML private GridPane boardGrid;
-    private Consumer<Tile> onTileClicked;
     private Board board;
 
-    public void initializeBoard() {
-        assert board != null;
-        assert onTileClicked != null;
+    public void initializeBoard(Board board, Consumer<Tile> onTileClicked) {
+        this.board = board;
 
         ArrayList<Tile> rowCells = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -53,9 +51,5 @@ public class BoardController {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public void setOnTileClicked(Consumer<Tile> onTileClicked) {
-        this.onTileClicked = onTileClicked;
     }
 }
