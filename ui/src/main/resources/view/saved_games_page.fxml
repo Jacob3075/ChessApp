@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?><?import javafx.scene.control.TableColumn?><?import javafx.scene.control.TableView?><?import javafx.scene.layout.AnchorPane?><?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?><?import javafx.scene.control.ListView?><?import javafx.scene.layout.AnchorPane?><?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #ECECE7;"
     prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
-    fx:controller="view.SavedGamesPage">
-    <children>
-        <TableView layoutX="171.0" layoutY="76.0" prefHeight="301.0" prefWidth="257.0">
-            <columns>
-                <TableColumn prefWidth="50.33331298828125" text="S.No." />
-                <TableColumn prefWidth="205.33331807454425" text="Past Games" />
-            </columns>
-        </TableView>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="14.0"
-            prefHeight="61.0" prefWidth="320.0" text="Saved Games" textAlignment="CENTER">
-            <font>
-                <Font name="Bernard MT Condensed" size="43.0" />
-            </font>
-        </Label>
-   </children>
+    fx:controller="com.jacob.ui.saved.SavedGamesController">
+    <ListView layoutX="50.0" layoutY="81.0" prefHeight="285.0" prefWidth="500.0"
+        fx:id="pastGames" />
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="14.0"
+        prefHeight="61.0" prefWidth="320.0" text="Saved Games" textAlignment="CENTER">
+        <font>
+            <Font name="Bernard MT Condensed" size="43.0" />
+        </font>
+    </Label>
 </AnchorPane>

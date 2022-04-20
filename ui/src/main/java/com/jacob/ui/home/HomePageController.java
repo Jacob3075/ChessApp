@@ -1,7 +1,6 @@
 package com.jacob.ui.home;
 
 import com.jacob.ui.auth.UserAuthState;
-import com.jacob.ui.game.view.ViewPastGameController;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,11 +44,6 @@ public class HomePageController implements Initializable {
 
     private void openPastGame(MouseEvent event) {
         Stage stage = (Stage) username.getScene().getWindow();
-        var viewPastGameController =
-                (ViewPastGameController)
-                        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.VIEW_GAME, context);
-        assert viewPastGameController != null;
-        viewPastGameController.setDate(1);
-        viewPastGameController.initializePage();
+        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.SAVED_GAMES, context);
     }
 }
