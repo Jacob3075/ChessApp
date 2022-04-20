@@ -1,5 +1,6 @@
 package com.jacob.ui.game.view;
 
+import com.jacob.database.game_data.PastGame;
 import com.jacob.engine.game.Game;
 import com.jacob.ui.game.BoardController;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ViewPastGameController {
     @FXML private BoardController boardController;
     @FXML private VBox sideBar;
-    private Integer data;
+    private PastGame pastGame;
     private final Game game;
 
     public ViewPastGameController() {
@@ -21,15 +22,17 @@ public class ViewPastGameController {
     }
 
     public void initializePage() {
-        assert data != null;
+        assert pastGame != null;
+
+        //        pastGame.getPlayedMoves().stream().map(playedMove -> new Move)
 
         boardController.setBoard(game.getBoard());
         boardController.setOnTileClicked(tile -> {});
         boardController.initializeBoard();
     }
 
-    public void setDate(int data) {
-        this.data = data;
+    public void setDate(PastGame data) {
+        this.pastGame = data;
     }
 
     private void showNextMove() {

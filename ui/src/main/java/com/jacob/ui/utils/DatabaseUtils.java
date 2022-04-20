@@ -29,15 +29,21 @@ public class DatabaseUtils {
         return pastGame;
     }
 
-    private static PositionPair getPositionsFromMove(Move move) {
-        return new PositionPair(
+    private static PositionedMove getPositionsFromMove(Move move) {
+        return new PositionedMove(
                 new Position(move.getStart().getI(), move.getStart().getJ()),
-                new Position(move.getEnd().getI(), move.getEnd().getJ()));
+                new Position(move.getEnd().getI(), move.getEnd().getJ()),
+                move.getPromotionChoice());
     }
 
-    private static PlayedMove createPlayedMoveFromPositions(PositionPair movePair) {
-        return new PlayedMove(null, null, movePair.start().index(), movePair.end().index());
+    private static PlayedMove createPlayedMoveFromPositions(PositionedMove positionedMove) {
+        return new PlayedMove(
+                null,
+                null,
+                positionedMove.start().index(),
+                positionedMove.end().index(),
+                positionedMove.promotionChoice);
     }
 
-    private record PositionPair(Position start, Position end) {}
+    private record PositionedMove(Position start, Position end, int promotionChoice) {}
 }

@@ -21,4 +21,5 @@ public class PlayedMove {
 
     private int startIndex;
     private int endIndex;
+    private int pawnPromotionChoice;
 }
