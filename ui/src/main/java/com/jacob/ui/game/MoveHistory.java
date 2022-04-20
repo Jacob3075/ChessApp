@@ -27,6 +27,7 @@ public class MoveHistory {
         }
 
         list.add(new DisplayMoves(list.size() + 1, whiteMove.toString(), move.toString()));
+        whiteMove = null;
     }
 
     public static class DisplayMoves {

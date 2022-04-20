@@ -52,6 +52,7 @@ public class PlayNewGameController implements Initializable {
     }
 
     private int getPawnPromotionChoice() {
+        System.out.println("PlayNewGameController.getPawnPromotionChoice");
         PawnPromotionPopupController controller = new PawnPromotionPopupController();
         JavaFxUtils.showPopupAndWait(JavaFxUtils.Views.PAWN_PROMOTION_POPUP, controller);
         return controller.getSelectedPiece();
