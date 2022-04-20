@@ -84,7 +84,7 @@ public class Move {
         int endingRow = end.getI() + 1;
 
         String result = pieceMoved == null ? "" : pieceMoved.getSymbol();
-        result += startingColumn + startingRow;
+        result += "" + startingColumn + startingRow;
         result += pieceCaptured == null ? "" : "x";
         result += "" + endingColumn + endingRow;
         return result;

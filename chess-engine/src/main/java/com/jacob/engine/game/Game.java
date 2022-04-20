@@ -19,6 +19,7 @@ public class Game {
     private Player currentTurn;
     private GameStatus status;
     private final List<Move> movesPlayed;
+    private final List<Spot[][]> boardPositions;
     private final Random random;
 
     public Game(Player playerZero, Player playerOne) {
@@ -29,6 +30,7 @@ public class Game {
 
         board = new Board();
         movesPlayed = new ArrayList<>();
+        boardPositions = new ArrayList<>();
 
         // white plays first
         if(playerZero.isWhiteSide())
@@ -37,6 +39,10 @@ public class Game {
             currentTurn = playerOne;
 
         setStatus(GameStatus.ACTIVE);
+    }
+
+    public List<Move> getMovesPlayed() {
+        return movesPlayed;
     }
 
     public static Game createNewGame(boolean isHumanWhite) {
@@ -110,7 +116,7 @@ public class Game {
         }
 
         movesPlayed.add(move);
-
+        boardPositions.add(board.getSpots());
         passCurrentTurnToOtherPlayer();
     }
 

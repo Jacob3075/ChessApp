@@ -10,6 +10,10 @@ public class Board {
         setBoardToStartingPosition();
     }
 
+    public Spot[][] getSpots() {
+        return spots;
+    }
+
     public Spot getSpot(int i, int j) {
         if(i < 0 || i > 7 || j < 0 || j > 7)
             return null;
