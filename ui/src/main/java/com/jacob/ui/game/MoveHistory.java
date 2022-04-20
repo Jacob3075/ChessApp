@@ -18,9 +18,9 @@ public class MoveHistory {
 
     public void initializeView() {
         ObservableList<TableColumn<DisplayMoves, ?>> columns = displayMovesTable.getColumns();
-        columns.get(0).setCellValueFactory(new PropertyValueFactory<>("moves"));
-        columns.get(1).setCellValueFactory(new PropertyValueFactory<>("moveByW"));
-        columns.get(2).setCellValueFactory(new PropertyValueFactory<>("moveByB"));
+        columns.get(0).setCellValueFactory(new PropertyValueFactory<>("moveIndex"));
+        columns.get(1).setCellValueFactory(new PropertyValueFactory<>("whiteMove"));
+        columns.get(2).setCellValueFactory(new PropertyValueFactory<>("blackMove"));
 
         displayMovesTable.setItems(list);
     }
@@ -35,26 +35,26 @@ public class MoveHistory {
     }
 
     public static class DisplayMoves {
-        private final int moves;
-        private final String moveByW;
-        private final String moveByB;
+        private final int moveIndex;
+        private final String whiteMove;
+        private final String blackMove;
 
-        public DisplayMoves(int moves, String moveByW, String moveByB) {
-            this.moves = moves;
-            this.moveByW = moveByW;
-            this.moveByB = moveByB;
+        public DisplayMoves(int moveIndex, String whiteMove, String blackMove) {
+            this.moveIndex = moveIndex;
+            this.whiteMove = whiteMove;
+            this.blackMove = blackMove;
         }
 
-        public int getMoves() {
-            return moves;
+        public int getMoveIndex() {
+            return moveIndex;
         }
 
-        public String getMoveByW() {
-            return moveByW;
+        public String getWhiteMove() {
+            return whiteMove;
         }
 
-        public String getMoveByB() {
-            return moveByB;
+        public String getBlackMove() {
+            return blackMove;
         }
     }
 }
