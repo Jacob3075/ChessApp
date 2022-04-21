@@ -15,11 +15,11 @@ import java.util.ResourceBundle;
 
 @Component
 public class MoveHistoryController implements Initializable {
-    private final ObservableList<DisplayMoves> list = FXCollections.observableArrayList();
     @FXML private TableView<DisplayMoves> displayMovesTable;
     @FXML private TableColumn<DisplayMoves, String> moveIdColumn;
     @FXML private TableColumn<DisplayMoves, String> whiteMoveColumn;
     @FXML private TableColumn<DisplayMoves, String> blackMoveColumn;
+    private final ObservableList<DisplayMoves> list = FXCollections.observableArrayList();
     private Move whiteMove;
 
     @Override
@@ -44,7 +44,7 @@ public class MoveHistoryController implements Initializable {
         whiteMove = null;
     }
 
-    public record DisplayMoves(int moveIndex, String whiteMove, String blackMove) {
+    private record DisplayMoves(int moveIndex, String whiteMove, String blackMove) {
         public String getMoveIndex() {
             return moveIndex + "";
         }

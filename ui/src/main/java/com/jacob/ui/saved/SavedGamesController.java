@@ -51,16 +51,15 @@ public class SavedGamesController implements Initializable {
             controller.initializePage();
         });
     }
-}
 
-record SavedGameItem(Long id, String createdTime, String result) {
-    public static SavedGameItem createFromEntity(PastGame pastGame) {
-        return new SavedGameItem(pastGame.getId(), pastGame.getCreatedTime(), pastGame.getResult());
+    private record SavedGameItem(Long id, String createdTime, String result) {
+        public static SavedGameItem createFromEntity(PastGame pastGame) {
+            return new SavedGameItem(pastGame.getId(), pastGame.getCreatedTime(), pastGame.getResult());
+        }
+
+        @Override
+        public String toString() {
+            return "SavedGameItem{createdTime='%s', result='%s'}".formatted(createdTime, result);
+        }
     }
-
-    @Override
-    public String toString() {
-        return "SavedGameItem{createdTime='%s', result='%s'}".formatted(createdTime, result);
-    }
-
 }
