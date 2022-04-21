@@ -10,7 +10,10 @@ import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
@@ -46,7 +49,7 @@ public class PlayNewGameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds).startCountDown();
+        new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds).setTimer();
         moveHistory.initializeView(displayMovesTable);
         boardController.initializeBoard(game.getBoard(), gameController::tileClicked);
     }
@@ -59,23 +62,17 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void gameCompleted() {
-        Alert alert =
-                new Alert(
+        new Alert(
                         Alert.AlertType.CONFIRMATION,
                         "Game Over, winner is: " + game.getStatus(),
-                        ButtonType.OK);
-
-        final Button actionButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-        actionButton.setOnAction(
-                event -> {
-                    Stage stage = (Stage) timerMinutes.getScene().getWindow();
-                    JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
-                });
-
-        alert.show();
+                        ButtonType.OK)
+                .showAndWait();
 
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);
+
+        Stage stage = (Stage) timerMinutes.getScene().getWindow();
+        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
     }
 
     private void updateUI(@Nullable Move move) {

@@ -3,8 +3,12 @@ package com.jacob.ui.game.play;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameTimer {
     private static final int START_SECONDS = 10;
@@ -51,6 +55,27 @@ public class GameTimer {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.getKeyFrames().add(keyframe);
         timeline.playFromStart();
+    }
+
+    int interval = 0;
+
+    public void setTimer() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (interval < 6) {
+                            Platform.runLater(() -> updateTime(interval, interval));
+                            interval++;
+                        } else {
+                            Platform.runLater(gameTimeOver);
+                            timer.cancel();
+                        }
+                    }
+                },
+                1000,
+                1000);
     }
 
     private void updateTime(Integer minutes, Integer seconds) {
