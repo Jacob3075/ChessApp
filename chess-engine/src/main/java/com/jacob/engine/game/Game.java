@@ -158,7 +158,8 @@ public class Game {
         Spot start = move.getStart();
         Spot end = move.getEnd();
 
-        int choice = move.getPromotionChoice();
+        move.getPromotionChoice();
+        int choice = move.getPromotionChoiceValue();
 
         start.setPiece(null);
         switch (choice) {

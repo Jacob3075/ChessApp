@@ -65,10 +65,12 @@ public class Move {
         this.queenSideCastlingMove = queenSideCastlingMove;
     }
 
-    public int getPromotionChoice() {
-        if (promotionChoice == -1) promotionChoice = getPromotionChoice.getAsInt();
-
+    public int getPromotionChoiceValue() {
         return promotionChoice;
+    }
+
+    public void getPromotionChoice() {
+        promotionChoice = getPromotionChoice.getAsInt();
     }
 
     @Override

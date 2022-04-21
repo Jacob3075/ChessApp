@@ -33,7 +33,7 @@ public class DatabaseUtils {
         return new PositionedMove(
                 new Position(move.getStart().getI(), move.getStart().getJ()),
                 new Position(move.getEnd().getI(), move.getEnd().getJ()),
-                move.getPromotionChoice());
+                move.getPromotionChoiceValue());
     }
 
     private static PlayedMove createPlayedMoveFromPositions(PositionedMove positionedMove) {
