@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -27,9 +26,8 @@ import java.util.ResourceBundle;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PlayNewGameController implements Initializable {
+    @FXML private TimerController timerController;
     @FXML private BoardController boardController;
-    @FXML private Label timerMinutes;
-    @FXML private Label timerSeconds;
     @FXML private TableView<MoveHistory.DisplayMoves> displayMovesTable;
     private final UserAuthState userAuthState;
     private final ApplicationContext context;
@@ -49,13 +47,12 @@ public class PlayNewGameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new GameTimer(this::gameTimeOver, timerMinutes, timerSeconds).setTimer();
+        timerController.setGameTimeOver(this::gameTimeOver);
         moveHistory.initializeView(displayMovesTable);
         boardController.initializeBoard(game.getBoard(), gameController::tileClicked);
     }
 
     private int getPawnPromotionChoice() {
-        System.out.println("PlayNewGameController.getPawnPromotionChoice");
         PawnPromotionPopupController controller = new PawnPromotionPopupController();
         JavaFxUtils.showPopupAndWait(JavaFxUtils.Views.PAWN_PROMOTION_POPUP, controller);
         return controller.getSelectedPiece();
@@ -71,7 +68,7 @@ public class PlayNewGameController implements Initializable {
         PastGame pastGame = DatabaseUtils.createPastGame(game, userAuthState.getLoggedInUser());
         userAuthState.updateUserDetails(pastGame);
 
-        Stage stage = (Stage) timerMinutes.getScene().getWindow();
+        Stage stage = (Stage) displayMovesTable.getScene().getWindow();
         JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
     }
 
