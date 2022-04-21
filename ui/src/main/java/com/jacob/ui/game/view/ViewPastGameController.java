@@ -3,8 +3,9 @@ package com.jacob.ui.game.view;
 import com.jacob.database.game_data.PastGame;
 import com.jacob.engine.game.Game;
 import com.jacob.ui.game.BoardController;
+import com.jacob.ui.game.MoveHistoryController;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ViewPastGameController {
+    @FXML private HBox root;
+    @FXML private MoveHistoryController moveHistoryController;
     @FXML private BoardController boardController;
-    @FXML private VBox sideBar;
     private PastGame pastGame;
     private final Game game;
 
@@ -23,8 +25,6 @@ public class ViewPastGameController {
 
     public void initializePage() {
         assert pastGame != null;
-
-        //        pastGame.getPlayedMoves().stream().map(playedMove -> new Move)
 
         boardController.initializeBoard(game.getBoard(), tile -> {});
     }
