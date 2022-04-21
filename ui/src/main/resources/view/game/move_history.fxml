@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?><?import javafx.scene.control.TableColumn?><?import javafx.scene.control.TableView?><?import javafx.scene.layout.AnchorPane?><?import javafx.scene.layout.GridPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" GridPane.rowIndex="1" prefHeight="300.0"
+    prefWidth="260.0" xmlns="http://javafx.com/javafx"
+    fx:controller="com.jacob.ui.game.MoveHistoryController">
+    <GridPane.margin>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="5.0" />
+    </GridPane.margin>
+    <TableView style="-fx-background-color: F3E2C9;" layoutY="1.0" prefHeight="292.0"
+        prefWidth="260.0" fx:id="displayMovesTable">
+        <columns>
+            <TableColumn prefWidth="56.33331298828125" text="Moves" fx:id="moveIdColumn" />
+            <TableColumn prefWidth="100.33331298828125" text="White" fx:id="whiteMoveColumn" />
+            <TableColumn prefWidth="103.0" text="Black" fx:id="blackMoveColumn" />
+        </columns>
+    </TableView>
+</AnchorPane>
