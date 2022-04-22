@@ -3,7 +3,7 @@ package com.jacob.ui.game.play;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
 import com.jacob.engine.game.GameStatus;
-import com.jacob.ui.game.Tile;
+import com.jacob.ui.game.tile.Tile;
 
 import java.util.List;
 import java.util.function.Consumer;

@@ -1,8 +1,9 @@
-package com.jacob.ui.game;
+package com.jacob.ui.game.tile;
 
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import com.jacob.engine.pieces.Piece;
+import com.jacob.ui.game.Position;
 import com.jacob.ui.utils.PieceUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,19 +19,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class Tile extends Label {
-    private static final Paint WHITE = Paint.valueOf("#F0D9B5");
-    private static final Paint BLACK = Paint.valueOf("#B58863");
+public abstract class Tile extends Label {
     private static final Paint SELECTED = Paint.valueOf("#CBCF74");
-    private Paint color;
-    @Nullable private Piece piece;
-    private final Position position;
-    private final Consumer<Tile> onClicked;
+    protected Paint color;
+    @Nullable
+    protected Piece piece;
+    protected final Position position;
+    protected final Consumer<Tile> onClicked;
 
-    Tile(int row, int column, Consumer<Tile> onClicked) {
+    protected Tile(Position position, Consumer<Tile> onClicked) {
         this.onClicked = onClicked;
-        this.position = new Position(row, column);
-        this.color = position.isWhiteCell() ? WHITE : BLACK;
+        this.position = position;
 
         setPrefSize(75, 75);
         setAlignment(Pos.CENTER);
@@ -38,6 +37,7 @@ public class Tile extends Label {
 
         updateTileImage();
     }
+
 
     private void tileClicked(MouseEvent mouseEvent) {
         onClicked.accept(this);
@@ -48,7 +48,7 @@ public class Tile extends Label {
         updateTileImage();
     }
 
-    private void updateTileImage() {
+    protected void updateTileImage() {
 
         BackgroundFill tileBackground = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
         setBackground(new Background(tileBackground));
@@ -73,11 +73,7 @@ public class Tile extends Label {
         setGraphic(imageView);
     }
 
-    public void setPiece(@Nullable Piece piece) {
-        this.piece = piece;
-        color = position.isWhiteCell() ? WHITE : BLACK;
-        updateTileImage();
-    }
+    public abstract void setPiece(@Nullable Piece piece);
 
     public Position getPosition() {
         return position;
@@ -87,3 +83,5 @@ public class Tile extends Label {
         return game.getSpot(position.row(), position.column());
     }
 }
+
+

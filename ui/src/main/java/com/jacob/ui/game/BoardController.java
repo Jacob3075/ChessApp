@@ -1,6 +1,8 @@
 package com.jacob.ui.game;
 
 import com.jacob.engine.board.Board;
+import com.jacob.ui.game.tile.Tile;
+import com.jacob.ui.game.tile.TileFactory;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
@@ -24,7 +26,7 @@ public class BoardController {
         for (int i = 0; i < 8; i++) {
             rowCells.clear();
             for (int j = 0; j < 8; j++) {
-                rowCells.add(new Tile(i, j, onTileClicked));
+                rowCells.add(TileFactory.createTile(i, j, onTileClicked));
             }
             boardGrid.addRow(7 - i, rowCells.toArray(new Tile[8]));
         }
