@@ -27,35 +27,35 @@ public class Board {
 
     public void setBoardToStartingPosition() {
         // initialize white pieces
-        spots[0][0] = new Spot(0, 0, new Rook(true));
-        spots[0][1] = new Spot(0, 1, new Knight(true));
-        spots[0][2] = new Spot(0, 2, new Bishop(true));
-        spots[0][3] = new Spot(0, 3, new Queen(true));
-        spots[0][4] = new Spot(0, 4, new King(true));
-        spots[0][5] = new Spot(0, 5, new Bishop(true));
-        spots[0][6] = new Spot(0, 6, new Knight(true));
-        spots[0][7] = new Spot(0, 7, new Rook(true));
+        spots[0][0] = new Spot(0, 0, PieceFactory.getPiece("white rook"));
+        spots[0][1] = new Spot(0, 1, PieceFactory.getPiece("white knight"));
+        spots[0][2] = new Spot(0, 2, PieceFactory.getPiece("white bishop"));
+        spots[0][3] = new Spot(0, 3, PieceFactory.getPiece("white queen"));
+        spots[0][4] = new Spot(0, 4, PieceFactory.getPiece("white king"));
+        spots[0][5] = new Spot(0, 5, PieceFactory.getPiece("white bishop"));
+        spots[0][6] = new Spot(0, 6, PieceFactory.getPiece("white knight"));
+        spots[0][7] = new Spot(0, 7, PieceFactory.getPiece("white rook"));
         // initialize white pawns
         for (int column = 0; column < 8; column++)
-            spots[1][column] = new Spot(1, column, new Pawn(true));
+            spots[1][column] = new Spot(1, column, PieceFactory.getPiece("white pawn"));
 
         // initialize black pieces
-        spots[7][0] = new Spot(7, 0, new Rook(false));
-        spots[7][1] = new Spot(7, 1, new Knight(false));
-        spots[7][2] = new Spot(7, 2, new Bishop(false));
-        spots[7][3] = new Spot(7, 3, new Queen(false));
-        spots[7][4] = new Spot(7, 4, new King(false));
-        spots[7][5] = new Spot(7, 5, new Bishop(false));
-        spots[7][6] = new Spot(7, 6, new Knight(false));
-        spots[7][7] = new Spot(7, 7, new Rook(false));
+        spots[7][0] = new Spot(7, 0, PieceFactory.getPiece("black rook"));
+        spots[7][1] = new Spot(7, 1, PieceFactory.getPiece("black knight"));
+        spots[7][2] = new Spot(7, 2, PieceFactory.getPiece("black bishop"));
+        spots[7][3] = new Spot(7, 3, PieceFactory.getPiece("black queen"));
+        spots[7][4] = new Spot(7, 4, PieceFactory.getPiece("black king"));
+        spots[7][5] = new Spot(7, 5, PieceFactory.getPiece("black bishop"));
+        spots[7][6] = new Spot(7, 6, PieceFactory.getPiece("black knight"));
+        spots[7][7] = new Spot(7, 7, PieceFactory.getPiece("black rook"));
         // initialize black pawns
         for (int column = 0; column < 8; column++)
-            spots[6][column] = new Spot(6, column, new Pawn(false));
+            spots[6][column] = new Spot(6, column, PieceFactory.getPiece("black pawn"));
 
         // initialize remaining spots without any piece
         for (int row = 2; row < 6; row++) {
             for (int column = 0; column < 8; column++) {
-                spots[row][column] = new Spot(row, column, null);
+                spots[row][column] = new Spot(row, column, PieceFactory.getPiece(null));
             }
         }
     }
