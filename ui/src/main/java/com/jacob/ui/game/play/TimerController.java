@@ -18,30 +18,32 @@ public class TimerController implements Initializable {
     @FXML public Label timerMinutes;
     @FXML public Label timerSeconds;
     private Runnable gameTimeOver;
-    private int interval = 0;
+    private int currentSeconds = 600;
+    private TimerTask task;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                if (currentSeconds >= 0) {
+                    Platform.runLater(() -> updateTime(currentSeconds));
+                    currentSeconds--;
+                } else {
+                    Platform.runLater(gameTimeOver);
+                    stopTimer();
+                }
+            }
+        };
         timer.scheduleAtFixedRate(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (interval < TOTAL_SECONDS) {
-                            Platform.runLater(() -> updateTime(interval, interval));
-                            interval++;
-                        } else {
-                            Platform.runLater(gameTimeOver);
-                            stopTimer();
-                        }
-                    }
-                },
-                0,
+                task,
+                1000,
                 1000);
     }
 
-    private void updateTime(Integer minutes, Integer seconds) {
-        timerMinutes.setText(String.format("%02d", minutes));
-        timerSeconds.setText(String.format("%02d", seconds));
+    private void updateTime(int seconds) {
+        timerMinutes.setText(String.format("%02d", seconds/60));
+        timerSeconds.setText(String.format("%02d", seconds%60));
     }
 
     public void setGameTimeOver(Runnable gameTimeOver) {
@@ -49,6 +51,8 @@ public class TimerController implements Initializable {
     }
 
     public void stopTimer() {
+        task.cancel();
         timer.cancel();
+        timer.purge();
     }
 }

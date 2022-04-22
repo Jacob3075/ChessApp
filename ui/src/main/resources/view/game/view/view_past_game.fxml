@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
-<HBox xmlns:fx="http://javafx.com/fxml/1" minHeight="600.0" minWidth="900.0" prefHeight="358.0"
-    prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.14-internal" fx:id="root"
-    fx:controller="com.jacob.ui.game.view.ViewPastGameController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="root" minHeight="600.0" minWidth="900.0" prefHeight="358.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jacob.ui.game.view.ViewPastGameController">
     <GridPane>
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
@@ -12,28 +13,25 @@
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <fx:include source="../board.fxml" fx:id="board" />
+        <fx:include fx:id="board" source="../board.fxml" />
         <GridPane GridPane.columnIndex="1">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="114.99999237060547"
-                    vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="319.00000762939453" minHeight="10.0"
-                    prefHeight="301.00000762939453" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="174.0"
-                    vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="114.99999237060547" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="319.00000762939453" minHeight="10.0" prefHeight="301.00000762939453" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <AnchorPane>
-                <Label contentDisplay="CENTER" layoutX="65.0" layoutY="21.0" text="Chess"
-                    textAlignment="CENTER">
+                <Label contentDisplay="CENTER" layoutX="65.0" layoutY="21.0" text="Chess" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Black" size="51.0" />
                     </font>
                 </Label>
             </AnchorPane>
-            <fx:include source="../move_history.fxml" fx:id="moveHistory" />
+            <fx:include fx:id="moveHistory" source="../move_history.fxml" />
         </GridPane>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" />
     </GridPane>
 </HBox>

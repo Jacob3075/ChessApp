@@ -81,6 +81,7 @@ public class PlayNewGameController implements Initializable {
 
     private void gameTimeOver() {
         game.setAndDeclareWin();
+        timerController.stopTimer();
         gameCompleted();
     }
 }
