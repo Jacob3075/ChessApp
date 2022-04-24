@@ -48,6 +48,7 @@ public class PlayNewGameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        timerController.startTime();
         timerController.setGameTimeOver(this::gameTimeOver);
         boardController.initializeBoard(game.getBoard(), gameController::tileClicked);
     }

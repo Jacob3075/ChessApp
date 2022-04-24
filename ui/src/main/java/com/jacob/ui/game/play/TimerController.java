@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 @Component
 public class TimerController implements Initializable {
-    private final Timer timer = new Timer(true);
+    private Timer timer = new Timer(true);
     @FXML private Label timerMinutes;
     @FXML private Label timerSeconds;
     private Runnable gameTimeOver;
@@ -22,27 +22,30 @@ public class TimerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                if (currentSeconds >= 0) {
-                    Platform.runLater(() -> updateTime(currentSeconds));
-                    currentSeconds--;
-                } else {
-                    Platform.runLater(gameTimeOver);
-                    stopTimer();
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(
-                task,
-                1000,
-                1000);
+        startTime();
+    }
+
+    public void startTime() {
+        timer = new Timer(true);
+        task =
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (currentSeconds >= 0) {
+                            Platform.runLater(() -> updateTime(currentSeconds));
+                            currentSeconds--;
+                        } else {
+                            Platform.runLater(gameTimeOver);
+                            stopTimer();
+                        }
+                    }
+                };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     private void updateTime(int seconds) {
-        timerMinutes.setText(String.format("%02d", seconds/60));
-        timerSeconds.setText(String.format("%02d", seconds%60));
+        timerMinutes.setText(String.format("%02d", seconds / 60));
+        timerSeconds.setText(String.format("%02d", seconds % 60));
     }
 
     public void setGameTimeOver(Runnable gameTimeOver) {
