@@ -49,15 +49,17 @@ public class ViewPastGameController {
         nextMove.setOnAction(this::showNextMove);
 
         for (PlayedMove playedMove : pastGame.getPlayedMoves()) {
-            game.makeMove(
+            Move move =
                     new Move(
                             game.getCurrentTurn(),
                             getSpot(new Position(playedMove.getStartIndex())),
                             getSpot(new Position(playedMove.getEndIndex())),
-                            playedMove::getPawnPromotionChoice));
+                            playedMove::getPawnPromotionChoice);
+            game.makeMove(move);
         }
 
         game.getMovesPlayed().forEach(moveHistoryController::updatePlayedMoves);
+        moveHistoryController.showLeftOverMove();
         game.resetBoard();
     }
 

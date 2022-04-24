@@ -22,7 +22,11 @@ public class DatabaseUtils {
                 game.getMovesPlayed().stream()
                         .map(DatabaseUtils::getPositionsFromMove)
                         .map(DatabaseUtils::createPlayedMoveFromPositions)
-                        .peek(playedMove -> playedMove.setPastGame(pastGame))
+                        .map(
+                                playedMove -> {
+                                    playedMove.setPastGame(pastGame);
+                                    return playedMove;
+                                })
                         .toList();
 
         pastGame.setPlayedMoves(playedMoves);

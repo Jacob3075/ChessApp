@@ -1,3 +1,4 @@
+
 package com.jacob.ui.game;
 
 import com.jacob.engine.board.Move;
@@ -20,7 +21,7 @@ public class MoveHistoryController implements Initializable {
     @FXML private TableColumn<DisplayMoves, String> whiteMoveColumn;
     @FXML private TableColumn<DisplayMoves, String> blackMoveColumn;
     private final ObservableList<DisplayMoves> list = FXCollections.observableArrayList();
-    private String whiteMove;
+    private Move whiteMove;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,23 +37,19 @@ public class MoveHistoryController implements Initializable {
 
     public void updatePlayedMoves(Move move) {
         if (whiteMove == null) {
-            whiteMove = move.toString();
-            return;
-        }
-
-        list.add(new DisplayMoves(list.size() + 1, whiteMove, move.toString()));
-        whiteMove = null;
-    }
-
-    public void updatePlayedMoves(String move) {
-        if (whiteMove == null) {
             whiteMove = move;
             return;
         }
 
-        list.add(new DisplayMoves(list.size() + 1, whiteMove, move));
+        list.add(new DisplayMoves(list.size() + 1, whiteMove.toString(), move.toString()));
         whiteMove = null;
     }
+    public void showLeftOverMove(){
+        if (whiteMove == null) return;
+
+        list.add(new DisplayMoves(list.size() + 1, whiteMove.toString(), ""));
+    }
+
     private record DisplayMoves(int moveIndex, String whiteMove, String blackMove) {
         public String getMoveIndex() {
             return moveIndex + "";
