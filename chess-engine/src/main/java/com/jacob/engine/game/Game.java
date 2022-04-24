@@ -18,8 +18,8 @@ public class Game {
     private final Board board;
     private Player currentTurn;
     private GameStatus status;
-    private final List<Move> movesPlayed;
-    private final List<Spot[][]> boardPositions;
+    private  List<Move> movesPlayed;
+    private  List<Spot[][]> boardPositions;
     private final Random random;
 
     public Game(Player playerZero, Player playerOne) {
@@ -29,14 +29,18 @@ public class Game {
         players[1] = playerOne;
 
         board = new Board();
+        resetBoard();
+    }
+
+    public void resetBoard() {
         movesPlayed = new ArrayList<>();
         boardPositions = new ArrayList<>();
 
         // white plays first
-        if(playerZero.isWhiteSide())
-            currentTurn = playerZero;
+        if(players[0].isWhiteSide())
+            currentTurn = players[0];
         else
-            currentTurn = playerOne;
+            currentTurn = players[1];
 
         setStatus(GameStatus.ACTIVE);
     }
@@ -89,10 +93,19 @@ public class Game {
 
     public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
-        return player == currentTurn
-                && movedPiece != null
-                && movedPiece.isWhite() == player.isWhiteSide()
-                && movedPiece.canMove(board, move.getStart(), move.getEnd());
+        boolean equals1 = player.equals(currentTurn);
+        boolean equals2 = movedPiece != null;
+        boolean equals3 = movedPiece.isWhite() == player.isWhiteSide();
+        boolean equals4 = movedPiece.canMove(board, move.getStart(), move.getEnd());
+        System.out.println("move = " + move);
+        System.out.println("equals1 = " + equals1);
+        System.out.println("equals2 = " + equals2);
+        System.out.println("equals3 = " + equals3);
+        System.out.println("equals4 = " + equals4);
+        return equals1
+                && equals2
+                && equals3
+                && equals4;
     }
 
     public void makeValidMove(Move move) {
@@ -243,6 +256,8 @@ public class Game {
 
     public void makeMove(Move move) {
         if (!isMovePossible(move, move.getPlayer())) return;
+
+        System.out.println("Game.makeMove");
 
         makeValidMove(move);
     }

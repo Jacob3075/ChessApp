@@ -20,7 +20,7 @@ public class MoveHistoryController implements Initializable {
     @FXML private TableColumn<DisplayMoves, String> whiteMoveColumn;
     @FXML private TableColumn<DisplayMoves, String> blackMoveColumn;
     private final ObservableList<DisplayMoves> list = FXCollections.observableArrayList();
-    private Move whiteMove;
+    private String whiteMove;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,14 +36,23 @@ public class MoveHistoryController implements Initializable {
 
     public void updatePlayedMoves(Move move) {
         if (whiteMove == null) {
+            whiteMove = move.toString();
+            return;
+        }
+
+        list.add(new DisplayMoves(list.size() + 1, whiteMove, move.toString()));
+        whiteMove = null;
+    }
+
+    public void updatePlayedMoves(String move) {
+        if (whiteMove == null) {
             whiteMove = move;
             return;
         }
 
-        list.add(new DisplayMoves(list.size() + 1, whiteMove.toString(), move.toString()));
+        list.add(new DisplayMoves(list.size() + 1, whiteMove, move));
         whiteMove = null;
     }
-
     private record DisplayMoves(int moveIndex, String whiteMove, String blackMove) {
         public String getMoveIndex() {
             return moveIndex + "";

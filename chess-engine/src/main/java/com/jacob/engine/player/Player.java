@@ -68,4 +68,22 @@ public abstract class Player {
         assert kingSpot != null;
         return kingSpot;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+
+        Player player = (Player) o;
+
+        if (whiteSide != player.whiteSide) return false;
+        return humanPlayer == player.humanPlayer;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (whiteSide ? 1 : 0);
+        result = 31 * result + (humanPlayer ? 1 : 0);
+        return result;
+    }
 }

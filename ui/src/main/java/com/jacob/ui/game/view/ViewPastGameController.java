@@ -1,13 +1,13 @@
 package com.jacob.ui.game.view;
 
 import com.jacob.database.game_data.PastGame;
+import com.jacob.database.game_data.PlayedMove;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import com.jacob.ui.game.BoardController;
 import com.jacob.ui.game.MoveHistoryController;
 import com.jacob.ui.game.Position;
-import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,35 +48,26 @@ public class ViewPastGameController {
         goBackButton.setOnAction(this::showHomeScreen);
         nextMove.setOnAction(this::showNextMove);
 
-        Game tempGame = Game.createNewGame(true);
-        pastGame.getPlayedMoves().stream()
-                .map(
-                        playedMove ->
-                                new DatabaseUtils.PositionedMove(
-                                        new Position(playedMove.getStartIndex()),
-                                        new Position(playedMove.getEndIndex()),
-                                        playedMove.getPawnPromotionChoice()))
-                .forEachOrdered(
-                        positionedMove ->
-                                tempGame.makeMove(
-                                        new Move(
-                                                tempGame.getCurrentTurn(),
-                                                getSpot(tempGame, positionedMove.start()),
-                                                getSpot(tempGame, positionedMove.end()),
-                                                positionedMove::promotionChoice)));
+        for (PlayedMove playedMove : pastGame.getPlayedMoves()) {
+            game.makeMove(
+                    new Move(
+                            game.getCurrentTurn(),
+                            getSpot(new Position(playedMove.getStartIndex())),
+                            getSpot(new Position(playedMove.getEndIndex())),
+                            playedMove::getPawnPromotionChoice));
+        }
 
-        movesPlayed = tempGame.getMovesPlayed().iterator();
-        tempGame.getMovesPlayed().forEach(moveHistoryController::updatePlayedMoves);
-        System.out.println("DONE");
+        game.getMovesPlayed().forEach(moveHistoryController::updatePlayedMoves);
+        game.resetBoard();
+    }
+
+    private Spot getSpot(Position position) {
+        return game.getSpot(position.row(), position.column());
     }
 
     private void showHomeScreen(@NotNull ActionEvent event) {
         Stage stage = (Stage) root.getScene().getWindow();
         JavaFxUtils.changeScene(stage, JavaFxUtils.Views.SAVED_GAMES, context);
-    }
-
-    private Spot getSpot(Game tempGame, Position position) {
-        return tempGame.getSpot(position.row(), position.column());
     }
 
     public void setDate(PastGame data) {
