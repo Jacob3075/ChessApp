@@ -13,10 +13,9 @@ import java.util.TimerTask;
 
 @Component
 public class TimerController implements Initializable {
-    private static final int TOTAL_SECONDS = 600;
-    private final Timer timer = new Timer();
-    @FXML public Label timerMinutes;
-    @FXML public Label timerSeconds;
+    private final Timer timer = new Timer(true);
+    @FXML private Label timerMinutes;
+    @FXML private Label timerSeconds;
     private Runnable gameTimeOver;
     private int currentSeconds = 600;
     private TimerTask task;

@@ -59,6 +59,7 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void gameCompleted() {
+        timerController.stopTimer();
         new Alert(
                         Alert.AlertType.CONFIRMATION,
                         "Game Over, winner is: " + game.getStatus(),
@@ -82,7 +83,6 @@ public class PlayNewGameController implements Initializable {
 
     private void gameTimeOver() {
         game.setAndDeclareWin();
-        timerController.stopTimer();
         gameCompleted();
     }
 }
