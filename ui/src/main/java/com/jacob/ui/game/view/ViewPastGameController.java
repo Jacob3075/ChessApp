@@ -1,9 +1,13 @@
 package com.jacob.ui.game.view;
 
 import com.jacob.database.game_data.PastGame;
+import com.jacob.engine.board.Move;
+import com.jacob.engine.board.Spot;
 import com.jacob.engine.game.Game;
 import com.jacob.ui.game.BoardController;
 import com.jacob.ui.game.MoveHistoryController;
+import com.jacob.ui.game.Position;
+import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +20,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
+
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ViewPastGameController {
+    @FXML private Button previousMove;
+    @FXML private Button nextMove;
     @FXML private Button goBackButton;
     @FXML private HBox root;
     @FXML private MoveHistoryController moveHistoryController;
@@ -26,6 +34,7 @@ public class ViewPastGameController {
     private final ApplicationContext context;
     private PastGame pastGame;
     private final Game game;
+    private Iterator<Move> movesPlayed;
 
     public ViewPastGameController(ApplicationContext context) {
         this.context = context;
@@ -37,19 +46,48 @@ public class ViewPastGameController {
 
         boardController.initializeBoard(game.getBoard(), tile -> {});
         goBackButton.setOnAction(this::showHomeScreen);
+        nextMove.setOnAction(this::showNextMove);
+
+        Game tempGame = Game.createNewGame(true);
+        pastGame.getPlayedMoves().stream()
+                .map(
+                        playedMove ->
+                                new DatabaseUtils.PositionedMove(
+                                        new Position(playedMove.getStartIndex()),
+                                        new Position(playedMove.getEndIndex()),
+                                        playedMove.getPawnPromotionChoice()))
+                .forEachOrdered(
+                        positionedMove ->
+                                tempGame.makeMove(
+                                        new Move(
+                                                tempGame.getCurrentTurn(),
+                                                getSpot(tempGame, positionedMove.start()),
+                                                getSpot(tempGame, positionedMove.end()),
+                                                positionedMove::promotionChoice)));
+
+        movesPlayed = tempGame.getMovesPlayed().iterator();
+        tempGame.getMovesPlayed().forEach(moveHistoryController::updatePlayedMoves);
+        System.out.println("DONE");
     }
 
     private void showHomeScreen(@NotNull ActionEvent event) {
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
+        Stage stage = (Stage) root.getScene().getWindow();
         JavaFxUtils.changeScene(stage, JavaFxUtils.Views.SAVED_GAMES, context);
+    }
+
+    private Spot getSpot(Game tempGame, Position position) {
+        return tempGame.getSpot(position.row(), position.column());
     }
 
     public void setDate(PastGame data) {
         this.pastGame = data;
     }
 
-    private void showNextMove() {
-        boardController.setBoard(game.getBoard());
+    private void showNextMove(ActionEvent actionEvent) {
+        if (!movesPlayed.hasNext()) return;
+
+        game.makeMove(movesPlayed.next());
+        boardController.initializeBoard(game.getBoard(), tile -> {});
         boardController.updateBoard();
     }
 

@@ -45,5 +45,5 @@ public class DatabaseUtils {
                 positionedMove.promotionChoice);
     }
 
-    private record PositionedMove(Position start, Position end, int promotionChoice) {}
+    public record PositionedMove(Position start, Position end, int promotionChoice) {}
 }

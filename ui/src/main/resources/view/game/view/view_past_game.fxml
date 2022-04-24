@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.control.*?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
 <HBox fx:id="root" minHeight="600.0" minWidth="900.0" prefHeight="358.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jacob.ui.game.view.ViewPastGameController">
     <GridPane>
         <columnConstraints>
@@ -21,34 +18,40 @@
             <rowConstraints>
                 <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="114.99999237060547" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="319.00000762939453" minHeight="10.0" prefHeight="301.00000762939453" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="174.0"
+                    vgrow="SOMETIMES" />
             </rowConstraints>
             <AnchorPane>
-                <Label contentDisplay="CENTER" layoutX="65.0" layoutY="21.0" text="Chess" textAlignment="CENTER">
+                <Label contentDisplay="CENTER" layoutX="65.0" layoutY="21.0" text="Chess"
+                    textAlignment="CENTER">
                     <font>
                         <Font name="Arial Black" size="51.0" />
                     </font>
                 </Label>
             </AnchorPane>
             <fx:include fx:id="moveHistory" source="../move_history.fxml" />
-         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-            <children>
-               <Button layoutX="21.0" layoutY="35.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Previous" textFill="WHITE">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button layoutX="197.0" layoutY="35.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Next" textAlignment="CENTER" textFill="WHITE">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-               <Button fx:id="goBackButton" layoutX="69.0" layoutY="114.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: black;" text="Go Back" textFill="WHITE">
-                  <font>
-                     <Font size="19.0" />
-                  </font>
-               </Button>
-            </children></AnchorPane>
+            <AnchorPane GridPane.rowIndex="2" prefHeight="200.0" prefWidth="200.0">
+                <Button style="-fx-background-color: black;" layoutX="21.0" layoutY="35.0"
+                    mnemonicParsing="false" text="Previous" textFill="WHITE" fx:id="previousMove">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Button>
+                <Button style="-fx-background-color: black;" layoutX="197.0" layoutY="35.0"
+                    mnemonicParsing="false" text="Next" textAlignment="CENTER" textFill="WHITE"
+                    fx:id="nextMove">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Button>
+                <Button style="-fx-background-color: black;" layoutX="69.0" layoutY="114.0"
+                    mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" text="Go Back"
+                    textFill="WHITE" fx:id="goBackButton">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Button>
+            </AnchorPane>
         </GridPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" />
     </GridPane>

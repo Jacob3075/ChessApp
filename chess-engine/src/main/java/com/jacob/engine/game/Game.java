@@ -242,9 +242,9 @@ public class Game {
     }
 
     public void makeMove(Move move) {
-        if (isMovePossible(move, move.getPlayer())) {
-            makeValidMove(move);
-        }
+        if (!isMovePossible(move, move.getPlayer())) return;
+
+        makeValidMove(move);
     }
 
     public Spot getSpot(int row, int column) {

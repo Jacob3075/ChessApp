@@ -21,6 +21,7 @@ public class BoardController {
 
     public void initializeBoard(Board board, Consumer<Tile> onTileClicked) {
         this.board = board;
+        boardGrid.getChildren().clear();
 
         ArrayList<Tile> rowCells = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
