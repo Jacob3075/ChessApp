@@ -4,10 +4,13 @@ import com.jacob.database.game_data.PastGame;
 import com.jacob.ui.auth.UserAuthState;
 import com.jacob.ui.game.view.ViewPastGameController;
 import com.jacob.ui.utils.JavaFxUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class SavedGamesController implements Initializable {
+    @FXML private Button goBackButton;
     @FXML
     private ListView<SavedGameItem> pastGames;
     private final UserAuthState userAuthState;
@@ -35,6 +39,8 @@ public class SavedGamesController implements Initializable {
                 .map(SavedGameItem::createFromEntity)
                 .toList();
         pastGames.getItems().addAll(savedGameItems);
+
+        goBackButton.setOnAction(this::showHomeScreen);
 
         pastGames.setOnMouseClicked(click -> {
             if (click.getClickCount() != 2) return;
@@ -61,5 +67,10 @@ public class SavedGamesController implements Initializable {
         public String toString() {
             return "SavedGameItem{createdTime='%s', result='%s'}".formatted(createdTime, result);
         }
+    }
+
+    private void showHomeScreen(@NotNull ActionEvent event) {
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
+        JavaFxUtils.changeScene(stage, JavaFxUtils.Views.HOME, context);
     }
 }

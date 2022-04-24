@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?><?import javafx.scene.control.ListView?><?import javafx.scene.layout.AnchorPane?><?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #ECECE7;"
-    prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
-    fx:controller="com.jacob.ui.saved.SavedGamesController">
-    <ListView layoutX="50.0" layoutY="81.0" prefHeight="285.0" prefWidth="500.0"
-        fx:id="pastGames" />
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="14.0"
-        prefHeight="61.0" prefWidth="320.0" text="Saved Games" textAlignment="CENTER">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ECECE7;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jacob.ui.saved.SavedGamesController">
+    <ListView fx:id="pastGames" layoutX="59.0" layoutY="83.0" prefHeight="255.0" prefWidth="482.0" />
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="14.0" prefHeight="61.0" prefWidth="320.0" text="Saved Games" textAlignment="CENTER">
         <font>
             <Font name="Bernard MT Condensed" size="43.0" />
         </font>
     </Label>
+   <Button fx:id="goBackButton" layoutX="401.0" layoutY="347.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: black;" text="Go Back" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font size="19.0" />
+      </font>
+   </Button>
 </AnchorPane>
