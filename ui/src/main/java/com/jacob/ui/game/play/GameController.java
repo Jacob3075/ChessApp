@@ -3,6 +3,7 @@ package com.jacob.ui.game.play;
 import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
 import com.jacob.engine.game.GameStatus;
+import com.jacob.ui.game.play.move_builder.MoveBuilder;
 import com.jacob.ui.game.tile.Tile;
 
 import java.util.List;
@@ -12,27 +13,30 @@ public class GameController {
     private final Game game;
     private final Runnable gameCompleted;
     private final Consumer<Move> updateUI;
-    private final MoveBuilder moveBuilder;
+    private MoveBuilder moveBuilderState;
 
     public GameController(
-            Game game, MoveBuilder moveBuilder, Runnable gameCompleted, Consumer<Move> updateUI) {
+            Game game,
+            MoveBuilder moveBuilderState,
+            Runnable gameCompleted,
+            Consumer<Move> updateUI) {
         this.game = game;
         this.gameCompleted = gameCompleted;
         this.updateUI = updateUI;
-        this.moveBuilder = moveBuilder;
+        this.moveBuilderState = moveBuilderState;
         initializeNextTurn();
     }
 
     public void tileClicked(Tile tile) {
         if (!game.getCurrentTurn().isHumanPlayer()) return;
 
-        moveBuilder.addTile(tile);
-        Move move = moveBuilder.buildMoveOrNull(game);
+        moveBuilderState = moveBuilderState.addTile(tile);
+        Move move = moveBuilderState.getMove(game);
 
         if (move == null) return;
 
         playMove(move);
-        moveBuilder.reset();
+        moveBuilderState = moveBuilderState.reset();
     }
 
     public void playMove(Move move) {

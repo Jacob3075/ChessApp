@@ -6,6 +6,7 @@ import com.jacob.engine.game.Game;
 import com.jacob.ui.auth.UserAuthState;
 import com.jacob.ui.game.BoardController;
 import com.jacob.ui.game.MoveHistoryController;
+import com.jacob.ui.game.play.move_builder.MoveBuilder;
 import com.jacob.ui.utils.DatabaseUtils;
 import com.jacob.ui.utils.JavaFxUtils;
 import javafx.fxml.FXML;
@@ -36,7 +37,7 @@ public class PlayNewGameController implements Initializable {
     private final GameController gameController =
             new GameController(
                     game,
-                    new MoveBuilder(this::getPawnPromotionChoice),
+                    MoveBuilder.getStartState(this::getPawnPromotionChoice),
                     this::gameCompleted,
                     this::updateUI);
 
