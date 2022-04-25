@@ -59,6 +59,7 @@ public class PlayNewGameController implements Initializable {
     }
 
     private void gameCompleted() {
+        moveHistoryController.showLeftOverMove();
         timerController.stopTimer();
         new Alert(
                         Alert.AlertType.CONFIRMATION,

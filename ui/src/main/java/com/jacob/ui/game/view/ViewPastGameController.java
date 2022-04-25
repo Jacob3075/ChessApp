@@ -25,7 +25,6 @@ import java.util.Iterator;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ViewPastGameController {
-    @FXML private Button previousMove;
     @FXML private Button nextMove;
     @FXML private Button goBackButton;
     @FXML private HBox root;
@@ -34,7 +33,7 @@ public class ViewPastGameController {
     private final ApplicationContext context;
     private PastGame pastGame;
     private final Game game;
-    private Iterator<Move> movesPlayed;
+    private Iterator<PlayedMove> playedMoveIterator;
 
     public ViewPastGameController(ApplicationContext context) {
         this.context = context;
@@ -44,21 +43,28 @@ public class ViewPastGameController {
     public void initializePage() {
         assert pastGame != null;
 
-        boardController.initializeBoard(game.getBoard(), tile -> {});
         goBackButton.setOnAction(this::showHomeScreen);
         nextMove.setOnAction(this::showNextMove);
 
         for (PlayedMove playedMove : pastGame.getPlayedMoves()) {
-            game.makeMove(
-                    new Move(
-                            game.getCurrentTurn(),
-                            getSpot(new Position(playedMove.getStartIndex())),
-                            getSpot(new Position(playedMove.getEndIndex())),
-                            playedMove::getPawnPromotionChoice));
+            Move move = convertPlayedMoveToMove(playedMove);
+            game.makeMove(move);
         }
 
         game.getMovesPlayed().forEach(moveHistoryController::updatePlayedMoves);
+        moveHistoryController.showLeftOverMove();
         game.resetBoard();
+        boardController.initializeBoard(game.getBoard(), tile -> {});
+        playedMoveIterator = pastGame.getPlayedMoves().iterator();
+    }
+
+    @NotNull
+    private Move convertPlayedMoveToMove(PlayedMove playedMove) {
+        return new Move(
+                game.getCurrentTurn(),
+                getSpot(new Position(playedMove.getStartIndex())),
+                getSpot(new Position(playedMove.getEndIndex())),
+                playedMove::getPawnPromotionChoice);
     }
 
     private Spot getSpot(Position position) {
@@ -75,15 +81,9 @@ public class ViewPastGameController {
     }
 
     private void showNextMove(ActionEvent actionEvent) {
-        if (!movesPlayed.hasNext()) return;
+        if (!playedMoveIterator.hasNext()) return;
 
-        game.makeMove(movesPlayed.next());
-        boardController.initializeBoard(game.getBoard(), tile -> {});
-        boardController.updateBoard();
-    }
-
-    private void showPreviousMove() {
-        boardController.setBoard(game.getBoard());
+        game.makeMove(convertPlayedMoveToMove(playedMoveIterator.next()));
         boardController.updateBoard();
     }
 }

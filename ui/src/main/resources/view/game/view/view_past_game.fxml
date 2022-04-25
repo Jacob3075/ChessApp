@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
-<HBox fx:id="root" minHeight="600.0" minWidth="900.0" prefHeight="358.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jacob.ui.game.view.ViewPastGameController">
+<?import javafx.scene.control.Button?><?import javafx.scene.control.ButtonBar?><?import javafx.scene.control.Label?><?import javafx.scene.layout.*?><?import javafx.scene.text.Font?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" minHeight="600.0" minWidth="900.0" prefHeight="358.0"
+    prefWidth="805.0" xmlns="http://javafx.com/javafx/16"
+    fx:controller="com.jacob.ui.game.view.ViewPastGameController" fx:id="root">
     <GridPane>
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
@@ -31,15 +33,9 @@
             </AnchorPane>
             <fx:include fx:id="moveHistory" source="../move_history.fxml" />
             <AnchorPane GridPane.rowIndex="2" prefHeight="200.0" prefWidth="200.0">
-                <Button style="-fx-background-color: black;" layoutX="21.0" layoutY="35.0"
-                    mnemonicParsing="false" text="Previous" textFill="WHITE" fx:id="previousMove">
-                    <font>
-                        <Font size="19.0" />
-                    </font>
-                </Button>
-                <Button style="-fx-background-color: black;" layoutX="197.0" layoutY="35.0"
-                    mnemonicParsing="false" text="Next" textAlignment="CENTER" textFill="WHITE"
-                    fx:id="nextMove">
+                <Button style="-fx-background-color: black;" layoutX="86.0" layoutY="34.0"
+                    mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" text="Next"
+                    textAlignment="CENTER" textFill="WHITE" fx:id="nextMove">
                     <font>
                         <Font size="19.0" />
                     </font>
