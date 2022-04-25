@@ -34,7 +34,7 @@ public class TimerController implements Initializable {
                 new TimerTask() {
                     @Override
                     public void run() {
-                        if (currentSeconds >= 0) {
+                        if (currentSeconds > 0) {
                             Platform.runLater(() -> updateTime(currentSeconds));
                             currentSeconds--;
                         } else {
