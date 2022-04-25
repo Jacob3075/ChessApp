@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class Game {
     private final Player[] players;
-    private final List<Spot[][]> boardPositions;
     private Player currentTurn;
     private GameStatus status;
     private  List<Move> movesPlayed;
@@ -28,14 +27,12 @@ public class Game {
         players[0] = playerZero;
         players[1] = playerOne;
 
-        boardPositions =new ArrayList<>();
         resetBoard();
     }
 
     public void resetBoard() {
         movesPlayed = new ArrayList<>();
         board = new Board();
-        board.displayBoard(true);
 
         // white plays first
         if(players[0].isWhiteSide())
@@ -81,11 +78,6 @@ public class Game {
         setStatus(GameStatus.DRAW);
     }
 
-    @Deprecated
-    public void makeComputerMove(Move move) {
-        makeValidMove(move);
-    }
-
     public Move getComputerMove(List<Move> possibleMoves){
 
         int randomIndex = random.nextInt(possibleMoves.size());
@@ -121,7 +113,6 @@ public class Game {
         }
 
         movesPlayed.add(move);
-        boardPositions.add(board.getSpots());
         passCurrentTurnToOtherPlayer();
     }
 
