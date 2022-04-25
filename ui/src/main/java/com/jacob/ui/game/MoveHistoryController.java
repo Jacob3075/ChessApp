@@ -9,12 +9,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class MoveHistoryController implements Initializable {
     @FXML private TableView<DisplayMoves> displayMovesTable;
     @FXML private TableColumn<DisplayMoves, String> moveIdColumn;

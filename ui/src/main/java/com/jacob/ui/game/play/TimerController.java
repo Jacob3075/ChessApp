@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -12,6 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TimerController implements Initializable {
     private Timer timer = new Timer(true);
     @FXML private Label timerMinutes;

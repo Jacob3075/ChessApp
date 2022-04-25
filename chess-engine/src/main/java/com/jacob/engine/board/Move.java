@@ -14,7 +14,7 @@ public class Move {
     private boolean kingSideCastlingMove;
     private boolean queenSideCastlingMove;
     private final IntSupplier getPromotionChoice;
-    private int promotionChoice = -1;
+    private int promotionChoice = 1;
 
     public Move(Player player, Spot start, Spot end, IntSupplier getPromotionChoice) {
         this.player = player;
@@ -70,6 +70,7 @@ public class Move {
     }
 
     public void getPromotionChoice() {
+        System.out.println("Move.getPromotionChoice");
         promotionChoice = getPromotionChoice.getAsInt();
     }
 

@@ -15,11 +15,11 @@ import java.util.Random;
 
 public class Game {
     private final Player[] players;
-    private final Board board;
+    private final List<Spot[][]> boardPositions;
     private Player currentTurn;
     private GameStatus status;
     private  List<Move> movesPlayed;
-    private  List<Spot[][]> boardPositions;
+    private Board board;
     private final Random random;
 
     public Game(Player playerZero, Player playerOne) {
@@ -28,13 +28,14 @@ public class Game {
         players[0] = playerZero;
         players[1] = playerOne;
 
-        board = new Board();
+        boardPositions =new ArrayList<>();
         resetBoard();
     }
 
     public void resetBoard() {
         movesPlayed = new ArrayList<>();
-        boardPositions = new ArrayList<>();
+        board = new Board();
+        board.displayBoard(true);
 
         // white plays first
         if(players[0].isWhiteSide())
@@ -93,19 +94,10 @@ public class Game {
 
     public boolean isMovePossible(Move move, Player player) {
         Piece movedPiece = move.getPieceMoved();
-        boolean equals1 = player.equals(currentTurn);
-        boolean equals2 = movedPiece != null;
-        boolean equals3 = movedPiece.isWhite() == player.isWhiteSide();
-        boolean equals4 = movedPiece.canMove(board, move.getStart(), move.getEnd());
-        System.out.println("move = " + move);
-        System.out.println("equals1 = " + equals1);
-        System.out.println("equals2 = " + equals2);
-        System.out.println("equals3 = " + equals3);
-        System.out.println("equals4 = " + equals4);
-        return equals1
-                && equals2
-                && equals3
-                && equals4;
+        return player.equals(currentTurn)
+                && movedPiece != null
+                && movedPiece.isWhite() == player.isWhiteSide()
+                && movedPiece.canMove(board, move.getStart(), move.getEnd());
     }
 
     public void makeValidMove(Move move) {
@@ -256,8 +248,6 @@ public class Game {
 
     public void makeMove(Move move) {
         if (!isMovePossible(move, move.getPlayer())) return;
-
-        System.out.println("Game.makeMove");
 
         makeValidMove(move);
     }
