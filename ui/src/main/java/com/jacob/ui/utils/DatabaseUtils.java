@@ -7,6 +7,8 @@ import com.jacob.engine.board.Move;
 import com.jacob.engine.game.Game;
 import com.jacob.ui.game.Position;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DatabaseUtils {
@@ -15,7 +17,12 @@ public class DatabaseUtils {
     public static PastGame createPastGame(Game game, User user) {
         PastGame pastGame = new PastGame();
         pastGame.setResult(game.getStatus().name());
-        pastGame.setCreatedTime("sometime");
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        String dateTime = dtf.format(now);
+        pastGame.setCreatedTime(dateTime);
+
         pastGame.setUser(user);
 
         List<PlayedMove> playedMoves =
