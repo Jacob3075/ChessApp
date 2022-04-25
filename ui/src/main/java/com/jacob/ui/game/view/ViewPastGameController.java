@@ -25,7 +25,6 @@ import java.util.Iterator;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ViewPastGameController {
-    @FXML private Button previousMove;
     @FXML private Button nextMove;
     @FXML private Button goBackButton;
     @FXML private HBox root;
@@ -85,11 +84,6 @@ public class ViewPastGameController {
         if (!playedMoveIterator.hasNext()) return;
 
         game.makeMove(convertPlayedMoveToMove(playedMoveIterator.next()));
-        boardController.updateBoard();
-    }
-
-    private void showPreviousMove() {
-        boardController.setBoard(game.getBoard());
         boardController.updateBoard();
     }
 }
